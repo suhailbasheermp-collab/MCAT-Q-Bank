@@ -64,7 +64,7 @@ function nextQuestion(){
  answered=false;
  if(!pool.length){card.innerHTML='<p>No questions left in this circle. Check your Review folder.</p>';current=null;updateStats();return;}
  current=pool[Math.floor(Math.random()*pool.length)];
- card.innerHTML='<div class="tag">'+current.subject+' · '+current.topic+'</div><div class="q">'+current.q+'</div>'+
+ card.innerHTML='<div class="tag">'+current.subject+' \u00b7 '+current.topic+'</div><div class="q">'+current.q+'</div>'+
   current.options.map((o,i)=>'<button class="opt" onclick="pick('+i+')">'+o+'</button>').join('')+'<div id="after"></div>';
  updateStats();
 }
@@ -82,7 +82,7 @@ function renderReview(){
  const list=document.getElementById('reviewList');
  const items=QUESTIONS.filter(q=>state.saved.includes(q.id));
  if(!items.length){list.innerHTML='<p>Nothing saved yet.</p>';return;}
- list.innerHTML=items.map(q=>'<div class="rev"><div class="tag">'+q.subject+' · '+q.topic+'</div><div>'+q.q+'</div><details><summary>Show answer</summary><p><b>'+q.options[q.answer]+'</b></p><p>'+q.explanation+'</p></details><button onclick="unsave('+q.id+')">Put back in circle</button> <button onclick="retireSaved('+q.id+')">Retire</button></div>').join('');
+ list.innerHTML=items.map(q=>'<div class="rev"><div class="tag">'+q.subject+' \u00b7 '+q.topic+'</div><div>'+q.q+'</div><details><summary>Show answer</summary><p><b>'+q.options[q.answer]+'</b></p><p>'+q.explanation+'</p></details><button onclick="unsave('+q.id+')">Put back in circle</button> <button onclick="retireSaved('+q.id+')">Retire</button></div>').join('');
 }
 function unsave(id){state.saved=state.saved.filter(x=>x!==id);persist();renderReview();updateStats();}
 function retireSaved(id){state.saved=state.saved.filter(x=>x!==id);state.retired.push(id);persist();renderReview();updateStats();}
@@ -94,7 +94,14 @@ function show(which){
  document.getElementById('review').classList.toggle('hidden',which!=='review');
  if(which==='review')renderReview();
 }
-initSubjects();nextQuestion();
+function loadBatches(n){
+ const s=document.createElement('script');
+ s.src='q'+n+'.js';
+ s.onload=function(){loadBatches(n+1);};
+ s.onerror=function(){initSubjects();nextQuestion();};
+ document.body.appendChild(s);
+}
+loadBatches(1);
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
 </script>
 </body>
