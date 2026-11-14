@@ -106,7 +106,13 @@ function loadBatches(n){
  const before=QUESTIONS.length;
  const s=document.createElement('script');
  s.src='q'+n+'.js';
- s.onload=function(){report.push('q'+n+'.js loaded, added '+(QUESTIONS.length-before)+' questions');loadBatches(n+1);};
+ s.onload=function(){
+  const flat=QUESTIONS.flat();
+  QUESTIONS.length=0;
+  flat.forEach(function(x){QUESTIONS.push(x);});
+  report.push('q'+n+'.js loaded, added '+(QUESTIONS.length-before)+' questions');
+  loadBatches(n+1);
+ };
  s.onerror=function(){report.push('q'+n+'.js not found, stopped here');initSubjects();nextQuestion();showReport();};
  document.body.appendChild(s);
 }
