@@ -8,10 +8,12 @@
 <title>MCAT Daily</title>
 <style>
  body{font-family:system-ui,sans-serif;margin:0;background:#f4f6fa;color:#1a1a1a;padding-bottom:40px}
- header{background:#1f3a5f;color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+ header{background:#1f3a5f;color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+ .brand{display:flex;align-items:center;gap:10px}
+ .logo{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1.5px solid #fff;box-shadow:0 0 6px rgba(255,255,255,0.4)}
  header h1{font-size:17px;margin:0;white-space:nowrap}
  nav{display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end}
- nav button{background:none;border:1px solid #fff;color:#fff;border-radius:6px;padding:6px 8px;font-size:12px}
+ nav button{background:none;border:1px solid #fff;color:#fff;border-radius:6px;padding:6px 8px;font-size:12px;font-weight:600;cursor:pointer}
  main{padding:16px;max-width:640px;margin:auto}
  .tag{font-size:12px;color:#555;margin-bottom:8px}
  .q{font-size:18px;line-height:1.4;margin-bottom:16px}
@@ -20,7 +22,7 @@
  .opt.wrong{background:#fadadd;border-color:#c0392b}
  .exp{background:#fff;border-left:4px solid #1f3a5f;padding:12px;margin:14px 0;border-radius:6px}
  .actions{display:flex;gap:10px}
- .actions button{flex:1;padding:14px;border-radius:10px;border:none;font-size:16px;color:#fff}
+ .actions button{flex:1;padding:14px;border-radius:10px;border:none;font-size:16px;color:#fff;font-weight:600;cursor:pointer}
  .retire{background:#2e9e4f}
  .save{background:#d98e04}
  .stats{font-size:13px;color:#555;margin-top:18px}
@@ -38,20 +40,20 @@
  .eq-answer-box{background:#eef3fa;border-left:4px solid #1f3a5f;padding:16px;border-radius:8px;margin-bottom:16px}
  .eq-formula{font-size:19px;font-weight:700;color:#1f3a5f;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;margin-bottom:8px;word-break:break-word}
  .eq-note{font-size:14px;color:#333;line-height:1.45}
- .reveal-btn{width:100%;padding:16px;background:#1f3a5f;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:600;margin-top:12px}
+ .reveal-btn{width:100%;padding:16px;background:#1f3a5f;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:600;margin-top:12px;cursor:pointer}
  .struct-box{background:#fff;border:1px solid #e5e9f0;border-radius:10px;padding:12px;margin:8px 0}
 
  /* Resources Section & Nested Toggles */
  .res-section{margin-top:28px;border-top:2px solid #dce1ea;padding-top:18px}
  .res-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px}
  .res-header h2{font-size:17px;margin:0;color:#1f3a5f}
- .btn-primary{background:#1f3a5f;color:#fff;border:none;padding:8px 12px;border-radius:8px;font-size:14px}
+ .btn-primary{background:#1f3a5f;color:#fff;border:none;padding:8px 12px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
  .backup-bar{display:flex;gap:8px;margin-bottom:12px}
  .btn-sec{flex:1;background:#fff;color:#1f3a5f;border:1px solid #1f3a5f;padding:8px 10px;border-radius:8px;font-size:13px;font-weight:600;text-align:center;cursor:pointer}
  .res-form{background:#fff;padding:14px;border-radius:10px;border:1px solid #c5cbd6;margin-bottom:14px}
  .hint{font-size:12px;color:#555;margin:-4px 0 10px 2px}
 
- details.tree-node{background:#fff;border:1px solid #dce1ea;border-radius:8px;margin-bottom:8px;overflow:hidden}
+ details.tree-node{background:#fff;border:1px solid #dce1ea;border-radius:8px;margin-bottom:8px;open:true;overflow:hidden}
  details.tree-node details.tree-node{margin:6px 0 6px 12px;border-color:#e2e6ee;background:#fafbfd}
  details.tree-node > summary{padding:11px 14px;font-weight:600;font-size:15px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center}
  details.tree-node > summary::-webkit-details-marker{display:none}
@@ -70,7 +72,10 @@
 </head>
 <body>
 <header>
- <h1>MCAT Daily</h1>
+ <div class="brand">
+  <img class="logo" src="logo.png" alt="MCAT Daily" onerror="this.style.display='none'">
+  <h1>MCAT Daily</h1>
+ </div>
  <nav>
   <button onclick="show('quiz')">Quiz</button>
   <button onclick="show('review')">Review</button>
@@ -81,7 +86,7 @@
 <main>
  <section id="quiz">
   <select id="subject" onchange="nextQuestion()"><option value="all">All subjects</option></select>
-  <div id="card"></div>
+  <div id="card">Loading daily MCAT modules...</div>
   <div class="stats" id="stats"></div>
   <details class="stats"><summary>Load report</summary><div id="report" style="white-space:pre-wrap"></div></details>
  </section>
@@ -139,7 +144,10 @@
 <!-- Fullscreen Equation Flashcard Modal -->
 <div id="eqModal" class="fs-modal">
  <header>
-  <h1>Equation Flashcards</h1>
+  <div class="brand" style="padding-left:8px">
+   <img class="logo" src="logo.png" style="width:30px;height:30px" onerror="this.style.display='none'">
+   <h1 style="font-size:16px">Equations</h1>
+  </div>
   <nav>
    <button id="eqModeBtn" onclick="toggleEqMode()">Saved (0)</button>
    <button onclick="closeEquations()">Close ✕</button>
@@ -169,7 +177,10 @@
 <!-- Fullscreen Structure Flashcard Modal -->
 <div id="stModal" class="fs-modal">
  <header>
-  <h1>Structure ID</h1>
+  <div class="brand" style="padding-left:8px">
+   <img class="logo" src="logo.png" style="width:30px;height:30px" onerror="this.style.display='none'">
+   <h1 style="font-size:16px">Structures</h1>
+  </div>
   <nav>
    <button id="stModeBtn" onclick="toggleStMode()">Saved (0)</button>
    <button onclick="closeStructures()">Close ✕</button>
@@ -199,9 +210,13 @@
 
 <div id="imgModal" onclick="this.style.display='none'"><img id="modalImg" src=""></div>
 
-<script src="questions.js"></script>
-<script src="equations.js"></script>
-<script src="structures.js"></script>
+<!-- Try to load fallback question object in case questions.js or first batch fails/does not exist yet -->
+<script>
+ window.QUESTIONS = window.QUESTIONS || [];
+</script>
+<script src="questions.js" onerror="console.warn('questions.js missing or has errors.')"></script>
+<script src="equations.js" onerror="console.warn('equations.js missing or has errors.')"></script>
+<script src="structures.js" onerror="console.warn('structures.js missing or has errors.')"></script>
 <script>
 const KEY='mcatState';
 let state=JSON.parse(localStorage.getItem(KEY)||'{"retired":[],"saved":[],"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[]}');
@@ -211,10 +226,12 @@ if(!state.stRetired)state.stRetired=[];
 if(!state.stSaved)state.stSaved=[];
 let current=null, answered=false;
 function persist(){localStorage.setItem(KEY,JSON.stringify(state));}
-function inCircle(q){return !state.retired.includes(q.id)&&!state.saved.includes(q.id);}
+function inCircle(q){return q && q.id && !state.retired.includes(q.id)&&!state.saved.includes(q.id);}
 function initSubjects(){
- const s=[...new Set(QUESTIONS.map(q=>q.subject))];
+ const s=[...new Set(QUESTIONS.filter(q => q && q.subject).map(q=>q.subject))];
  const el=document.getElementById('subject');
+ // Clear dynamic options but retain "all"
+ el.innerHTML = '<option value="all">All subjects</option>';
  s.forEach(x=>{const o=document.createElement('option');o.value=x;o.textContent=x;el.appendChild(o);});
 }
 function nextQuestion(){
@@ -222,7 +239,10 @@ function nextQuestion(){
  const pool=QUESTIONS.filter(q=>inCircle(q)&&(subj==='all'||q.subject===subj));
  const card=document.getElementById('card');
  answered=false;
- if(!pool.length){card.innerHTML='<p>No questions left in this circle. Check your Review folder.</p>';current=null;updateStats();return;}
+ if(!pool.length){
+  card.innerHTML='<p style="padding:10px;text-align:center">No active questions left in this circle.<br><small>If the app is brand new, verify your <b>q1.js</b> is in GitHub and loaded below.</small></p>';
+  current=null;updateStats();return;
+ }
  current=pool[Math.floor(Math.random()*pool.length)];
  card.innerHTML='<div class="tag">'+current.subject+' \u00b7 '+current.topic+'</div><div class="q">'+current.q+'</div>'+
   current.options.map((o,i)=>'<button class="opt" onclick="pick('+i+')">'+o+'</button>').join('')+'<div id="after"></div>';
@@ -240,7 +260,7 @@ function retire(){state.retired.push(current.id);persist();nextQuestion();}
 function saveIt(){state.saved.push(current.id);persist();nextQuestion();}
 function renderReview(){
  const list=document.getElementById('reviewList');
- const items=QUESTIONS.filter(q=>state.saved.includes(q.id));
+ const items=QUESTIONS.filter(q=>q && state.saved.includes(q.id));
  if(!items.length){list.innerHTML='<p>Nothing saved yet.</p>';return;}
  list.innerHTML=items.map(q=>'<div class="rev"><div class="tag">'+q.subject+' \u00b7 '+q.topic+'</div><div>'+q.q+'</div><details><summary>Show answer</summary><p><b>'+q.options[q.answer]+'</b></p><p>'+q.explanation+'</p></details><button onclick="unsave('+q.id+')">Put back in circle</button> <button onclick="retireSaved('+q.id+')">Retire</button></div>').join('');
 }
@@ -258,7 +278,7 @@ function show(which){
 /* Fullscreen Equations Flashcard Logic */
 let curEq=null, eqShowingSaved=false;
 function eqPool(){return typeof EQUATIONS!=='undefined'?EQUATIONS:[];}
-function eqInCircle(e){return !state.eqRetired.includes(e.id)&&!state.eqSaved.includes(e.id);}
+function eqInCircle(e){return e && e.id && !state.eqRetired.includes(e.id)&&!state.eqSaved.includes(e.id);}
 function openEquations(){
  eqShowingSaved=false;
  document.getElementById('eqDeckView').classList.remove('hidden');
@@ -307,7 +327,7 @@ function retireEq(){state.eqRetired.push(curEq.id);persist();nextEq();}
 function saveEq(){state.eqSaved.push(curEq.id);persist();nextEq();}
 function renderEqSaved(){
  const list=document.getElementById('eqSavedList');
- const items=eqPool().filter(e=>state.eqSaved.includes(e.id));
+ const items=eqPool().filter(e=>e && state.eqSaved.includes(e.id));
  if(!items.length){list.innerHTML='<p>No equations saved yet.</p>';return;}
  list.innerHTML=items.map(e=>'<div class="rev"><div class="tag">'+e.subject+' \u00b7 '+e.topic+'</div><div><b>'+e.q+'</b></div>'+
   '<div class="eq-formula" style="font-size:17px;margin-top:8px">'+e.eq+'</div>'+
@@ -320,7 +340,7 @@ function retireSavedEq(id){state.eqSaved=state.eqSaved.filter(x=>x!==id);state.e
 /* Fullscreen Structures Flashcard Logic */
 let curSt=null, stShowingSaved=false;
 function stPool(){return typeof STRUCTURES!=='undefined'?STRUCTURES:[];}
-function stInCircle(s){return !state.stRetired.includes(s.id)&&!state.stSaved.includes(s.id);}
+function stInCircle(s){return s && s.id && !state.stRetired.includes(s.id)&&!state.stSaved.includes(s.id);}
 function openStructures(){
  stShowingSaved=false;
  document.getElementById('stDeckView').classList.remove('hidden');
@@ -370,4 +390,210 @@ function retireSt(){state.stRetired.push(curSt.id);persist();nextSt();}
 function saveSt(){state.stSaved.push(curSt.id);persist();nextSt();}
 function renderStSaved(){
  const list=document.getElementById('stSavedList');
- const items=stPool().filter(s=>state.stSaved.
+ const items=stPool().filter(s=>s && state.stSaved.includes(s.id));
+ if(!items.length){list.innerHTML='<p>No structures saved yet.</p>';return;}
+ list.innerHTML=items.map(s=>'<div class="rev"><div class="tag">'+s.cat+'</div><div><b>'+s.name+'</b></div>'+
+  '<div class="struct-box">'+s.svg+'</div>'+
+  '<div class="eq-note" style="margin-bottom:8px">'+s.info+'</div>'+
+  '<button onclick="unsaveSt('+s.id+')">Put back in circle</button> <button onclick="retireSavedSt('+s.id+')">Retire</button></div>').join('');
+}
+function unsaveSt(id){state.stSaved=state.stSaved.filter(x=>x!==id);persist();renderStSaved();updateStStats();}
+function retireSavedSt(id){state.stSaved=state.stSaved.filter(x=>x!==id);state.stRetired.push(id);persist();renderStSaved();updateStStats();}
+
+/* IndexedDB Storage for Nested Equations & Phone Images */
+let db;
+const req=indexedDB.open('mcatResourcesDB',1);
+req.onupgradeneeded=e=>{e.target.result.createObjectStore('items',{keyPath:'id',autoIncrement:true});};
+req.onsuccess=e=>{db=e.target.result;renderResources();};
+
+function toggleResForm(){document.getElementById('resForm').classList.toggle('hidden');}
+
+function compressImage(file){
+ return new Promise(resolve=>{
+  const reader=new FileReader();
+  reader.onload=e=>{
+   const img=new Image();
+   img.onload=()=>{
+    const canvas=document.createElement('canvas');
+    const maxW=1200;
+    const scale=img.width>maxW?maxW/img.width:1;
+    canvas.width=img.width*scale;
+    canvas.height=img.height*scale;
+    canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
+    resolve(canvas.toDataURL('image/jpeg',0.8));
+   };
+   img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
+ });
+}
+
+async function saveResource(){
+ const title=document.getElementById('resTitle').value.trim();
+ const subject=document.getElementById('resSubj').value;
+ const note=document.getElementById('resNote').value.trim();
+ const file=document.getElementById('resFile').files[0];
+ if(!title&&!note&&file){alert('Add a title, equation, or photo first.');return;}
+ let imgData=null;
+ if(file)imgData=await compressImage(file);
+ const tx=db.transaction('items','readwrite');
+ tx.objectStore('items').add({title:title||'Untitled Resource',subject,note,imgData});
+ tx.oncomplete=()=>{
+  document.getElementById('resTitle').value='';
+  document.getElementById('resNote').value='';
+  document.getElementById('resFile').value='';
+  toggleResForm();
+  renderResources();
+ };
+}
+
+function escapeHtml(s){
+ return s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : '';
+}
+
+function buildTreeHtml(node){
+ let html='';
+ Object.keys(node.children).forEach(key=>{
+  html+='<details class="tree-node" open><summary>'+escapeHtml(key)+'</summary><div class="tree-body">'+buildTreeHtml(node.children[key])+'</div></details>';
+ });
+ node.items.forEach(item=>{
+  html+='<div class="res-item"><div class="tag">'+escapeHtml(item.subject)+'</div>'+
+   (item.note?'<div class="res-note">'+escapeHtml(item.note)+'</div>':'')+
+   (item.imgData?'<img src="'+item.imgData+'" onclick="zoomImg(this.src)">':'')+
+   '<div><button class="res-del" onclick="delResource('+item.id+')">Delete</button></div></div>';
+ });
+ return html;
+}
+
+function renderResources(){
+ if(!db) return;
+ const filter=document.getElementById('resFilter').value;
+ const list=document.getElementById('resList');
+ db.transaction('items','readonly').objectStore('items').getAll().onsuccess=e=>{
+  const all=e.target.result.filter(x=>filter==='all'||x.subject===filter);
+  if(!all.length){list.innerHTML='<p class="stats">No equations or charts saved yet.</p>';return;}
+  const root={children:{},items:[]};
+  all.forEach(item=>{
+   const parts=item.title.split('/').map(p=>p.trim()).filter(Boolean);
+   if(!parts.length)parts.push('Untitled');
+   let curr=root;
+   parts.forEach(part=>{
+    if(!curr.children[part])curr.children[part]={children:{},items:[]};
+    curr=curr.children[part];
+   });
+   curr.items.push(item);
+  });
+  list.innerHTML=buildTreeHtml(root);
+ };
+}
+
+function delResource(id){
+ const tx=db.transaction('items','readwrite');
+ tx.objectStore('items').delete(id);
+ tx.oncomplete=renderResources;
+}
+
+function zoomImg(src){
+ document.getElementById('modalImg').src=src;
+ document.getElementById('imgModal').style.display='flex';
+}
+
+/* Export & Restore All Resources + Quiz State */
+function exportBackup(){
+ if(!db)return;
+ db.transaction('items','readonly').objectStore('items').getAll().onsuccess=e=>{
+  const payload={
+   version:1,
+   date:new Date().toISOString(),
+   quizState:state,
+   resources:e.target.result
+  };
+  const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='mcat-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+ };
+}
+
+function importBackup(ev){
+ const file=ev.target.files[0];
+ if(!file)return;
+ const reader=new FileReader();
+ reader.onload=e=>{
+  try{
+   const data=JSON.parse(e.target.result);
+   if(!data.resources||!Array.isArray(data.resources)){alert('Invalid backup file.');return;}
+   if(data.quizState){
+    state=data.quizState;
+    if(!state.eqRetired)state.eqRetired=[];
+    if(!state.eqSaved)state.eqSaved=[];
+    if(!state.stRetired)state.stRetired=[];
+    if(!state.stSaved)state.stSaved=[];
+    persist();
+    updateStats();
+   }
+   const tx=db.transaction('items','readwrite');
+   const store=tx.objectStore('items');
+   store.clear();
+   data.resources.forEach(item=>{
+    const clean={title:item.title,subject:item.subject,note:item.note,imgData:item.imgData};
+    store.add(clean);
+   });
+   tx.oncomplete=()=>{
+    renderResources();
+    alert('Restored '+data.resources.length+' resources and progress!');
+   };
+  }catch(err){
+   alert('Could not read backup file.');
+  }
+  ev.target.value='';
+ };
+ reader.readAsText(file);
+}
+
+const report=[];
+window.addEventListener('error',function(ev){
+ if(ev.filename&&/q\d+\.js/.test(ev.filename)){
+  report.push('ERROR in '+ev.filename.split('/').pop().split('?')[0]+' line '+ev.lineno+': '+ev.message);
+ }
+});
+function showReport(){document.getElementById('report').textContent=report.join('\n');}
+
+function initApp(){
+ initSubjects();
+ nextQuestion();
+ showReport();
+}
+
+// Resilient Batch Loader that guarantees App runs regardless of any individual JS failure or file status
+function loadBatches(n){
+ const before=QUESTIONS.length;
+ const s=document.createElement('script');
+ s.src='q'+n+'.js';
+ s.onload=function(){
+  const flat=QUESTIONS.flat().filter(Boolean);
+  QUESTIONS.length=0;
+  flat.forEach(function(x){if(x) QUESTIONS.push(x);});
+  report.push('q'+n+'.js loaded, added '+(QUESTIONS.length-before)+' questions');
+  loadBatches(n+1);
+ };
+ s.onerror=function(){
+  report.push('q'+n+'.js not found or had issues, finalized load.');
+  // Always initialize quiz regardless
+  initApp();
+ };
+ document.body.appendChild(s);
+}
+
+// Initiate recursive file scan
+loadBatches(1);
+
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
+</script>
+</body>
+</html>
