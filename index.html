@@ -123,8 +123,9 @@
     <option value="Physics">Physics</option>
     <option value="Psychology and Sociology">Psychology and Sociology</option>
    </select>
-   <textarea id="resNote" rows="3" placeholder="Equations or notes (e.g., ADH & Oxytocin)..."></textarea>
-   <label style="font-size:13px;color:#555;display:block;margin-bottom:4px">Attach chart/photo from phone (optional):</label>
+   <textarea id="resNote" rows="3" placeholder="Type notes OR paste a copied image directly here..."></textarea>
+   <div id="pastePreview"></div>
+   <label style="font-size:13px;color:#555;display:block;margin-bottom:4px">Or attach chart/photo from phone (optional):</label>
    <input type="file" id="resFile" accept="image/*">
    <div class="actions">
     <button class="retire" onclick="saveResource()">Save</button>
@@ -229,7 +230,14 @@
 <script>
 const KEY='mcatState';
 const TODAY=new Date().toDateString();
-let state=JSON.parse(localStorage.getItem(KEY)||'{"retired":[],"saved":[],"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"day":"","todayCount":0}');
+let state;
+try {
+ state=JSON.parse(localStorage.getItem(KEY)||'{"retired":[],"saved":[],"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"day":"","todayCount":0}');
+} catch(e) {
+ state={"retired":[],"saved":[],"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"day":"","todayCount":0};
+}
+if(!state.retired)state.retired=[];
+if(!state.saved)state.saved=[];
 if(!state.eqRetired)state.eqRetired=[];
 if(!state.eqSaved)state.eqSaved=[];
 if(!state.stRetired)state.stRetired=[];
@@ -425,13 +433,23 @@ function renderStSaved(){
 function unsaveSt(id){state.stSaved=state.stSaved.filter(x=>x!==id);persist();renderStSaved();updateStStats();}
 function retireSavedSt(id){state.stSaved=state.stSaved.filter(x=>x!==id);state.stRetired.push(id);persist();renderStSaved();updateStStats();}
 
-/* IndexedDB Storage for Nested Equations & Phone Images */
+/* IndexedDB Storage + Direct Image Paste for Nested Resources */
 let db;
 const req=indexedDB.open('mcatResourcesDB',1);
 req.onupgradeneeded=e=>{e.target.result.createObjectStore('items',{keyPath:'id',autoIncrement:true});};
 req.onsuccess=e=>{db=e.target.result;renderResources();};
 
-function toggleResForm(){document.getElementById('resForm').classList.toggle('hidden');}
+let pastedImgData = null;
+
+function toggleResForm(){
+ document.getElementById('resForm').classList.toggle('hidden');
+ clearPastedImg();
+}
+
+function clearPastedImg(){
+ pastedImgData = null;
+ document.getElementById('pastePreview').innerHTML = '';
+}
 
 function compressImage(file){
  return new Promise(resolve=>{
@@ -453,13 +471,29 @@ function compressImage(file){
  });
 }
 
+document.getElementById('resNote').addEventListener('paste', async function(e){
+ const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+ for (let i = 0; i < items.length; i++) {
+  if (items[i].type.indexOf('image') !== -1) {
+   e.preventDefault();
+   const blob = items[i].getAsFile();
+   pastedImgData = await compressImage(blob);
+   document.getElementById('pastePreview').innerHTML =
+    '<div style="margin:6px 0">' +
+    '<img src="' + pastedImgData + '" style="max-height:140px;border-radius:6px;border:1px solid #c5cbd6">' +
+    '<button type="button" onclick="clearPastedImg()" style="display:block;color:#c0392b;background:none;border:none;font-size:12px;padding:4px 0;cursor:pointer">Remove pasted image</button></div>';
+   break;
+  }
+ }
+});
+
 async function saveResource(){
  const title=document.getElementById('resTitle').value.trim();
  const subject=document.getElementById('resSubj').value;
  const note=document.getElementById('resNote').value.trim();
  const file=document.getElementById('resFile').files[0];
- if(!title&&!note&&!file){alert('Add a title, equation, or photo first.');return;}
- let imgData=null;
+ if(!title&&!note&&!file&&!pastedImgData){alert('Add a title, equation, or photo first.');return;}
+ let imgData=pastedImgData;
  if(file)imgData=await compressImage(file);
  const tx=db.transaction('items','readwrite');
  tx.objectStore('items').add({title:title||'Untitled Resource',subject,note,imgData});
@@ -467,6 +501,7 @@ async function saveResource(){
   document.getElementById('resTitle').value='';
   document.getElementById('resNote').value='';
   document.getElementById('resFile').value='';
+  clearPastedImg();
   toggleResForm();
   renderResources();
  };
