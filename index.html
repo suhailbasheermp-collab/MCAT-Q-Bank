@@ -32,6 +32,12 @@
  .rev{background:#fff;padding:12px;border-radius:8px;margin:10px 0}
  .rev button{margin-top:8px;padding:8px 12px;border-radius:6px;border:1px solid #999;background:#fff}
 
+ /* Rich Paste Box for Android Image & Text Pasting */
+ .rich-box{min-height:76px;padding:10px;margin-bottom:8px;font-size:15px;border:1px solid #c5cbd6;border-radius:8px;background:#fff;white-space:pre-wrap;word-break:break-word;outline:none}
+ .rich-box:empty::before{content:attr(data-placeholder);color:#888}
+ .rich-box img{max-width:100%;max-height:160px;display:block;margin-top:6px;border-radius:6px}
+ .paste-btn{width:100%;padding:10px;margin-bottom:10px;background:#eef3fa;color:#1f3a5f;border:1px dashed #1f3a5f;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
+
  /* Fullscreen Flashcard Overlays (Equations & Structures) */
  .fs-modal{position:fixed;inset:0;background:#f4f6fa;z-index:900;display:none;flex-direction:column;overflow-y:auto}
  .fs-modal header{position:sticky;top:0;z-index:10}
@@ -123,7 +129,8 @@
     <option value="Physics">Physics</option>
     <option value="Psychology and Sociology">Psychology and Sociology</option>
    </select>
-   <textarea id="resNote" rows="3" placeholder="Type notes OR paste a copied image directly here..."></textarea>
+   <div id="resNote" class="rich-box" contenteditable="true" data-placeholder="Type notes OR paste copied image here..."></div>
+   <button type="button" class="paste-btn" onclick="pasteFromClipboard()">📋 Paste Copied Image from Clipboard</button>
    <div id="pastePreview"></div>
    <label style="font-size:13px;color:#555;display:block;margin-bottom:4px">Or attach chart/photo from phone (optional):</label>
    <input type="file" id="resFile" accept="image/*">
@@ -433,7 +440,7 @@ function renderStSaved(){
 function unsaveSt(id){state.stSaved=state.stSaved.filter(x=>x!==id);persist();renderStSaved();updateStStats();}
 function retireSavedSt(id){state.stSaved=state.stSaved.filter(x=>x!==id);state.stRetired.push(id);persist();renderStSaved();updateStStats();}
 
-/* IndexedDB Storage + Direct Image Paste for Nested Resources */
+/* IndexedDB Storage + Direct Android Image Paste for Nested Resources */
 let db;
 const req=indexedDB.open('mcatResourcesDB',1);
 req.onupgradeneeded=e=>{e.target.result.createObjectStore('items',{keyPath:'id',autoIncrement:true});};
@@ -441,14 +448,22 @@ req.onsuccess=e=>{db=e.target.result;renderResources();};
 
 let pastedImgData = null;
 
-function toggleResForm(){
- document.getElementById('resForm').classList.toggle('hidden');
- clearPastedImg();
+function setPastedPreview(dataUrl){
+ pastedImgData = dataUrl;
+ document.getElementById('pastePreview').innerHTML =
+  '<div style="margin:6px 0">' +
+  '<img src="' + dataUrl + '" style="max-height:150px;border-radius:6px;border:1px solid #c5cbd6">' +
+  '<button type="button" onclick="clearPastedImg()" style="display:block;color:#c0392b;background:none;border:none;font-size:12px;padding:4px 0;cursor:pointer">Remove pasted image</button></div>';
 }
 
 function clearPastedImg(){
  pastedImgData = null;
  document.getElementById('pastePreview').innerHTML = '';
+}
+
+function toggleResForm(){
+ document.getElementById('resForm').classList.toggle('hidden');
+ clearPastedImg();
 }
 
 function compressImage(file){
@@ -471,26 +486,61 @@ function compressImage(file){
  });
 }
 
-document.getElementById('resNote').addEventListener('paste', async function(e){
- const items = (e.clipboardData || e.originalEvent.clipboardData).items;
- for (let i = 0; i < items.length; i++) {
-  if (items[i].type.indexOf('image') !== -1) {
-   e.preventDefault();
-   const blob = items[i].getAsFile();
-   pastedImgData = await compressImage(blob);
-   document.getElementById('pastePreview').innerHTML =
-    '<div style="margin:6px 0">' +
-    '<img src="' + pastedImgData + '" style="max-height:140px;border-radius:6px;border:1px solid #c5cbd6">' +
-    '<button type="button" onclick="clearPastedImg()" style="display:block;color:#c0392b;background:none;border:none;font-size:12px;padding:4px 0;cursor:pointer">Remove pasted image</button></div>';
-   break;
+/* Handle direct Gboard / browser paste inside contenteditable box */
+const noteBox = document.getElementById('resNote');
+noteBox.addEventListener('paste', async function(e){
+ const cd = e.clipboardData || e.originalEvent.clipboardData;
+ if(cd && cd.items){
+  for(let i=0;i<cd.items.length;i++){
+   if(cd.items[i].type.indexOf('image')!==-1){
+    e.preventDefault();
+    const blob = cd.items[i].getAsFile();
+    const dataUrl = await compressImage(blob);
+    setPastedPreview(dataUrl);
+    return;
+   }
   }
  }
+ /* Fallback if Gboard inserts an <img> tag directly into contenteditable */
+ setTimeout(async ()=>{
+  const embedded = noteBox.querySelector('img');
+  if(embedded){
+   const src = embedded.src;
+   embedded.remove();
+   if(src.startsWith('data:image')){
+    setPastedPreview(src);
+   }
+  }
+ }, 60);
 });
+
+/* 1-Tap Clipboard API Button */
+async function pasteFromClipboard(){
+ try{
+  if(!navigator.clipboard || !navigator.clipboard.read){
+   alert('Tap inside the notes box above and tap Paste on your keyboard.');
+   return;
+  }
+  const items = await navigator.clipboard.read();
+  for(const item of items){
+   const imgType = item.types.find(t => t.startsWith('image/'));
+   if(imgType){
+    const blob = await item.getType(imgType);
+    const dataUrl = await compressImage(blob);
+    setPastedPreview(dataUrl);
+    return;
+   }
+  }
+  alert('No image found in clipboard. Copy an image from Chrome first.');
+ }catch(err){
+  alert('Tap inside the notes box above and select Paste from your keyboard.');
+ }
+}
 
 async function saveResource(){
  const title=document.getElementById('resTitle').value.trim();
  const subject=document.getElementById('resSubj').value;
- const note=document.getElementById('resNote').value.trim();
+ const note=noteBox.innerText.trim();
  const file=document.getElementById('resFile').files[0];
  if(!title&&!note&&!file&&!pastedImgData){alert('Add a title, equation, or photo first.');return;}
  let imgData=pastedImgData;
@@ -499,7 +549,7 @@ async function saveResource(){
  tx.objectStore('items').add({title:title||'Untitled Resource',subject,note,imgData});
  tx.oncomplete=()=>{
   document.getElementById('resTitle').value='';
-  document.getElementById('resNote').value='';
+  noteBox.innerHTML='';
   document.getElementById('resFile').value='';
   clearPastedImg();
   toggleResForm();
