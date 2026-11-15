@@ -8,9 +8,10 @@
 <title>MCAT Daily</title>
 <style>
  body{font-family:system-ui,sans-serif;margin:0;background:#f4f6fa;color:#1a1a1a;padding-bottom:40px}
- header{background:#1f3a5f;color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
- header h1{font-size:18px;margin:0}
- nav button{background:none;border:1px solid #fff;color:#fff;border-radius:6px;padding:6px 10px;margin-left:5px;font-size:13px}
+ header{background:#1f3a5f;color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+ header h1{font-size:17px;margin:0;white-space:nowrap}
+ nav{display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end}
+ nav button{background:none;border:1px solid #fff;color:#fff;border-radius:6px;padding:6px 8px;font-size:12px}
  main{padding:16px;max-width:640px;margin:auto}
  .tag{font-size:12px;color:#555;margin-bottom:8px}
  .q{font-size:18px;line-height:1.4;margin-bottom:16px}
@@ -28,16 +29,17 @@
  .rev{background:#fff;padding:12px;border-radius:8px;margin:10px 0}
  .rev button{margin-top:8px;padding:8px 12px;border-radius:6px;border:1px solid #999;background:#fff}
 
- /* Fullscreen Equation Flashcard Overlay */
- #eqModal{position:fixed;inset:0;background:#f4f6fa;z-index:900;display:none;flex-direction:column;overflow-y:auto}
- #eqModal header{position:sticky;top:0;z-index:10}
- .eq-wrap{padding:16px;max-width:640px;width:100%;margin:auto;box-sizing:border-box;flex:1;display:flex;flex-direction:column}
- .eq-card{background:#fff;border:1px solid #c5cbd6;border-radius:14px;padding:22px 18px;margin:10px 0;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+ /* Fullscreen Flashcard Overlays (Equations & Structures) */
+ .fs-modal{position:fixed;inset:0;background:#f4f6fa;z-index:900;display:none;flex-direction:column;overflow-y:auto}
+ .fs-modal header{position:sticky;top:0;z-index:10}
+ .fs-wrap{padding:16px;max-width:640px;width:100%;margin:auto;box-sizing:border-box;flex:1;display:flex;flex-direction:column}
+ .fs-card{background:#fff;border:1px solid #c5cbd6;border-radius:14px;padding:20px 16px;margin:10px 0;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
  .eq-prompt{font-size:19px;font-weight:600;line-height:1.45;margin:10px 0 18px 0}
  .eq-answer-box{background:#eef3fa;border-left:4px solid #1f3a5f;padding:16px;border-radius:8px;margin-bottom:16px}
- .eq-formula{font-size:20px;font-weight:700;color:#1f3a5f;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;margin-bottom:8px;word-break:break-word}
- .eq-note{font-size:14px;color:#333;line-height:1.4}
- .eq-reveal-btn{width:100%;padding:16px;background:#1f3a5f;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:600}
+ .eq-formula{font-size:19px;font-weight:700;color:#1f3a5f;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;margin-bottom:8px;word-break:break-word}
+ .eq-note{font-size:14px;color:#333;line-height:1.45}
+ .reveal-btn{width:100%;padding:16px;background:#1f3a5f;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:600;margin-top:12px}
+ .struct-box{background:#fff;border:1px solid #e5e9f0;border-radius:10px;padding:12px;margin:8px 0}
 
  /* Resources Section & Nested Toggles */
  .res-section{margin-top:28px;border-top:2px solid #dce1ea;padding-top:18px}
@@ -73,6 +75,7 @@
   <button onclick="show('quiz')">Quiz</button>
   <button onclick="show('review')">Review</button>
   <button onclick="openEquations()">Equations</button>
+  <button onclick="openStructures()">Structures</button>
  </nav>
 </header>
 <main>
@@ -134,7 +137,7 @@
 </main>
 
 <!-- Fullscreen Equation Flashcard Modal -->
-<div id="eqModal">
+<div id="eqModal" class="fs-modal">
  <header>
   <h1>Equation Flashcards</h1>
   <nav>
@@ -142,13 +145,15 @@
    <button onclick="closeEquations()">Close ✕</button>
   </nav>
  </header>
- <div class="eq-wrap">
+ <div class="fs-wrap">
   <select id="eqSubj" onchange="nextEq()">
    <option value="all">All subjects</option>
    <option value="Physics">Physics</option>
    <option value="General Chemistry">General Chemistry</option>
+   <option value="Organic Chemistry">Organic Chemistry</option>
    <option value="Biochemistry">Biochemistry</option>
    <option value="Biology">Biology</option>
+   <option value="Psychology and Sociology">Psychology and Sociology</option>
   </select>
   <div id="eqDeckView">
    <div id="eqCard"></div>
@@ -161,15 +166,49 @@
  </div>
 </div>
 
+<!-- Fullscreen Structure Flashcard Modal -->
+<div id="stModal" class="fs-modal">
+ <header>
+  <h1>Structure ID</h1>
+  <nav>
+   <button id="stModeBtn" onclick="toggleStMode()">Saved (0)</button>
+   <button onclick="closeStructures()">Close ✕</button>
+  </nav>
+ </header>
+ <div class="fs-wrap">
+  <select id="stCat" onchange="nextSt()">
+   <option value="all">All structures (62)</option>
+   <option value="Amino Acids">Amino Acids (20)</option>
+   <option value="Bases & Nucleotides">Bases &amp; Nucleosides (6)</option>
+   <option value="Carbohydrates">Carbohydrates (8)</option>
+   <option value="Vitamins & Cofactors">Vitamins &amp; Cofactors (5)</option>
+   <option value="Neurotransmitters & Hormones">Neurotransmitters &amp; Hormones (6)</option>
+   <option value="Metabolism & Organic">Metabolism &amp; Lipids (13)</option>
+   <option value="Organic Functional Groups">Functional Groups (4)</option>
+  </select>
+  <div id="stDeckView">
+   <div id="stCard"></div>
+   <div class="stats" id="stStats"></div>
+  </div>
+  <div id="stSavedView" class="hidden">
+   <h3>Saved Structures</h3>
+   <div id="stSavedList"></div>
+  </div>
+ </div>
+</div>
+
 <div id="imgModal" onclick="this.style.display='none'"><img id="modalImg" src=""></div>
 
 <script src="questions.js"></script>
 <script src="equations.js"></script>
+<script src="structures.js"></script>
 <script>
 const KEY='mcatState';
-let state=JSON.parse(localStorage.getItem(KEY)||'{"retired":[],"saved":[],"eqRetired":[],"eqSaved":[]}');
+let state=JSON.parse(localStorage.getItem(KEY)||'{"retired":[],"saved":[],"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[]}');
 if(!state.eqRetired)state.eqRetired=[];
 if(!state.eqSaved)state.eqSaved=[];
+if(!state.stRetired)state.stRetired=[];
+if(!state.stSaved)state.stSaved=[];
 let current=null, answered=false;
 function persist(){localStorage.setItem(KEY,JSON.stringify(state));}
 function inCircle(q){return !state.retired.includes(q.id)&&!state.saved.includes(q.id);}
@@ -245,13 +284,13 @@ function nextEq(){
  const pool=eqPool().filter(e=>eqInCircle(e)&&(subj==='all'||e.subject===subj));
  const card=document.getElementById('eqCard');
  if(!pool.length){
-  card.innerHTML='<div class="eq-card"><p>No equations left in this circle. Check your Saved list.</p></div>';
+  card.innerHTML='<div class="fs-card"><p>No equations left in this circle. Check your Saved list.</p></div>';
   curEq=null;updateEqStats();return;
  }
  curEq=pool[Math.floor(Math.random()*pool.length)];
- card.innerHTML='<div class="eq-card"><div class="tag">'+curEq.subject+' \u00b7 '+curEq.topic+'</div>'+
+ card.innerHTML='<div class="fs-card"><div class="tag">'+curEq.subject+' \u00b7 '+curEq.topic+'</div>'+
   '<div class="eq-prompt">'+curEq.q+'</div>'+
-  '<button class="eq-reveal-btn" id="revealEqBtn" onclick="revealEq()">Show Equation</button>'+
+  '<button class="reveal-btn" id="revealEqBtn" onclick="revealEq()">Show Equation</button>'+
   '<div id="eqAfter" class="hidden"></div></div>';
  updateEqStats();
 }
@@ -278,183 +317,57 @@ function renderEqSaved(){
 function unsaveEq(id){state.eqSaved=state.eqSaved.filter(x=>x!==id);persist();renderEqSaved();updateEqStats();}
 function retireSavedEq(id){state.eqSaved=state.eqSaved.filter(x=>x!==id);state.eqRetired.push(id);persist();renderEqSaved();updateEqStats();}
 
-/* IndexedDB Storage for Nested Equations & Phone Images */
-let db;
-const req=indexedDB.open('mcatResourcesDB',1);
-req.onupgradeneeded=e=>{e.target.result.createObjectStore('items',{keyPath:'id',autoIncrement:true});};
-req.onsuccess=e=>{db=e.target.result;renderResources();};
-
-function toggleResForm(){document.getElementById('resForm').classList.toggle('hidden');}
-
-function compressImage(file){
- return new Promise(resolve=>{
-  const reader=new FileReader();
-  reader.onload=e=>{
-   const img=new Image();
-   img.onload=()=>{
-    const canvas=document.createElement('canvas');
-    const maxW=1200;
-    const scale=img.width>maxW?maxW/img.width:1;
-    canvas.width=img.width*scale;
-    canvas.height=img.height*scale;
-    canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
-    resolve(canvas.toDataURL('image/jpeg',0.8));
-   };
-   img.src=e.target.result;
-  };
-  reader.readAsDataURL(file);
- });
+/* Fullscreen Structures Flashcard Logic */
+let curSt=null, stShowingSaved=false;
+function stPool(){return typeof STRUCTURES!=='undefined'?STRUCTURES:[];}
+function stInCircle(s){return !state.stRetired.includes(s.id)&&!state.stSaved.includes(s.id);}
+function openStructures(){
+ stShowingSaved=false;
+ document.getElementById('stDeckView').classList.remove('hidden');
+ document.getElementById('stSavedView').classList.add('hidden');
+ document.getElementById('stModal').style.display='flex';
+ nextSt();
 }
-
-async function saveResource(){
- const title=document.getElementById('resTitle').value.trim();
- const subject=document.getElementById('resSubj').value;
- const note=document.getElementById('resNote').value.trim();
- const file=document.getElementById('resFile').files[0];
- if(!title&&!note&&!file){alert('Add a title, equation, or photo first.');return;}
- let imgData=null;
- if(file)imgData=await compressImage(file);
- const tx=db.transaction('items','readwrite');
- tx.objectStore('items').add({title:title||'Untitled Resource',subject,note,imgData});
- tx.oncomplete=()=>{
-  document.getElementById('resTitle').value='';
-  document.getElementById('resNote').value='';
-  document.getElementById('resFile').value='';
-  toggleResForm();
-  renderResources();
- };
+function closeStructures(){document.getElementById('stModal').style.display='none';}
+function toggleStMode(){
+ stShowingSaved=!stShowingSaved;
+ document.getElementById('stDeckView').classList.toggle('hidden',stShowingSaved);
+ document.getElementById('stSavedView').classList.toggle('hidden',!stShowingSaved);
+ document.getElementById('stModeBtn').textContent=stShowingSaved?'Back to Drill':'Saved ('+state.stSaved.length+')';
+ if(stShowingSaved)renderStSaved();
 }
-
-function escapeHtml(s){
- return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function updateStStats(){
+ const all=stPool();
+ document.getElementById('stStats').textContent='In circle: '+all.filter(stInCircle).length+' | Saved: '+state.stSaved.length+' | Retired: '+state.stRetired.length+' | Total: '+all.length;
+ if(!stShowingSaved)document.getElementById('stModeBtn').textContent='Saved ('+state.stSaved.length+')';
 }
-
-function buildTreeHtml(node){
- let html='';
- Object.keys(node.children).forEach(key=>{
-  html+='<details class="tree-node"><summary>'+escapeHtml(key)+'</summary><div class="tree-body">'+buildTreeHtml(node.children[key])+'</div></details>';
- });
- node.items.forEach(item=>{
-  html+='<div class="res-item"><div class="tag">'+escapeHtml(item.subject)+'</div>'+
-   (item.note?'<div class="res-note">'+escapeHtml(item.note)+'</div>':'')+
-   (item.imgData?'<img src="'+item.imgData+'" onclick="zoomImg(this.src)">':'')+
-   '<div><button class="res-del" onclick="delResource('+item.id+')">Delete</button></div></div>';
- });
- return html;
-}
-
-function renderResources(){
- if(!db)return;
- const filter=document.getElementById('resFilter').value;
- const list=document.getElementById('resList');
- db.transaction('items','readonly').objectStore('items').getAll().onsuccess=e=>{
-  const all=e.target.result.filter(x=>filter==='all'||x.subject===filter);
-  if(!all.length){list.innerHTML='<p class="stats">No equations or charts saved yet.</p>';return;}
-  const root={children:{},items:[]};
-  all.forEach(item=>{
-   const parts=item.title.split('/').map(p=>p.trim()).filter(Boolean);
-   if(!parts.length)parts.push('Untitled');
-   let curr=root;
-   parts.forEach(part=>{
-    if(!curr.children[part])curr.children[part]={children:{},items:[]};
-    curr=curr.children[part];
-   });
-   curr.items.push(item);
-  });
-  list.innerHTML=buildTreeHtml(root);
- };
-}
-
-function delResource(id){
- const tx=db.transaction('items','readwrite');
- tx.objectStore('items').delete(id);
- tx.oncomplete=renderResources;
-}
-
-function zoomImg(src){
- document.getElementById('modalImg').src=src;
- document.getElementById('imgModal').style.display='flex';
-}
-
-/* Export & Restore All Resources + Quiz State */
-function exportBackup(){
- if(!db)return;
- db.transaction('items','readonly').objectStore('items').getAll().onsuccess=e=>{
-  const payload={
-   version:1,
-   date:new Date().toISOString(),
-   quizState:state,
-   resources:e.target.result
-  };
-  const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;
-  a.download='mcat-backup-'+new Date().toISOString().slice(0,10)+'.json';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
- };
-}
-
-function importBackup(ev){
- const file=ev.target.files[0];
- if(!file)return;
- const reader=new FileReader();
- reader.onload=e=>{
-  try{
-   const data=JSON.parse(e.target.result);
-   if(!data.resources||!Array.isArray(data.resources)){alert('Invalid backup file.');return;}
-   if(data.quizState){
-    state=data.quizState;
-    if(!state.eqRetired)state.eqRetired=[];
-    if(!state.eqSaved)state.eqSaved=[];
-    persist();
-    updateStats();
-   }
-   const tx=db.transaction('items','readwrite');
-   const store=tx.objectStore('items');
-   store.clear();
-   data.resources.forEach(item=>{
-    const clean={title:item.title,subject:item.subject,note:item.note,imgData:item.imgData};
-    store.add(clean);
-   });
-   tx.oncomplete=()=>{
-    renderResources();
-    alert('Restored '+data.resources.length+' resources and progress!');
-   };
-  }catch(err){
-   alert('Could not read backup file.');
-  }
-  ev.target.value='';
- };
- reader.readAsText(file);
-}
-
-const report=[];
-window.addEventListener('error',function(ev){
- if(ev.filename&&/q\d+\.js/.test(ev.filename)){
-  report.push('ERROR in '+ev.filename.split('/').pop().split('?')[0]+' line '+ev.lineno+': '+ev.message);
+function nextSt(){
+ const cat=document.getElementById('stCat').value;
+ const pool=stPool().filter(s=>stInCircle(s)&&(cat==='all'||s.cat===cat));
+ const card=document.getElementById('stCard');
+ if(!pool.length){
+  card.innerHTML='<div class="fs-card"><p>No structures left in this circle. Check your Saved list.</p></div>';
+  curSt=null;updateStStats();return;
  }
-});
-function showReport(){document.getElementById('report').textContent=report.join('\n');}
-function loadBatches(n){
- const before=QUESTIONS.length;
- const s=document.createElement('script');
- s.src='q'+n+'.js';
- s.onload=function(){
-  const flat=QUESTIONS.flat();
-  QUESTIONS.length=0;
-  flat.forEach(function(x){QUESTIONS.push(x);});
-  report.push('q'+n+'.js loaded, added '+(QUESTIONS.length-before)+' questions');
-  loadBatches(n+1);
- };
- s.onerror=function(){report.push('q'+n+'.js not found, stopped here');initSubjects();nextQuestion();showReport();};
- document.body.appendChild(s);
+ curSt=pool[Math.floor(Math.random()*pool.length)];
+ card.innerHTML='<div class="fs-card"><div class="tag">Identify this structure</div>'+
+  '<div class="struct-box">'+curSt.svg+'</div>'+
+  '<button class="reveal-btn" id="revealStBtn" onclick="revealSt()">Flip / Show Structure Name</button>'+
+  '<div id="stAfter" class="hidden"></div></div>';
+ updateStStats();
 }
-loadBatches(1);
-if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
-</script>
-</body>
-</html>
+function revealSt(){
+ document.getElementById('revealStBtn').classList.add('hidden');
+ const after=document.getElementById('stAfter');
+ after.classList.remove('hidden');
+ after.innerHTML='<div class="eq-answer-box" style="margin-top:12px"><div class="tag" style="margin-bottom:4px">'+curSt.cat+'</div>'+
+  '<div class="eq-formula" style="font-family:system-ui,sans-serif">'+curSt.name+'</div>'+
+  '<div class="eq-note">'+curSt.info+'</div></div>'+
+  '<div class="actions"><button class="retire" onclick="retireSt()">Mastered, retire it</button><button class="save" onclick="saveSt()">Save for review</button></div>'+
+  '<button class="opt" onclick="nextSt()" style="margin-top:12px">Keep in circle, next structure</button>';
+}
+function retireSt(){state.stRetired.push(curSt.id);persist();nextSt();}
+function saveSt(){state.stSaved.push(curSt.id);persist();nextSt();}
+function renderStSaved(){
+ const list=document.getElementById('stSavedList');
+ const items=stPool().filter(s=>state.stSaved.
