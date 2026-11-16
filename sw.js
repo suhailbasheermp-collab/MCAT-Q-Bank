@@ -1,4 +1,4 @@
-const CACHE = 'mcat-v23';
+const CACHE = 'mcat-v24';
 const ASSETS = [
   './',
   './index.html',
