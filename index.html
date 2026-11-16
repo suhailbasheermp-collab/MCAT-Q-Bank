@@ -25,7 +25,7 @@
  .tab-panel{display:none}
  .tab-panel.active{display:block}
 
- .tag{font-size:12px;color:#555;margin-bottom:8px}
+ .tag{font-size:12px;color:#555;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:6px}
  .opt{display:block;width:100%;text-align:left;padding:14px;margin:8px 0;border:1px solid #c5cbd6;border-radius:10px;background:#fff;font-size:16px;cursor:pointer}
  .actions{display:flex;gap:10px}
  .actions button{flex:1;padding:14px;border-radius:10px;border:none;font-size:16px;color:#fff;font-weight:600;cursor:pointer}
@@ -59,6 +59,17 @@
  .rich-box img{max-width:100%;max-height:160px;display:block;margin-top:6px;border-radius:6px}
  .paste-btn{width:100%;padding:10px;margin-bottom:10px;background:#eef3fa;color:#1f3a5f;border:1px dashed #1f3a5f;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
 
+ /* Priority Selector & Badges */
+ .prio-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+ .prio-opt{padding:9px 6px;border:1.5px solid #c5cbd6;border-radius:8px;background:#fff;font-size:12px;font-weight:600;cursor:pointer;text-align:center}
+ .prio-opt.sel-none{border-color:#1f3a5f;background:#eef3fa;color:#1f3a5f}
+ .prio-opt.sel-high{border-color:#c0392b;background:#fdecea;color:#c0392b}
+ .prio-opt.sel-review{border-color:#d98e04;background:#fef6e4;color:#9a6300}
+
+ .prio-badge{font-size:11px;font-weight:700;padding:2px 7px;border-radius:99px}
+ .prio-badge.high{background:#fdecea;color:#c0392b;border:1px solid #f5c2be}
+ .prio-badge.review{background:#fef6e4;color:#9a6300;border:1px solid #f7dfa5}
+
  /* Resources Section & Nested Toggles */
  .res-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px}
  .res-header h2{font-size:17px;margin:0;color:#1f3a5f}
@@ -66,19 +77,25 @@
  .backup-bar{display:flex;gap:8px;margin-bottom:12px}
  .btn-sec{flex:1;background:#fff;color:#1f3a5f;border:1px solid #1f3a5f;padding:8px 10px;border-radius:8px;font-size:13px;font-weight:600;text-align:center;cursor:pointer}
  .res-form{background:#fff;padding:14px;border-radius:10px;border:1px solid #c5cbd6;margin-bottom:14px}
+ .form-mode-label{font-size:13px;font-weight:700;color:#1f3a5f;margin-bottom:8px}
  .hint{font-size:12px;color:#555;margin:-4px 0 10px 2px}
+ .filter-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 
  details.tree-node{background:#fff;border:1px solid #dce1ea;border-radius:8px;margin-bottom:8px;overflow:hidden}
  details.tree-node details.tree-node{margin:6px 0 6px 12px;border-color:#e2e6ee;background:#fafbfd}
- details.tree-node > summary{padding:11px 14px;font-weight:600;font-size:15px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center}
+ details.tree-node > summary{padding:11px 14px;font-weight:600;font-size:15px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px}
  details.tree-node > summary::-webkit-details-marker{display:none}
- details.tree-node > summary::after{content:'▸';color:#1f3a5f;font-size:14px}
- details.tree-node[open] > summary::after{content:'▾'}
+ .sum-left{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+ .sum-arrow{color:#1f3a5f;font-size:14px}
  .tree-body{padding:4px 12px 12px 12px;border-top:1px solid #eef1f6}
- .res-item{padding-top:8px}
+ .res-item{padding:10px 0 4px 10px;border-left:3px solid transparent;margin-top:6px}
+ .res-item.p-high{border-left-color:#c0392b}
+ .res-item.p-review{border-left-color:#d98e04}
  .res-item img{width:100%;max-height:260px;object-fit:contain;border-radius:6px;margin-top:8px;background:#fff;border:1px solid #eee;cursor:pointer}
  .res-note{white-space:pre-wrap;font-size:14px;background:#f4f6fa;padding:10px;border-radius:6px;margin-top:6px;font-family:ui-monospace,monospace}
- .res-del{color:#c0392b;border:none;background:none;font-size:13px;padding:4px 0;margin-top:8px;cursor:pointer}
+ .item-actions{display:flex;gap:14px;margin-top:8px}
+ .res-edit{color:#1f3a5f;border:none;background:none;font-size:13px;font-weight:600;padding:4px 0;cursor:pointer}
+ .res-del{color:#c0392b;border:none;background:none;font-size:13px;padding:4px 0;cursor:pointer}
 
  /* Fullscreen Image Zoom Modal */
  #imgModal{position:fixed;inset:0;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;z-index:999;padding:12px}
@@ -115,7 +132,7 @@
  <section id="panel-res" class="tab-panel active">
   <div class="res-header">
    <h2>Study Vault</h2>
-   <button class="btn-primary" onclick="toggleResForm()">+ Add Resource</button>
+   <button class="btn-primary" onclick="openNewResource()">+ Add Resource</button>
   </div>
 
   <div class="backup-bar">
@@ -124,8 +141,11 @@
   </div>
 
   <div id="resForm" class="res-form hidden">
-   <input type="text" id="resTitle" placeholder="Title / Path (e.g., Hormones / Pituitary / Posterior)">
-   <div class="hint">Use <b>/</b> to create nested toggles (Title / Subtitle / Sub-subtitle).</div>
+   <div id="formModeLabel" class="form-mode-label">New Resource</div>
+   <input type="text" id="resTitle" list="titleSuggestions" autocomplete="off" placeholder="Title / Path (e.g., Hormones / Pituitary / Posterior)">
+   <datalist id="titleSuggestions"></datalist>
+   <div class="hint">Type to pick an existing folder/subtitle or use <b>/</b> to nest new ones.</div>
+
    <select id="resSubj">
     <option value="Biochemistry">Biochemistry</option>
     <option value="Biology">Biology</option>
@@ -134,26 +154,41 @@
     <option value="Physics">Physics</option>
     <option value="Psychology and Sociology">Psychology and Sociology</option>
    </select>
+
+   <div class="prio-row">
+    <button type="button" class="prio-opt sel-none" id="prio-none" onclick="setPriority('none')">⚪ Normal</button>
+    <button type="button" class="prio-opt" id="prio-high" onclick="setPriority('high')">🔴 High Priority</button>
+    <button type="button" class="prio-opt" id="prio-review" onclick="setPriority('review')">🟡 Needs Review</button>
+   </div>
+
    <div id="resNote" class="rich-box" contenteditable="true" data-placeholder="Type notes OR paste copied image here..."></div>
    <button type="button" class="paste-btn" onclick="pasteFromClipboard()">📋 Paste Copied Image from Clipboard</button>
    <div id="pastePreview"></div>
-   <label style="font-size:13px;color:#555;display:block;margin-bottom:4px">Or attach chart/photo from phone (optional):</label>
+   <label style="font-size:13px;color:#555;display:block;margin-bottom:4px">Or attach/replace chart from phone (optional):</label>
    <input type="file" id="resFile" accept="image/*">
    <div class="actions">
     <button class="retire" onclick="saveResource()">Save</button>
-    <button style="background:#7f8c8d" onclick="toggleResForm()">Cancel</button>
+    <button style="background:#7f8c8d" onclick="closeResForm()">Cancel</button>
    </div>
   </div>
 
-  <select id="resFilter" onchange="renderResources()">
-   <option value="all">All saved resources</option>
-   <option value="Biochemistry">Biochemistry</option>
-   <option value="Biology">Biology</option>
-   <option value="General Chemistry">General Chemistry</option>
-   <option value="Organic Chemistry">Organic Chemistry</option>
-   <option value="Physics">Physics</option>
-   <option value="Psychology and Sociology">Psychology and Sociology</option>
-  </select>
+  <div class="filter-row">
+   <select id="resFilter" onchange="renderResources()">
+    <option value="all">All subjects</option>
+    <option value="Biochemistry">Biochemistry</option>
+    <option value="Biology">Biology</option>
+    <option value="General Chemistry">General Chemistry</option>
+    <option value="Organic Chemistry">Organic Chemistry</option>
+    <option value="Physics">Physics</option>
+    <option value="Psychology and Sociology">Psychology and Sociology</option>
+   </select>
+   <select id="resPrioFilter" onchange="renderResources()">
+    <option value="all">All priorities</option>
+    <option value="high">🔴 High Priority</option>
+    <option value="review">🟡 Needs Review</option>
+    <option value="none">⚪ Normal</option>
+   </select>
+  </div>
   <div id="resList"></div>
  </section>
 
@@ -385,20 +420,30 @@ function renderStSaved(){
 function unsaveSt(id){state.stSaved=state.stSaved.filter(x=>x!==id);persist();renderStSaved();updateStStats();}
 function retireSavedSt(id){state.stSaved=state.stSaved.filter(x=>x!==id);state.stRetired.push(id);persist();renderStSaved();updateStStats();}
 
-/* IndexedDB Storage + Direct Android Image Paste for Nested Resources */
+/* IndexedDB Storage + Autocomplete + Move/Edit + Priority Flags */
 let db;
 const req=indexedDB.open('mcatResourcesDB',1);
 req.onupgradeneeded=e=>{e.target.result.createObjectStore('items',{keyPath:'id',autoIncrement:true});};
 req.onsuccess=e=>{db=e.target.result;renderResources();};
 
 let pastedImgData = null;
+let editingId = null;
+let currentPriority = 'none';
+
+function setPriority(p){
+ currentPriority = p;
+ ['none','high','review'].forEach(k=>{
+  const el=document.getElementById('prio-'+k);
+  el.className='prio-opt'+(k===p?' sel-'+k:'');
+ });
+}
 
 function setPastedPreview(dataUrl){
  pastedImgData = dataUrl;
  document.getElementById('pastePreview').innerHTML =
   '<div style="margin:6px 0">' +
   '<img src="' + dataUrl + '" style="max-height:150px;border-radius:6px;border:1px solid #c5cbd6">' +
-  '<button type="button" onclick="clearPastedImg()" style="display:block;color:#c0392b;background:none;border:none;font-size:12px;padding:4px 0;cursor:pointer">Remove pasted image</button></div>';
+  '<button type="button" onclick="clearPastedImg()" style="display:block;color:#c0392b;background:none;border:none;font-size:12px;padding:4px 0;cursor:pointer">Remove image</button></div>';
 }
 
 function clearPastedImg(){
@@ -406,8 +451,44 @@ function clearPastedImg(){
  document.getElementById('pastePreview').innerHTML = '';
 }
 
-function toggleResForm(){
- document.getElementById('resForm').classList.toggle('hidden');
+function openNewResource(){
+ editingId = null;
+ document.getElementById('formModeLabel').textContent = 'Add New Resource';
+ document.getElementById('resTitle').value = '';
+ noteBox.innerHTML = '';
+ document.getElementById('resFile').value = '';
+ setPriority('none');
+ clearPastedImg();
+ document.getElementById('resForm').classList.remove('hidden');
+ document.getElementById('resTitle').focus();
+}
+
+function editResource(id){
+ if(!db)return;
+ db.transaction('items','readonly').objectStore('items').get(id).onsuccess=e=>{
+  const item = e.target.result;
+  if(!item)return;
+  editingId = item.id;
+  document.getElementById('formModeLabel').textContent = 'Edit / Move Resource';
+  document.getElementById('resTitle').value = item.title || '';
+  document.getElementById('resSubj').value = item.subject || 'Biochemistry';
+  noteBox.innerText = item.note || '';
+  document.getElementById('resFile').value = '';
+  setPriority(item.priority || 'none');
+  if(item.imgData){
+   setPastedPreview(item.imgData);
+  }else{
+   clearPastedImg();
+  }
+  const form = document.getElementById('resForm');
+  form.classList.remove('hidden');
+  form.scrollIntoView({behavior:'smooth',block:'center'});
+ };
+}
+
+function closeResForm(){
+ editingId = null;
+ document.getElementById('resForm').classList.add('hidden');
  clearPastedImg();
 }
 
@@ -486,13 +567,19 @@ async function saveResource(){
  let imgData=pastedImgData;
  if(file)imgData=await compressImage(file);
  const tx=db.transaction('items','readwrite');
- tx.objectStore('items').add({title:title||'Untitled Resource',subject,note,imgData});
+ const store=tx.objectStore('items');
+ const record={title:title||'Untitled Resource',subject,priority:currentPriority,note,imgData};
+ if(editingId!==null){
+  record.id=editingId;
+  store.put(record);
+ }else{
+  store.add(record);
+ }
  tx.oncomplete=()=>{
   document.getElementById('resTitle').value='';
   noteBox.innerHTML='';
   document.getElementById('resFile').value='';
-  clearPastedImg();
-  toggleResForm();
+  closeResForm();
   renderResources();
  };
 }
@@ -501,29 +588,65 @@ function escapeHtml(s){
  return s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : '';
 }
 
+/* Populate autocomplete suggestions with all existing paths & parent folder prefixes */
+function updateTitleSuggestions(allItems){
+ const paths = new Set();
+ allItems.forEach(item=>{
+  if(!item.title)return;
+  const parts = item.title.split('/').map(p=>p.trim()).filter(Boolean);
+  let acc = '';
+  parts.forEach((p,idx)=>{
+   acc = idx===0 ? p : acc + ' / ' + p;
+   paths.add(acc);
+  });
+ });
+ const dl = document.getElementById('titleSuggestions');
+ dl.innerHTML = [...paths].sort().map(p=>'<option value="'+escapeHtml(p)+'"></option>').join('');
+}
+
+function nodeHasPriority(node, prio){
+ if(node.items.some(i=>(i.priority||'none')===prio))return true;
+ return Object.values(node.children).some(child=>nodeHasPriority(child,prio));
+}
+
 function buildTreeHtml(node){
  let html='';
  Object.keys(node.children).forEach(key=>{
-  html+='<details class="tree-node"><summary>'+escapeHtml(key)+'</summary><div class="tree-body">'+buildTreeHtml(node.children[key])+'</div></details>';
+  const child=node.children[key];
+  const hasHigh=nodeHasPriority(child,'high');
+  const hasRev=nodeHasPriority(child,'review');
+  const dots=(hasHigh?' 🔴':'')+(hasRev?' 🟡':'');
+  html+='<details class="tree-node"><summary><span class="sum-left">'+escapeHtml(key)+dots+'</span><span class="sum-arrow">▾</span></summary><div class="tree-body">'+buildTreeHtml(child)+'</div></details>';
  });
  node.items.forEach(item=>{
-  html+='<div class="res-item"><div class="tag">'+escapeHtml(item.subject)+'</div>'+
+  const p=item.priority||'none';
+  const badge=p==='high'?'<span class="prio-badge high">🔴 High Priority</span>':(p==='review'?'<span class="prio-badge review">🟡 Needs Review</span>':'');
+  html+='<div class="res-item p-'+p+'"><div class="tag"><span>'+escapeHtml(item.subject)+'</span>'+badge+'</div>'+
    (item.note?'<div class="res-note">'+escapeHtml(item.note)+'</div>':'')+
    (item.imgData?'<img src="'+item.imgData+'" onclick="zoomImg(this.src)">':'')+
-   '<div><button class="res-del" onclick="delResource('+item.id+')">Delete</button></div></div>';
+   '<div class="item-actions">'+
+   '<button class="res-edit" onclick="editResource('+item.id+')">Edit / Move</button>'+
+   '<button class="res-del" onclick="delResource('+item.id+')">Delete</button>'+
+   '</div></div>';
  });
  return html;
 }
 
 function renderResources(){
  if(!db) return;
- const filter=document.getElementById('resFilter').value;
+ const subjFilter=document.getElementById('resFilter').value;
+ const prioFilter=document.getElementById('resPrioFilter').value;
  const list=document.getElementById('resList');
  db.transaction('items','readonly').objectStore('items').getAll().onsuccess=e=>{
-  const totalAll=e.target.result.length;
-  document.getElementById('sub-res').textContent=totalAll+' saved';
-  const all=e.target.result.filter(x=>filter==='all'||x.subject===filter);
-  if(!all.length){list.innerHTML='<p class="stats">No equations or charts saved yet.</p>';return;}
+  const rawAll=e.target.result;
+  updateTitleSuggestions(rawAll);
+  document.getElementById('sub-res').textContent=rawAll.length+' saved';
+  const all=rawAll.filter(x=>{
+   const matchSubj=subjFilter==='all'||x.subject===subjFilter;
+   const matchPrio=prioFilter==='all'||(x.priority||'none')===prioFilter;
+   return matchSubj && matchPrio;
+  });
+  if(!all.length){list.innerHTML='<p class="stats">No matching resources found.</p>';return;}
   const root={children:{},items:[]};
   all.forEach(item=>{
    const parts=item.title.split('/').map(p=>p.trim()).filter(Boolean);
@@ -540,6 +663,7 @@ function renderResources(){
 }
 
 function delResource(id){
+ if(!confirm('Delete this resource?'))return;
  const tx=db.transaction('items','readwrite');
  tx.objectStore('items').delete(id);
  tx.oncomplete=renderResources;
@@ -594,7 +718,7 @@ function importBackup(ev){
    const store=tx.objectStore('items');
    store.clear();
    data.resources.forEach(item=>{
-    const clean={title:item.title,subject:item.subject,note:item.note,imgData:item.imgData};
+    const clean={title:item.title,subject:item.subject,priority:item.priority||'none',note:item.note,imgData:item.imgData};
     store.add(clean);
    });
    tx.oncomplete=()=>{
