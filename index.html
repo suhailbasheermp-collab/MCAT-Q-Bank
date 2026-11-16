@@ -15,7 +15,6 @@
 
  /* Daily Micro-Habit Strip */
  .habit-strip{background:#fff;border:1px solid #d5dce6;border-radius:10px;padding:8px 12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600;color:#1f3a5f;box-shadow:0 1px 4px rgba(0,0,0,0.03)}
- .habit-strip span.muted{color:#555;font-weight:500}
 
  /* 5 Central Navigation Tabs */
  .hub-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:16px}
@@ -760,15 +759,13 @@ function nextMath(){
  let q='', ans='', trick='';
 
  if(type === 0){
-  /* Acid/Buffer pH from [H+] */
   const coeffs = [[2,0.30],[3,0.48],[4,0.60],[5,0.70],[6,0.78],[7,0.85],[8,0.90]];
   const [c, lg] = coeffs[Math.floor(Math.random()*coeffs.length)];
-  const exp = Math.floor(Math.random()*9) + 2; // 10^-2 to 10^-10
+  const exp = Math.floor(Math.random()*9) + 2;
   q = 'Find pH if [H⁺] = ' + c + ' × 10⁻' + exp + ' M';
   ans = 'pH ≈ ' + (exp - lg).toFixed(2);
   trick = 'Shortcut: pH = ' + exp + ' - log(' + c + '). Since log(' + c + ') ≈ ' + lg + ', ' + exp + ' - ' + lg + ' = ' + (exp - lg).toFixed(2) + '.';
  } else if(type === 1){
-  /* Scientific Notation Division */
   const a1 = [1.5, 2.4, 3.6, 4.8, 6.0, 7.5, 8.4, 9.0][Math.floor(Math.random()*8)];
   const a2 = [1.2, 1.5, 2.0, 3.0, 4.0][Math.floor(Math.random()*5)];
   const e1 = Math.floor(Math.random()*11) - 5;
@@ -779,7 +776,6 @@ function nextMath(){
   ans = resC + ' × 10^' + resE;
   trick = 'Divide coefficients (' + a1 + ' / ' + a2 + ' = ' + resC + '), and SUBTRACT exponents: (' + e1 + ') - (' + e2 + ') = ' + resE + '.';
  } else if(type === 2){
-  /* Weak Acid Square Root [H+] = sqrt(Ka * [HA]) */
   const pairs = [
    ['1.8 × 10⁻⁵', '0.20 M', '√(3.6 × 10⁻⁶) ≈ 1.9 × 10⁻³ M (pH ≈ 2.7)'],
    ['4.0 × 10⁻⁶', '0.10 M', '√(4.0 × 10⁻⁷) = √(40 × 10⁻⁸) ≈ 6.3 × 10⁻⁴ M (pH ≈ 3.2)'],
@@ -792,7 +788,6 @@ function nextMath(){
   ans = out;
   trick = 'Multiply Ka × [HA], shift decimal so the exponent is EVEN, then take √(number) × 10^(half exponent).';
  } else {
-  /* Decibel & Poiseuille Scaling */
   const drills = [
    ['Sound intensity increases by 1000×. What is ΔdB?', '+30 dB', '1000 = 10³ → multiply exponent 3 by 10 dB = +30 dB.'],
    ['Sound level increases by +20 dB. By what factor did intensity increase?', '100× intensity', '+20 dB ÷ 10 = 2 → 10² = 100×.'],
@@ -866,7 +861,6 @@ function renderErrors(){
  const total = state.errors.length;
  document.getElementById('sub-er').textContent = total + ' logged';
 
- /* Autocomplete for topics */
  const topics = [...new Set(state.errors.map(e => e.topic).filter(Boolean))].sort();
  document.getElementById('errTopicSuggestions').innerHTML =
   topics.map(t => '<option value="'+escapeHtml(t)+'"></option>').join('');
@@ -878,7 +872,6 @@ function renderErrors(){
   return;
  }
 
- /* Count by Error Type */
  const typeCounts = {};
  const subjCounts = {};
  const topicCounts = {};
@@ -916,7 +909,6 @@ function renderErrors(){
 
  dash.innerHTML = html;
 
- /* Filtered Error Log Feed */
  const fType = document.getElementById('errFilterType').value;
  const fSubj = document.getElementById('errFilterSubj').value;
  const filtered = state.errors.filter(e =>
