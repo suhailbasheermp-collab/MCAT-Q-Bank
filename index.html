@@ -7,42 +7,45 @@
 <link rel="manifest" href="manifest.json">
 <title>MCAT Daily</title>
 <style>
- body{font-family:system-ui,sans-serif;margin:0;background:#f4f6fa;color:#1a1a1a;padding-bottom:40px}
- header{background:#1f3a5f;color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
- .brand{display:flex;align-items:center;gap:10px}
+ body{font-family:system-ui,sans-serif;margin:0;background:#f4f6fa;color:#1a1a1a;padding-bottom:44px}
+ header{background:#1f3a5f;color:#fff;padding:14px 16px;display:flex;justify-content:center;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
  .logo{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1.5px solid #fff;box-shadow:0 0 6px rgba(255,255,255,0.4)}
- header h1{font-size:17px;margin:0;white-space:nowrap}
- nav{display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end}
- nav button{background:none;border:1px solid #fff;color:#fff;border-radius:6px;padding:6px 8px;font-size:12px;font-weight:600;cursor:pointer}
+ header h1{font-size:19px;margin:0;letter-spacing:0.3px}
  main{padding:16px;max-width:640px;margin:auto}
+
+ /* Large Central Tabs */
+ .hub-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+ .hub-tab{background:#fff;border:2px solid #d5dce6;border-radius:14px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.04);transition:all 0.15s ease;color:#1f3a5f}
+ .hub-tab .tab-icon{font-size:24px;line-height:1}
+ .hub-tab .tab-title{font-size:14px;font-weight:700}
+ .hub-tab .tab-sub{font-size:11px;color:#555;font-weight:500}
+ .hub-tab.active{background:#1f3a5f;border-color:#1f3a5f;color:#fff;box-shadow:0 4px 12px rgba(31,58,95,0.28)}
+ .hub-tab.active .tab-sub{color:#d6e2f2}
+
+ .tab-panel{display:none}
+ .tab-panel.active{display:block}
+
  .tag{font-size:12px;color:#555;margin-bottom:8px}
- .q{font-size:18px;line-height:1.4;margin-bottom:16px}
- .opt{display:block;width:100%;text-align:left;padding:14px;margin:8px 0;border:1px solid #c5cbd6;border-radius:10px;background:#fff;font-size:16px}
- .opt.correct{background:#d6f5dd;border-color:#2e9e4f}
- .opt.wrong{background:#fadadd;border-color:#c0392b}
- .exp{background:#fff;border-left:4px solid #1f3a5f;padding:12px;margin:14px 0;border-radius:6px}
+ .opt{display:block;width:100%;text-align:left;padding:14px;margin:8px 0;border:1px solid #c5cbd6;border-radius:10px;background:#fff;font-size:16px;cursor:pointer}
  .actions{display:flex;gap:10px}
  .actions button{flex:1;padding:14px;border-radius:10px;border:none;font-size:16px;color:#fff;font-weight:600;cursor:pointer}
  .retire{background:#2e9e4f}
  .save{background:#d98e04}
- .stats{font-size:13px;color:#555;margin-top:18px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
+ .stats{font-size:13px;color:#555;margin-top:16px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
  .reset-link{background:none;border:none;color:#1f3a5f;text-decoration:underline;font-size:12px;padding:0;cursor:pointer}
  .hidden{display:none}
- select,input,textarea{padding:10px;margin-bottom:10px;font-size:15px;border:1px solid #c5cbd6;border-radius:8px;width:100%;box-sizing:border-box}
- .rev{background:#fff;padding:12px;border-radius:8px;margin:10px 0}
- .rev button{margin-top:8px;padding:8px 12px;border-radius:6px;border:1px solid #999;background:#fff}
+ select,input{padding:10px;margin-bottom:10px;font-size:15px;border:1px solid #c5cbd6;border-radius:8px;width:100%;box-sizing:border-box;background:#fff}
+ .rev{background:#fff;padding:12px;border-radius:8px;margin:10px 0;border:1px solid #dce1ea}
+ .rev button{margin-top:8px;padding:8px 12px;border-radius:6px;border:1px solid #999;background:#fff;cursor:pointer}
 
- /* Rich Paste Box for Android Image & Text Pasting */
- .rich-box{min-height:76px;padding:10px;margin-bottom:8px;font-size:15px;border:1px solid #c5cbd6;border-radius:8px;background:#fff;white-space:pre-wrap;word-break:break-word;outline:none}
- .rich-box:empty::before{content:attr(data-placeholder);color:#888}
- .rich-box img{max-width:100%;max-height:160px;display:block;margin-top:6px;border-radius:6px}
- .paste-btn{width:100%;padding:10px;margin-bottom:10px;background:#eef3fa;color:#1f3a5f;border:1px dashed #1f3a5f;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
+ /* Sub-bar inside Equations & Structures Tabs */
+ .sub-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:8px}
+ .sub-bar h2{font-size:17px;margin:0;color:#1f3a5f}
+ .pill-btn{background:#fff;color:#1f3a5f;border:1.5px solid #1f3a5f;border-radius:8px;padding:7px 12px;font-size:13px;font-weight:600;cursor:pointer}
+ .pill-btn.active{background:#1f3a5f;color:#fff}
 
- /* Fullscreen Flashcard Overlays (Equations & Structures) */
- .fs-modal{position:fixed;inset:0;background:#f4f6fa;z-index:900;display:none;flex-direction:column;overflow-y:auto}
- .fs-modal header{position:sticky;top:0;z-index:10}
- .fs-wrap{padding:16px;max-width:640px;width:100%;margin:auto;box-sizing:border-box;flex:1;display:flex;flex-direction:column}
- .fs-card{background:#fff;border:1px solid #c5cbd6;border-radius:14px;padding:20px 16px;margin:10px 0;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+ /* Flashcard Styling */
+ .fs-card{background:#fff;border:1px solid #c5cbd6;border-radius:14px;padding:20px 16px;margin:8px 0;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
  .eq-prompt{font-size:19px;font-weight:600;line-height:1.45;margin:10px 0 18px 0}
  .eq-answer-box{background:#eef3fa;border-left:4px solid #1f3a5f;padding:16px;border-radius:8px;margin-bottom:16px}
  .eq-formula{font-size:19px;font-weight:700;color:#1f3a5f;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;margin-bottom:8px;word-break:break-word}
@@ -50,11 +53,16 @@
  .reveal-btn{width:100%;padding:16px;background:#1f3a5f;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:600;margin-top:12px;cursor:pointer}
  .struct-box{background:#fff;border:1px solid #e5e9f0;border-radius:10px;padding:12px;margin:8px 0}
 
+ /* Rich Paste Box for Android Image & Text Pasting */
+ .rich-box{min-height:76px;padding:10px;margin-bottom:8px;font-size:15px;border:1px solid #c5cbd6;border-radius:8px;background:#fff;white-space:pre-wrap;word-break:break-word;outline:none}
+ .rich-box:empty::before{content:attr(data-placeholder);color:#888}
+ .rich-box img{max-width:100%;max-height:160px;display:block;margin-top:6px;border-radius:6px}
+ .paste-btn{width:100%;padding:10px;margin-bottom:10px;background:#eef3fa;color:#1f3a5f;border:1px dashed #1f3a5f;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
+
  /* Resources Section & Nested Toggles */
- .res-section{margin-top:28px;border-top:2px solid #dce1ea;padding-top:18px}
  .res-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px}
  .res-header h2{font-size:17px;margin:0;color:#1f3a5f}
- .btn-primary{background:#1f3a5f;color:#fff;border:none;padding:8px 12px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
+ .btn-primary{background:#1f3a5f;color:#fff;border:none;padding:9px 14px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
  .backup-bar{display:flex;gap:8px;margin-bottom:12px}
  .btn-sec{flex:1;background:#fff;color:#1f3a5f;border:1px solid #1f3a5f;padding:8px 10px;border-radius:8px;font-size:13px;font-weight:600;text-align:center;cursor:pointer}
  .res-form{background:#fff;padding:14px;border-radius:10px;border:1px solid #c5cbd6;margin-bottom:14px}
@@ -79,37 +87,34 @@
 </head>
 <body>
 <header>
- <div class="brand">
-  <img class="logo" src="logo.png" alt="MCAT Daily" onerror="this.style.display='none'">
-  <h1>MCAT Daily</h1>
- </div>
- <nav>
-  <button onclick="show('quiz')">Quiz</button>
-  <button onclick="show('review')">Review</button>
-  <button onclick="openEquations()">Equations</button>
-  <button onclick="openStructures()">Structures</button>
- </nav>
+ <img class="logo" src="logo.png" alt="MCAT Daily" onerror="this.style.display='none'">
+ <h1>MCAT Daily</h1>
 </header>
+
 <main>
- <section id="quiz">
-  <select id="subject" onchange="nextQuestion()"><option value="all">All subjects</option></select>
-  <div id="card">Loading daily MCAT modules...</div>
-  <div class="stats">
-   <span id="stats"></span>
-   <button class="reset-link" onclick="resetRetired('quiz')">Reset Retired</button>
-  </div>
-  <details style="font-size:13px;color:#555;margin-top:10px"><summary>Load report</summary><div id="report" style="white-space:pre-wrap"></div></details>
- </section>
+ <!-- 3 Large Central Navigation Tabs -->
+ <div class="hub-tabs" role="tablist">
+  <button class="hub-tab active" id="tab-res" onclick="switchTab('res')">
+   <span class="tab-icon">🗂️</span>
+   <span class="tab-title">Resources</span>
+   <span class="tab-sub" id="sub-res">Notes &amp; Charts</span>
+  </button>
+  <button class="hub-tab" id="tab-eq" onclick="switchTab('eq')">
+   <span class="tab-icon">∑</span>
+   <span class="tab-title">Equations</span>
+   <span class="tab-sub" id="sub-eq">125 Formulas</span>
+  </button>
+  <button class="hub-tab" id="tab-st" onclick="switchTab('st')">
+   <span class="tab-icon">🧬</span>
+   <span class="tab-title">Structures</span>
+   <span class="tab-sub" id="sub-st">62 Molecules</span>
+  </button>
+ </div>
 
- <section id="review" class="hidden">
-  <h2>Saved for review</h2>
-  <div id="reviewList"></div>
- </section>
-
- <!-- Bottom Resources & Study Vault -->
- <section class="res-section" id="resources">
+ <!-- TAB 1: RESOURCES & ADD RESOURCE -->
+ <section id="panel-res" class="tab-panel active">
   <div class="res-header">
-   <h2>Equations &amp; Charts</h2>
+   <h2>Study Vault</h2>
    <button class="btn-primary" onclick="toggleResForm()">+ Add Resource</button>
   </div>
 
@@ -151,21 +156,13 @@
   </select>
   <div id="resList"></div>
  </section>
-</main>
 
-<!-- Fullscreen Equation Flashcard Modal -->
-<div id="eqModal" class="fs-modal">
- <header>
-  <div class="brand" style="padding-left:4px">
-   <img class="logo" src="logo.png" style="width:30px;height:30px" onerror="this.style.display='none'">
-   <h1 style="font-size:16px">Equations</h1>
+ <!-- TAB 2: EQUATIONS DRILL -->
+ <section id="panel-eq" class="tab-panel">
+  <div class="sub-bar">
+   <h2>Equation Flashcards</h2>
+   <button class="pill-btn" id="eqModeBtn" onclick="toggleEqMode()">Saved (0)</button>
   </div>
-  <nav>
-   <button id="eqModeBtn" onclick="toggleEqMode()">Saved (0)</button>
-   <button onclick="closeEquations()">Close ✕</button>
-  </nav>
- </header>
- <div class="fs-wrap">
   <select id="eqSubj" onchange="nextEq()">
    <option value="all">All subjects</option>
    <option value="Physics">Physics</option>
@@ -186,22 +183,14 @@
    <h3>Saved Equations</h3>
    <div id="eqSavedList"></div>
   </div>
- </div>
-</div>
+ </section>
 
-<!-- Fullscreen Structure Flashcard Modal -->
-<div id="stModal" class="fs-modal">
- <header>
-  <div class="brand" style="padding-left:4px">
-   <img class="logo" src="logo.png" style="width:30px;height:30px" onerror="this.style.display='none'">
-   <h1 style="font-size:16px">Structures</h1>
+ <!-- TAB 3: STRUCTURES DRILL -->
+ <section id="panel-st" class="tab-panel">
+  <div class="sub-bar">
+   <h2>Structure Identification</h2>
+   <button class="pill-btn" id="stModeBtn" onclick="toggleStMode()">Saved (0)</button>
   </div>
-  <nav>
-   <button id="stModeBtn" onclick="toggleStMode()">Saved (0)</button>
-   <button onclick="closeStructures()">Close ✕</button>
-  </nav>
- </header>
- <div class="fs-wrap">
   <select id="stCat" onchange="nextSt()">
    <option value="all">All structures (62)</option>
    <option value="Amino Acids">Amino Acids (20)</option>
@@ -223,121 +212,77 @@
    <h3>Saved Structures</h3>
    <div id="stSavedList"></div>
   </div>
- </div>
-</div>
+ </section>
+</main>
 
 <div id="imgModal" onclick="this.style.display='none'"><img id="modalImg" src=""></div>
 
-<script>
- window.QUESTIONS = window.QUESTIONS || [];
-</script>
-<script src="questions.js" onerror="console.warn('questions.js missing')"></script>
-<script src="equations.js" onerror="console.warn('equations.js missing')"></script>
-<script src="structures.js" onerror="console.warn('structures.js missing')"></script>
+<script src="equations.js"></script>
+<script src="structures.js"></script>
 <script>
 const KEY='mcatState';
-const TODAY=new Date().toDateString();
 let state;
 try {
- state=JSON.parse(localStorage.getItem(KEY)||'{"retired":[],"saved":[],"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"day":"","todayCount":0}');
+ state=JSON.parse(localStorage.getItem(KEY)||'{"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[]}');
 } catch(e) {
- state={"retired":[],"saved":[],"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"day":"","todayCount":0};
+ state={"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[]};
 }
-if(!state.retired)state.retired=[];
-if(!state.saved)state.saved=[];
 if(!state.eqRetired)state.eqRetired=[];
 if(!state.eqSaved)state.eqSaved=[];
 if(!state.stRetired)state.stRetired=[];
 if(!state.stSaved)state.stSaved=[];
-if(state.day!==TODAY){state.day=TODAY;state.todayCount=0;}
 
-let current=null, answered=false;
 function persist(){localStorage.setItem(KEY,JSON.stringify(state));}
-function bumpToday(){
- if(state.day!==TODAY){state.day=TODAY;state.todayCount=0;}
- state.todayCount++;
- persist();
+
+/* Central Tab Switcher */
+function switchTab(which){
+ ['res','eq','st'].forEach(t=>{
+  document.getElementById('tab-'+t).classList.toggle('active',t===which);
+  document.getElementById('panel-'+t).classList.toggle('active',t===which);
+ });
+ if(which==='eq'){
+  eqShowingSaved=false;
+  document.getElementById('eqDeckView').classList.remove('hidden');
+  document.getElementById('eqSavedView').classList.add('hidden');
+  nextEq();
+ }
+ if(which==='st'){
+  stShowingSaved=false;
+  document.getElementById('stDeckView').classList.remove('hidden');
+  document.getElementById('stSavedView').classList.add('hidden');
+  nextSt();
+ }
 }
+
 function resetRetired(type){
  if(!confirm('Put all retired cards back into the circle?'))return;
- if(type==='quiz'){state.retired=[];persist();nextQuestion();}
  if(type==='eq'){state.eqRetired=[];persist();nextEq();}
  if(type==='st'){state.stRetired=[];persist();nextSt();}
 }
 
-function inCircle(q){return q && q.id && !state.retired.includes(q.id)&&!state.saved.includes(q.id);}
-function initSubjects(){
- const s=[...new Set(QUESTIONS.filter(q=>q && q.subject).map(q=>q.subject))];
- const el=document.getElementById('subject');
- el.innerHTML='<option value="all">All subjects</option>';
- s.forEach(x=>{const o=document.createElement('option');o.value=x;o.textContent=x;el.appendChild(o);});
-}
-function nextQuestion(){
- const subj=document.getElementById('subject').value;
- const pool=QUESTIONS.filter(q=>inCircle(q)&&(subj==='all'||q.subject===subj));
- const card=document.getElementById('card');
- answered=false;
- if(!pool.length){
-  card.innerHTML='<p style="padding:10px;text-align:center">No active questions left in this circle.</p>';
-  current=null;updateStats();return;
- }
- current=pool[Math.floor(Math.random()*pool.length)];
- card.innerHTML='<div class="tag">'+current.subject+' \u00b7 '+current.topic+'</div><div class="q">'+current.q+'</div>'+
-  current.options.map((o,i)=>'<button class="opt" onclick="pick('+i+')">'+o+'</button>').join('')+'<div id="after"></div>';
- updateStats();
-}
-function pick(i){
- if(answered)return; answered=true;
- bumpToday();
- updateStats();
- const btns=document.querySelectorAll('.opt');
- btns.forEach((b,idx)=>{if(idx===current.answer)b.classList.add('correct');else if(idx===i)b.classList.add('wrong');});
- document.getElementById('after').innerHTML='<div class="exp">'+current.explanation+'</div>'+
-  '<div class="actions"><button class="retire" onclick="retire()">Mastered, retire it</button><button class="save" onclick="saveIt()">Save for review</button></div>'+
-  '<button class="opt" onclick="nextQuestion()" style="margin-top:12px">Keep in circle, next question</button>';
-}
-function retire(){state.retired.push(current.id);persist();nextQuestion();}
-function saveIt(){state.saved.push(current.id);persist();nextQuestion();}
-function renderReview(){
- const list=document.getElementById('reviewList');
- const items=QUESTIONS.filter(q=>q && state.saved.includes(q.id));
- if(!items.length){list.innerHTML='<p>Nothing saved yet.</p>';return;}
- list.innerHTML=items.map(q=>'<div class="rev"><div class="tag">'+q.subject+' \u00b7 '+q.topic+'</div><div>'+q.q+'</div><details><summary>Show answer</summary><p><b>'+q.options[q.answer]+'</b></p><p>'+q.explanation+'</p></details><button onclick="unsave('+q.id+')">Put back in circle</button> <button onclick="retireSaved('+q.id+')">Retire</button></div>').join('');
-}
-function unsave(id){state.saved=state.saved.filter(x=>x!==id);persist();renderReview();updateStats();}
-function retireSaved(id){state.saved=state.saved.filter(x=>x!==id);state.retired.push(id);persist();renderReview();updateStats();}
-function updateStats(){
- document.getElementById('stats').textContent='Today: '+state.todayCount+' | Circle: '+QUESTIONS.filter(inCircle).length+' | Saved: '+state.saved.length+' | Retired: '+state.retired.length;
-}
-function show(which){
- document.getElementById('quiz').classList.toggle('hidden',which!=='quiz');
- document.getElementById('review').classList.toggle('hidden',which!=='review');
- if(which==='review')renderReview();
-}
-
-/* Fullscreen Equations Flashcard Logic */
+/* Equations Flashcard Logic */
 let curEq=null, eqShowingSaved=false;
 function eqPool(){return typeof EQUATIONS!=='undefined'?EQUATIONS:[];}
 function eqInCircle(e){return e && e.id && !state.eqRetired.includes(e.id)&&!state.eqSaved.includes(e.id);}
-function openEquations(){
- eqShowingSaved=false;
- document.getElementById('eqDeckView').classList.remove('hidden');
- document.getElementById('eqSavedView').classList.add('hidden');
- document.getElementById('eqModal').style.display='flex';
- nextEq();
-}
-function closeEquations(){document.getElementById('eqModal').style.display='none';}
 function toggleEqMode(){
  eqShowingSaved=!eqShowingSaved;
  document.getElementById('eqDeckView').classList.toggle('hidden',eqShowingSaved);
  document.getElementById('eqSavedView').classList.toggle('hidden',!eqShowingSaved);
- document.getElementById('eqModeBtn').textContent=eqShowingSaved?'Back to Drill':'Saved ('+state.eqSaved.length+')';
+ const btn=document.getElementById('eqModeBtn');
+ btn.classList.toggle('active',eqShowingSaved);
+ btn.textContent=eqShowingSaved?'Back to Drill':'Saved ('+state.eqSaved.length+')';
  if(eqShowingSaved)renderEqSaved();
 }
 function updateEqStats(){
  const all=eqPool();
- document.getElementById('eqStats').textContent='Circle: '+all.filter(eqInCircle).length+' | Saved: '+state.eqSaved.length+' | Retired: '+state.eqRetired.length;
- if(!eqShowingSaved)document.getElementById('eqModeBtn').textContent='Saved ('+state.eqSaved.length+')';
+ const inC=all.filter(eqInCircle).length;
+ document.getElementById('eqStats').textContent='Circle: '+inC+' | Saved: '+state.eqSaved.length+' | Retired: '+state.eqRetired.length;
+ document.getElementById('sub-eq').textContent=inC+' left';
+ if(!eqShowingSaved){
+  const btn=document.getElementById('eqModeBtn');
+  btn.classList.remove('active');
+  btn.textContent='Saved ('+state.eqSaved.length+')';
+ }
 }
 function nextEq(){
  const subj=document.getElementById('eqSubj').value;
@@ -377,29 +322,29 @@ function renderEqSaved(){
 function unsaveEq(id){state.eqSaved=state.eqSaved.filter(x=>x!==id);persist();renderEqSaved();updateEqStats();}
 function retireSavedEq(id){state.eqSaved=state.eqSaved.filter(x=>x!==id);state.eqRetired.push(id);persist();renderEqSaved();updateEqStats();}
 
-/* Fullscreen Structures Flashcard Logic */
+/* Structures Flashcard Logic */
 let curSt=null, stShowingSaved=false;
 function stPool(){return typeof STRUCTURES!=='undefined'?STRUCTURES:[];}
 function stInCircle(s){return s && s.id && !state.stRetired.includes(s.id)&&!state.stSaved.includes(s.id);}
-function openStructures(){
- stShowingSaved=false;
- document.getElementById('stDeckView').classList.remove('hidden');
- document.getElementById('stSavedView').classList.add('hidden');
- document.getElementById('stModal').style.display='flex';
- nextSt();
-}
-function closeStructures(){document.getElementById('stModal').style.display='none';}
 function toggleStMode(){
  stShowingSaved=!stShowingSaved;
  document.getElementById('stDeckView').classList.toggle('hidden',stShowingSaved);
  document.getElementById('stSavedView').classList.toggle('hidden',!stShowingSaved);
- document.getElementById('stModeBtn').textContent=stShowingSaved?'Back to Drill':'Saved ('+state.stSaved.length+')';
+ const btn=document.getElementById('stModeBtn');
+ btn.classList.toggle('active',stShowingSaved);
+ btn.textContent=stShowingSaved?'Back to Drill':'Saved ('+state.stSaved.length+')';
  if(stShowingSaved)renderStSaved();
 }
 function updateStStats(){
  const all=stPool();
- document.getElementById('stStats').textContent='Circle: '+all.filter(stInCircle).length+' | Saved: '+state.stSaved.length+' | Retired: '+state.stRetired.length;
- if(!stShowingSaved)document.getElementById('stModeBtn').textContent='Saved ('+state.stSaved.length+')';
+ const inC=all.filter(stInCircle).length;
+ document.getElementById('stStats').textContent='Circle: '+inC+' | Saved: '+state.stSaved.length+' | Retired: '+state.stRetired.length;
+ document.getElementById('sub-st').textContent=inC+' left';
+ if(!stShowingSaved){
+  const btn=document.getElementById('stModeBtn');
+  btn.classList.remove('active');
+  btn.textContent='Saved ('+state.stSaved.length+')';
+ }
 }
 function nextSt(){
  const cat=document.getElementById('stCat').value;
@@ -486,7 +431,6 @@ function compressImage(file){
  });
 }
 
-/* Handle direct Gboard / browser paste inside contenteditable box */
 const noteBox = document.getElementById('resNote');
 noteBox.addEventListener('paste', async function(e){
  const cd = e.clipboardData || e.originalEvent.clipboardData;
@@ -501,20 +445,16 @@ noteBox.addEventListener('paste', async function(e){
    }
   }
  }
- /* Fallback if Gboard inserts an <img> tag directly into contenteditable */
  setTimeout(async ()=>{
   const embedded = noteBox.querySelector('img');
   if(embedded){
    const src = embedded.src;
    embedded.remove();
-   if(src.startsWith('data:image')){
-    setPastedPreview(src);
-   }
+   if(src.startsWith('data:image')) setPastedPreview(src);
   }
  }, 60);
 });
 
-/* 1-Tap Clipboard API Button */
 async function pasteFromClipboard(){
  try{
   if(!navigator.clipboard || !navigator.clipboard.read){
@@ -580,6 +520,8 @@ function renderResources(){
  const filter=document.getElementById('resFilter').value;
  const list=document.getElementById('resList');
  db.transaction('items','readonly').objectStore('items').getAll().onsuccess=e=>{
+  const totalAll=e.target.result.length;
+  document.getElementById('sub-res').textContent=totalAll+' saved';
   const all=e.target.result.filter(x=>filter==='all'||x.subject===filter);
   if(!all.length){list.innerHTML='<p class="stats">No equations or charts saved yet.</p>';return;}
   const root={children:{},items:[]};
@@ -608,7 +550,7 @@ function zoomImg(src){
  document.getElementById('imgModal').style.display='flex';
 }
 
-/* Export & Restore All Resources + Quiz State */
+/* Export & Restore All Resources + Drill State */
 function exportBackup(){
  if(!db)return;
  db.transaction('items','readonly').objectStore('items').getAll().onsuccess=e=>{
@@ -644,9 +586,9 @@ function importBackup(ev){
     if(!state.eqSaved)state.eqSaved=[];
     if(!state.stRetired)state.stRetired=[];
     if(!state.stSaved)state.stSaved=[];
-    if(state.day!==TODAY){state.day=TODAY;state.todayCount=0;}
     persist();
-    updateStats();
+    updateEqStats();
+    updateStStats();
    }
    const tx=db.transaction('items','readwrite');
    const store=tx.objectStore('items');
@@ -667,39 +609,8 @@ function importBackup(ev){
  reader.readAsText(file);
 }
 
-const report=[];
-window.addEventListener('error',function(ev){
- if(ev.filename&&/q\d+\.js/.test(ev.filename)){
-  report.push('ERROR in '+ev.filename.split('/').pop().split('?')[0]+' line '+ev.lineno+': '+ev.message);
- }
-});
-function showReport(){document.getElementById('report').textContent=report.join('\n');}
-
-function initApp(){
- initSubjects();
- nextQuestion();
- showReport();
-}
-
-function loadBatches(n){
- const before=QUESTIONS.length;
- const s=document.createElement('script');
- s.src='q'+n+'.js';
- s.onload=function(){
-  const flat=QUESTIONS.flat().filter(Boolean);
-  QUESTIONS.length=0;
-  flat.forEach(function(x){if(x) QUESTIONS.push(x);});
-  report.push('q'+n+'.js loaded, added '+(QUESTIONS.length-before)+' questions');
-  loadBatches(n+1);
- };
- s.onerror=function(){
-  report.push('q'+n+'.js not found, stopped here');
-  initApp();
- };
- document.body.appendChild(s);
-}
-
-loadBatches(1);
+updateEqStats();
+updateStStats();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
 </script>
 </body>
