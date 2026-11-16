@@ -14,7 +14,17 @@
  main{padding:12px 14px;max-width:640px;margin:auto}
 
  /* Daily Micro-Habit Strip */
- .habit-strip{background:#fff;border:1px solid #d5dce6;border-radius:10px;padding:8px 12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600;color:#1f3a5f;box-shadow:0 1px 4px rgba(0,0,0,0.03)}
+ .habit-strip{background:#fff;border:1px solid #d5dce6;border-radius:10px;padding:8px 12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600;color:#1f3a5f;box-shadow:0 1px 4px rgba(0,0,0,0.03)}
+
+ /* Up Next to Learn (3-Slot Queue) */
+ .next-box{background:#fff;border:1px solid #d5dce6;border-radius:12px;padding:10px 12px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,0.03)}
+ .next-head{font-size:12px;font-weight:700;color:#1f3a5f;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+ .next-slot{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+ .next-slot:last-child{margin-bottom:0}
+ .next-num{font-size:12px;font-weight:700;color:#1f3a5f;background:#eef3fa;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+ .next-input{flex:1;padding:7px 10px;margin:0;font-size:13.5px;border:1px solid #dce1ea;border-radius:8px;background:#fafbfd;color:#1a1a1a}
+ .next-input:focus{outline:none;border-color:#1f3a5f;background:#fff}
+ .next-done{background:#eef3fa;color:#2e9e4f;border:1px solid #c5cbd6;border-radius:8px;padding:6px 9px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0}
 
  /* 5 Central Navigation Tabs */
  .hub-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:16px}
@@ -131,6 +141,29 @@
  <div class="habit-strip">
   <span>⚡ Today's Drill</span>
   <span id="habitSummary">0 Eq · 0 St · 0 Works</span>
+ </div>
+
+ <!-- 3-Slot Editable 'Up Next to Learn' List -->
+ <div class="next-box">
+  <div class="next-head">
+   <span>💡 Up Next to Learn (3 Slots)</span>
+   <span style="font-size:11px;color:#666;font-weight:500">Tap ✓ when learned</span>
+  </div>
+  <div class="next-slot">
+   <span class="next-num">1</span>
+   <input type="text" class="next-input" id="nextSlot0" placeholder="Add topic #1 to learn next..." oninput="saveNextSlot(0)">
+   <button type="button" class="next-done" title="Mark learned & clear" onclick="clearNextSlot(0)">✓</button>
+  </div>
+  <div class="next-slot">
+   <span class="next-num">2</span>
+   <input type="text" class="next-input" id="nextSlot1" placeholder="Add topic #2 to learn next..." oninput="saveNextSlot(1)">
+   <button type="button" class="next-done" title="Mark learned & clear" onclick="clearNextSlot(1)">✓</button>
+  </div>
+  <div class="next-slot">
+   <span class="next-num">3</span>
+   <input type="text" class="next-input" id="nextSlot2" placeholder="Add topic #3 to learn next..." oninput="saveNextSlot(2)">
+   <button type="button" class="next-done" title="Mark learned & clear" onclick="clearNextSlot(2)">✓</button>
+  </div>
  </div>
 
  <!-- 5 Central Navigation Tabs -->
@@ -426,9 +459,9 @@ const KEY='mcatState';
 const TODAY=new Date().toDateString();
 let state;
 try {
- state=JSON.parse(localStorage.getItem(KEY)||'{"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"wkState":{},"errors":[],"today":{"day":"","eq":0,"st":0,"wk":0}}');
+ state=JSON.parse(localStorage.getItem(KEY)||'{"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"wkState":{},"errors":[],"upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}}');
 } catch(e) {
- state={"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"wkState":{},"errors":[],"today":{"day":"","eq":0,"st":0,"wk":0}};
+ state={"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"wkState":{},"errors":[],"upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}};
 }
 if(!state.eqRetired)state.eqRetired=[];
 if(!state.eqSaved)state.eqSaved=[];
@@ -436,11 +469,29 @@ if(!state.stRetired)state.stRetired=[];
 if(!state.stSaved)state.stSaved=[];
 if(!state.wkState)state.wkState={};
 if(!state.errors)state.errors=[];
+if(!Array.isArray(state.upNext) || state.upNext.length!==3)state.upNext=["","",""];
 if(!state.today || state.today.day!==TODAY){
  state.today={day:TODAY,eq:0,st:0,wk:0};
 }
 
 function persist(){localStorage.setItem(KEY,JSON.stringify(state));}
+
+/* Up Next to Learn (3 Editable Slots) */
+function renderUpNext(){
+ for(let i=0;i<3;i++){
+  const el=document.getElementById('nextSlot'+i);
+  if(el)el.value=state.upNext[i]||'';
+ }
+}
+function saveNextSlot(idx){
+ state.upNext[idx]=document.getElementById('nextSlot'+idx).value;
+ persist();
+}
+function clearNextSlot(idx){
+ state.upNext[idx]='';
+ document.getElementById('nextSlot'+idx).value='';
+ persist();
+}
 
 function bumpHabit(kind){
  if(!state.today || state.today.day!==TODAY)state.today={day:TODAY,eq:0,st:0,wk:0};
@@ -1277,8 +1328,10 @@ function importBackup(ev){
     if(!state.stSaved)state.stSaved=[];
     if(!state.wkState)state.wkState={};
     if(!state.errors)state.errors=[];
+    if(!Array.isArray(state.upNext) || state.upNext.length!==3)state.upNext=["","",""];
     if(!state.today || state.today.day!==TODAY)state.today={day:TODAY,eq:0,st:0,wk:0};
     persist();
+    renderUpNext();
     updateEqStats();
     updateStStats();
     updateWkStats();
@@ -1304,6 +1357,7 @@ function importBackup(ev){
  reader.readAsText(file);
 }
 
+renderUpNext();
 updateHabitStrip();
 updateEqStats();
 updateStStats();
