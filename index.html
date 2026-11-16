@@ -76,7 +76,7 @@
  .res-header h2{font-size:17px;margin:0;color:#1f3a5f}
  .btn-primary{background:#1f3a5f;color:#fff;border:none;padding:9px 14px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
  .backup-bar{display:flex;gap:8px;margin-bottom:12px}
- .btn-sec{flex:1;background:#fff;color:#1f3a5f;border:1px solid #1f3a5f;padding:8px 10px;border-radius:8px;font-size:13px;font-weight:600;text-align:center;cursor:pointer}
+ .btn-sec{flex:1;background:#fff;color:#1f3a5f;border:1.5px solid #1f3a5f;padding:8px 10px;border-radius:8px;font-size:13px;font-weight:600;text-align:center;cursor:pointer}
  .res-form{background:#fff;padding:14px;border-radius:10px;border:1px solid #c5cbd6;margin-bottom:14px}
  .form-mode-label{font-size:13px;font-weight:700;color:#1f3a5f;margin-bottom:8px}
  .hint{font-size:12px;color:#555;margin:-4px 0 10px 2px}
@@ -130,7 +130,7 @@
   <button class="hub-tab" id="tab-wk" onclick="switchTab('wk')">
    <span class="tab-icon">🧮</span>
    <span class="tab-title">Works</span>
-   <span class="tab-sub" id="sub-wk">60 Setups</span>
+   <span class="tab-sub" id="sub-wk">100 Setups</span>
   </button>
  </div>
 
@@ -142,7 +142,7 @@
   </div>
 
   <div class="backup-bar">
-   <button class="btn-sec" onclick="exportBackup()">Download Backup</button>
+   <button class="btn-sec" onclick="exportBackup()">💾 Download / Update Backup</button>
    <label class="btn-sec" style="margin:0">Restore Backup<input type="file" id="restoreFile" accept=".json,application/json" style="display:none" onchange="importBackup(event)"></label>
   </div>
 
@@ -266,12 +266,13 @@
     <option value="due">Due Now (Practice + New + Due)</option>
     <option value="practice">🟡 Needs Practice Only</option>
     <option value="mastered">🟢 Mastered (Scheduled)</option>
-    <option value="all">All 60 Setups</option>
+    <option value="all">All 100 Setups</option>
    </select>
    <select id="wkSubj" onchange="onWkFilterChange()">
     <option value="all">All subjects</option>
     <option value="General Chemistry">General Chemistry</option>
     <option value="Physics">Physics</option>
+    <option value="Organic Chemistry">Organic Chemistry</option>
     <option value="Biochemistry">Biochemistry</option>
     <option value="Biology">Biology</option>
     <option value="Psychology and Sociology">Psychology &amp; Stats</option>
@@ -536,10 +537,9 @@ function nextWk(){
  const pool=getFilteredWorks();
  const card=document.getElementById('wkCard');
  if(!pool.length){
-  card.innerHTML='<div class="fs-card"><p>No calculation blueprints match this filter right now. Switch filter to "All 60 Setups" or "Mastered" to review early.</p></div>';
+  card.innerHTML='<div class="fs-card"><p>No calculation blueprints match this filter right now. Switch filter to "All 100 Setups" or "Mastered" to review early.</p></div>';
   curWk=null;updateWkStats();return;
  }
- /* Prioritize Needs Practice cards slightly higher in Due mode */
  const practicePool=pool.filter(w=>getWkEntry(w.id).status==='practice');
  const pickPool=(practicePool.length && Math.random()<0.65)?practicePool:pool;
  curWk=pickPool[Math.floor(Math.random()*pickPool.length)];
@@ -862,21 +862,48 @@ function zoomImg(src){
  document.getElementById('imgModal').style.display='flex';
 }
 
-/* Export & Restore All Resources + Drill State */
-function exportBackup(){
+/* Seamless In-Place Overwriting Backup using File System Access API */
+let savedFileHandle = null;
+
+async function exportBackup(){
  if(!db)return;
- db.transaction('items','readonly').objectStore('items').getAll().onsuccess=e=>{
+ db.transaction('items','readonly').objectStore('items').getAll().onsuccess=async e=>{
   const payload={
    version:1,
    date:new Date().toISOString(),
    quizState:state,
    resources:e.target.result
   };
-  const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});
+  const jsonString=JSON.stringify(payload);
+
+  try{
+   if(window.showSaveFilePicker){
+    if(!savedFileHandle){
+     const opts={
+      suggestedName:'mcat-vault-backup.json',
+      types:[{
+       description:'JSON Backup',
+       accept:{'application/json':['.json']}
+      }]
+     };
+     savedFileHandle=await window.showSaveFilePicker(opts);
+    }
+    const writable=await savedFileHandle.createWritable();
+    await writable.write(jsonString);
+    await writable.close();
+    alert('Backup successfully updated in-place!');
+    return;
+   }
+  }catch(err){
+   if(err.name!=='AbortError')savedFileHandle=null;
+   else return;
+  }
+
+  const blob=new Blob([jsonString],{type:'application/json'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
   a.href=url;
-  a.download='mcat-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.download='mcat-vault-backup.json';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
