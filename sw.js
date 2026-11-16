@@ -1,11 +1,11 @@
-const CACHE = 'mcat-v17';
+const CACHE = 'mcat-v22';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './questions.js',
   './equations.js',
   './structures.js',
+  './works.js',
   './logo.png'
 ];
 
