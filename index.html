@@ -66,6 +66,7 @@
  .eq-note{font-size:14px;color:#333;line-height:1.5;white-space:pre-wrap}
  .reveal-btn{width:100%;padding:16px;background:#1f3a5f;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:600;margin-top:12px;cursor:pointer}
  .struct-box{background:#fff;border:1px solid #e5e9f0;border-radius:10px;padding:12px;margin:8px 0}
+ .drill-img{width:100%;max-height:300px;object-fit:contain;border-radius:8px;margin-top:10px;background:#fff;border:1px solid #dce1ea;cursor:pointer}
 
  /* Rich Paste Box for Android Image & Text Pasting */
  .rich-box{min-height:76px;padding:10px;margin-bottom:8px;font-size:15px;border:1px solid #c5cbd6;border-radius:8px;background:#fff;white-space:pre-wrap;word-break:break-word;outline:none}
@@ -86,11 +87,11 @@
  .prio-badge.master{background:#d6f5dd;color:#1e7035;border:1px solid #a8e4b7}
 
  /* Resources Section & Nested Toggles + Blur Active Recall */
- .res-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px}
+ .res-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:6px;flex-wrap:wrap}
  .res-header h2{font-size:17px;margin:0;color:#1f3a5f}
- .btn-primary{background:#1f3a5f;color:#fff;border:none;padding:9px 14px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
+ .btn-primary{background:#1f3a5f;color:#fff;border:none;padding:8px 12px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
  .backup-bar{display:flex;gap:8px;margin-bottom:10px}
- .btn-sec{flex:1;background:#fff;color:#1f3a5f;border:1.5px solid #1f3a5f;padding:8px 10px;border-radius:8px;font-size:12.5px;font-weight:600;text-align:center;cursor:pointer}
+ .btn-sec{flex:1;background:#fff;color:#1f3a5f;border:1.5px solid #1f3a5f;padding:8px 8px;border-radius:8px;font-size:12px;font-weight:600;text-align:center;cursor:pointer}
  .btn-sec.active{background:#1f3a5f;color:#fff}
  .res-form{background:#fff;padding:14px;border-radius:10px;border:1px solid #c5cbd6;margin-bottom:14px}
  .form-mode-label{font-size:13px;font-weight:700;color:#1f3a5f;margin-bottom:8px}
@@ -195,71 +196,102 @@
   </button>
  </div>
 
- <!-- TAB 1: RESOURCES & ADD RESOURCE -->
+ <!-- TAB 1: RESOURCES & VAULT CIRCLE DRILL -->
  <section id="panel-res" class="tab-panel active">
   <div class="res-header">
    <h2>Study Vault</h2>
-   <button class="btn-primary" onclick="openNewResource()">+ Add Resource</button>
-  </div>
-
-  <div class="backup-bar">
-   <button class="btn-sec" onclick="exportBackup()">💾 Save Backup</button>
-   <label class="btn-sec" style="margin:0">Restore<input type="file" id="restoreFile" accept=".json,application/json" style="display:none" onchange="importBackup(event)"></label>
-   <button class="btn-sec" id="blurToggleBtn" onclick="toggleBlurMode()">👁️ Blur Test: OFF</button>
-  </div>
-
-  <div id="resForm" class="res-form hidden">
-   <div id="formModeLabel" class="form-mode-label">New Resource</div>
-   <input type="text" id="resTitle" list="titleSuggestions" autocomplete="off" placeholder="Title / Path (e.g., Hormones / Pituitary / Posterior)">
-   <datalist id="titleSuggestions"></datalist>
-   <div class="hint">Type to pick an existing folder/subtitle or use <b>/</b> to nest new ones.</div>
-
-   <select id="resSubj">
-    <option value="Biochemistry">Biochemistry</option>
-    <option value="Biology">Biology</option>
-    <option value="General Chemistry">General Chemistry</option>
-    <option value="Organic Chemistry">Organic Chemistry</option>
-    <option value="Physics">Physics</option>
-    <option value="Psychology and Sociology">Psychology and Sociology</option>
-   </select>
-
-   <div class="prio-row">
-    <button type="button" class="prio-opt sel-none" id="prio-none" onclick="setPriority('none')">⚪ Normal</button>
-    <button type="button" class="prio-opt" id="prio-high" onclick="setPriority('high')">🔴 High Priority</button>
-    <button type="button" class="prio-opt" id="prio-review" onclick="setPriority('review')">🟡 Needs Review</button>
-   </div>
-
-   <div id="resNote" class="rich-box" contenteditable="true" data-placeholder="Type notes OR paste copied image here..."></div>
-   <button type="button" class="paste-btn" onclick="pasteFromClipboard()">📋 Paste Copied Image from Clipboard</button>
-   <div id="pastePreview"></div>
-   <label style="font-size:13px;color:#555;display:block;margin-bottom:4px">Or attach/replace chart from phone (optional):</label>
-   <input type="file" id="resFile" accept="image/*">
-   <div class="actions">
-    <button class="retire" onclick="saveResource()">Save</button>
-    <button style="background:#7f8c8d" onclick="closeResForm()">Cancel</button>
+   <div class="pill-group">
+    <button class="pill-btn" id="resDrillBtn" onclick="toggleResDrillMode()">🔄 Drill Circle</button>
+    <button class="btn-primary" onclick="openNewResource()">+ Add</button>
    </div>
   </div>
 
-  <input type="search" id="resSearch" placeholder="🔍 Search folders, topics, or notes..." oninput="renderResources()">
+  <!-- Sub-view A: Browse Folders & Add/Edit Form -->
+  <div id="resBrowseView">
+   <div class="backup-bar">
+    <button class="btn-sec" onclick="exportBackup()">💾 Save Backup</button>
+    <label class="btn-sec" style="margin:0">Restore<input type="file" id="restoreFile" accept=".json,application/json" style="display:none" onchange="importBackup(event)"></label>
+    <button class="btn-sec" id="blurToggleBtn" onclick="toggleBlurMode()">👁️ Blur: OFF</button>
+   </div>
 
-  <div class="filter-row">
-   <select id="resFilter" onchange="renderResources()">
-    <option value="all">All subjects</option>
-    <option value="Biochemistry">Biochemistry</option>
-    <option value="Biology">Biology</option>
-    <option value="General Chemistry">General Chemistry</option>
-    <option value="Organic Chemistry">Organic Chemistry</option>
-    <option value="Physics">Physics</option>
-    <option value="Psychology and Sociology">Psychology and Sociology</option>
-   </select>
-   <select id="resPrioFilter" onchange="renderResources()">
-    <option value="all">All priorities</option>
-    <option value="high">🔴 High Priority</option>
-    <option value="review">🟡 Needs Review</option>
-    <option value="none">⚪ Normal</option>
-   </select>
+   <div id="resForm" class="res-form hidden">
+    <div id="formModeLabel" class="form-mode-label">New Resource</div>
+    <input type="text" id="resTitle" list="titleSuggestions" autocomplete="off" placeholder="Title / Path (e.g., Hormones / Pituitary / Posterior)">
+    <datalist id="titleSuggestions"></datalist>
+    <div class="hint">Type to pick an existing folder/subtitle or use <b>/</b> to nest new ones.</div>
+
+    <select id="resSubj">
+     <option value="Biochemistry">Biochemistry</option>
+     <option value="Biology">Biology</option>
+     <option value="General Chemistry">General Chemistry</option>
+     <option value="Organic Chemistry">Organic Chemistry</option>
+     <option value="Physics">Physics</option>
+     <option value="Psychology and Sociology">Psychology and Sociology</option>
+    </select>
+
+    <div class="prio-row">
+     <button type="button" class="prio-opt sel-none" id="prio-none" onclick="setPriority('none')">⚪ Normal</button>
+     <button type="button" class="prio-opt" id="prio-high" onclick="setPriority('high')">🔴 High Priority</button>
+     <button type="button" class="prio-opt" id="prio-review" onclick="setPriority('review')">🟡 Needs Review</button>
+    </div>
+
+    <div id="resNote" class="rich-box" contenteditable="true" data-placeholder="Type notes OR paste copied image here..."></div>
+    <button type="button" class="paste-btn" onclick="pasteFromClipboard()">📋 Paste Copied Image from Clipboard</button>
+    <div id="pastePreview"></div>
+    <label style="font-size:13px;color:#555;display:block;margin-bottom:4px">Or attach/replace chart from phone (optional):</label>
+    <input type="file" id="resFile" accept="image/*">
+    <div class="actions">
+     <button class="retire" onclick="saveResource()">Save</button>
+     <button style="background:#7f8c8d" onclick="closeResForm()">Cancel</button>
+    </div>
+   </div>
+
+   <input type="search" id="resSearch" placeholder="🔍 Search folders, topics, or notes..." oninput="renderResources()">
+
+   <div class="filter-row">
+    <select id="resFilter" onchange="renderResources()">
+     <option value="all">All subjects</option>
+     <option value="Biochemistry">Biochemistry</option>
+     <option value="Biology">Biology</option>
+     <option value="General Chemistry">General Chemistry</option>
+     <option value="Organic Chemistry">Organic Chemistry</option>
+     <option value="Physics">Physics</option>
+     <option value="Psychology and Sociology">Psychology and Sociology</option>
+    </select>
+    <select id="resPrioFilter" onchange="renderResources()">
+     <option value="all">All priorities</option>
+     <option value="high">🔴 High Priority</option>
+     <option value="review">🟡 Needs Review</option>
+     <option value="none">⚪ Normal</option>
+    </select>
+   </div>
+   <div id="resList"></div>
   </div>
-  <div id="resList"></div>
+
+  <!-- Sub-view B: Vault Circle Drill (Active Recall on Your Saved Charts & Notes) -->
+  <div id="resDrillView" class="hidden">
+   <div class="filter-row">
+    <select id="resDrillScope" onchange="nextResDrill()">
+     <option value="circle">Active Circle (Unretired)</option>
+     <option value="review">🟡 Saved for Review / Extra Only</option>
+     <option value="high">🔴 High Priority Only</option>
+    </select>
+    <select id="resDrillSubj" onchange="nextResDrill()">
+     <option value="all">All subjects</option>
+     <option value="Biochemistry">Biochemistry</option>
+     <option value="Biology">Biology</option>
+     <option value="General Chemistry">General Chemistry</option>
+     <option value="Organic Chemistry">Organic Chemistry</option>
+     <option value="Physics">Physics</option>
+     <option value="Psychology and Sociology">Psychology and Sociology</option>
+    </select>
+   </div>
+   <div id="resDrillCard"></div>
+   <div class="stats">
+    <span id="resDrillStats"></span>
+    <button class="reset-link" onclick="resetRetired('res')">Reset Vault Circle</button>
+   </div>
+  </div>
  </section>
 
  <!-- TAB 2: EQUATIONS DRILL -->
@@ -385,14 +417,17 @@
   </div>
 
   <div id="errForm" class="res-form hidden">
-   <div class="form-mode-label">Log Practice / AAMC Mistake</div>
-   <label style="font-size:12px;font-weight:600;color:#555">1. Why did I miss it? (Error Classification)</label>
+   <div class="form-mode-label">Log Practice / AAMC / CARS Mistake</div>
+   <label style="font-size:12px;font-weight:600;color:#555">1. Why did I miss it? (What Happened)</label>
    <select id="errType">
-    <option value="Didn't Read / Misread">Didn't Read / Misread Stem</option>
+    <option value="Didn't Read / Carelessness">Didn't Read / Carelessness (NOT/EXCEPT)</option>
     <option value="Passage / Graph Trap">Passage / Graph / Data Trap</option>
     <option value="Content Gap">Content Gap</option>
     <option value="Calculation / Math Error">Calculation / Math Error</option>
     <option value="50/50 Guess / Overthought">50/50 Guess / Overthought</option>
+    <option value="Outside Knowledge / Bias (CARS)">Outside Knowledge / Bias (CARS)</option>
+    <option value="Extreme / Out-of-Scope (CARS)">Extreme / Out-of-Scope (CARS)</option>
+    <option value="Author vs. Cited Source (CARS)">Confused Author vs. Cited Source (CARS)</option>
     <option value="Timing / Rushed">Timing / Rushed</option>
    </select>
 
@@ -407,12 +442,12 @@
     <option value="Psychology and Sociology">Psychology and Sociology</option>
    </select>
 
-   <label style="font-size:12px;font-weight:600;color:#555">3. Main Topic (e.g., Cell, Enzymes, Optics, Main Idea)</label>
-   <input type="text" id="errTopic" list="errTopicSuggestions" placeholder="Main Topic...">
+   <label style="font-size:12px;font-weight:600;color:#555">3. Main Topic or CARS Question Type</label>
+   <input type="text" id="errTopic" list="errTopicSuggestions" placeholder="e.g., Cell, Enzymes, or Reasoning Within Text...">
    <datalist id="errTopicSuggestions"></datalist>
 
    <label style="font-size:12px;font-weight:600;color:#555">4. Takeaway / Rule for Next Time (optional)</label>
-   <input type="text" id="errLesson" placeholder="e.g., Circle EXCEPT/NOT before reading choices">
+   <input type="text" id="errLesson" placeholder="e.g., Circle EXCEPT/NOT or check author's tone first">
 
    <div class="actions">
     <button class="retire" onclick="saveErrorLog()">Save Mistake</button>
@@ -427,11 +462,14 @@
   <div class="filter-row">
    <select id="errFilterType" onchange="renderErrors()">
     <option value="all">All error types</option>
-    <option value="Didn't Read / Misread">Didn't Read / Misread</option>
+    <option value="Didn't Read / Carelessness">Didn't Read / Carelessness</option>
     <option value="Passage / Graph Trap">Passage / Graph Trap</option>
     <option value="Content Gap">Content Gap</option>
     <option value="Calculation / Math Error">Calculation / Math Error</option>
     <option value="50/50 Guess / Overthought">50/50 Guess / Overthought</option>
+    <option value="Outside Knowledge / Bias (CARS)">Outside Knowledge / Bias (CARS)</option>
+    <option value="Extreme / Out-of-Scope (CARS)">Extreme / Out-of-Scope (CARS)</option>
+    <option value="Author vs. Cited Source (CARS)">Confused Author vs. Cited Source (CARS)</option>
     <option value="Timing / Rushed">Timing / Rushed</option>
    </select>
    <select id="errFilterSubj" onchange="renderErrors()">
@@ -459,14 +497,15 @@ const KEY='mcatState';
 const TODAY=new Date().toDateString();
 let state;
 try {
- state=JSON.parse(localStorage.getItem(KEY)||'{"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"wkState":{},"errors":[],"upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}}');
+ state=JSON.parse(localStorage.getItem(KEY)||'{"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"resRetired":[],"wkState":{},"errors":[],"upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}}');
 } catch(e) {
- state={"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"wkState":{},"errors":[],"upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}};
+ state={"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"resRetired":[],"wkState":{},"errors":[],"upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}};
 }
 if(!state.eqRetired)state.eqRetired=[];
 if(!state.eqSaved)state.eqSaved=[];
 if(!state.stRetired)state.stRetired=[];
 if(!state.stSaved)state.stSaved=[];
+if(!state.resRetired)state.resRetired=[];
 if(!state.wkState)state.wkState={};
 if(!state.errors)state.errors=[];
 if(!Array.isArray(state.upNext) || state.upNext.length!==3)state.upNext=["","",""];
@@ -512,6 +551,10 @@ function switchTab(which){
   document.getElementById('tab-'+t).classList.toggle('active',t===which);
   document.getElementById('panel-'+t).classList.toggle('active',t===which);
  });
+ if(which==='res'){
+  if(resDrillMode)nextResDrill();
+  else renderResources();
+ }
  if(which==='eq'){
   eqShowingSaved=false;
   document.getElementById('eqDeckView').classList.remove('hidden');
@@ -537,6 +580,7 @@ function resetRetired(type){
  if(type==='eq'){state.eqRetired=[];persist();nextEq();}
  if(type==='st'){state.stRetired=[];persist();nextSt();}
  if(type==='wk'){state.wkState={};persist();nextWk();}
+ if(type==='res'){state.resRetired=[];persist();nextResDrill();}
 }
 
 /* Equations Flashcard Logic */
@@ -861,13 +905,17 @@ function revealMath(){
  document.getElementById('mathStreak').textContent = 'Solved: ' + mathCount;
 }
 
-/* TAB 5: PICTORIAL ERROR PATTERN TRACKER */
+/* TAB 5: PICTORIAL ERROR PATTERN TRACKER (WITH CARS PRESETS) */
 const ERR_COLORS = {
+ "Didn't Read / Carelessness": "#c0392b",
  "Didn't Read / Misread": "#c0392b",
  "Passage / Graph Trap": "#d98e04",
  "Content Gap": "#1f3a5f",
  "Calculation / Math Error": "#8e44ad",
  "50/50 Guess / Overthought": "#2980b9",
+ "Outside Knowledge / Bias (CARS)": "#e67e22",
+ "Extreme / Out-of-Scope (CARS)": "#d35400",
+ "Author vs. Cited Source (CARS)": "#9b59b6",
  "Timing / Rushed": "#16a085"
 };
 
@@ -912,13 +960,23 @@ function renderErrors(){
  const total = state.errors.length;
  document.getElementById('sub-er').textContent = total + ' logged';
 
- const topics = [...new Set(state.errors.map(e => e.topic).filter(Boolean))].sort();
+ const carsPresets = [
+  "Foundations: Main Idea",
+  "Foundations: Explicit Detail",
+  "Foundations: Tone / Attitude",
+  "Foundations: Word in Context",
+  "Reasoning Within Text: Function / Structure",
+  "Reasoning Within Text: Evaluate Evidence",
+  "Reasoning Beyond Text: Strengthen / Weaken",
+  "Reasoning Beyond Text: Apply New Info / Analogy"
+ ];
+ const topics = [...new Set([...carsPresets, ...state.errors.map(e => e.topic).filter(Boolean)])].sort();
  document.getElementById('errTopicSuggestions').innerHTML =
   topics.map(t => '<option value="'+escapeHtml(t)+'"></option>').join('');
 
  const dash = document.getElementById('errDashboard');
  if(!total){
-  dash.innerHTML = '<div class="chart-card"><p style="margin:0;font-size:13.5px;color:#555">No mistakes logged yet. Tap <b>+ Log Mistake</b> after any practice block to see visual patterns of where you lose points.</p></div>';
+  dash.innerHTML = '<div class="chart-card"><p style="margin:0;font-size:13.5px;color:#555">No mistakes logged yet. Tap <b>+ Log Mistake</b> after any practice block or CARS passage to see visual patterns of where you lose points.</p></div>';
   document.getElementById('errList').innerHTML = '';
   return;
  }
@@ -981,7 +1039,7 @@ function renderErrors(){
  }).join('');
 }
 
-/* IndexedDB Storage + Search + Blur Active Recall + Move/Edit + Priority Flags */
+/* IndexedDB Storage + Vault Circle Drill + Search + Blur Active Recall + Move/Edit + Priority Flags */
 let db;
 const req=indexedDB.open('mcatResourcesDB',1);
 req.onupgradeneeded=e=>{e.target.result.createObjectStore('items',{keyPath:'id',autoIncrement:true});};
@@ -991,6 +1049,103 @@ let pastedImgData = null;
 let editingId = null;
 let currentPriority = 'none';
 let blurActive = false;
+let resDrillMode = false;
+let curResDrill = null;
+
+function toggleResDrillMode(){
+ resDrillMode = !resDrillMode;
+ document.getElementById('resBrowseView').classList.toggle('hidden', resDrillMode);
+ document.getElementById('resDrillView').classList.toggle('hidden', !resDrillMode);
+ const btn = document.getElementById('resDrillBtn');
+ btn.classList.toggle('active', resDrillMode);
+ btn.textContent = resDrillMode ? '📂 Browse Vault' : '🔄 Drill Circle';
+ if(resDrillMode) nextResDrill();
+ else renderResources();
+}
+
+function nextResDrill(){
+ if(!db) return;
+ const scope = document.getElementById('resDrillScope').value;
+ const subj = document.getElementById('resDrillSubj').value;
+ db.transaction('items','readonly').objectStore('items').getAll().onsuccess = e => {
+  const all = e.target.result;
+  const activeCircle = all.filter(x => !state.resRetired.includes(x.id));
+  const reviewCount = activeCircle.filter(x => x.priority === 'review').length;
+  const retiredCount = all.filter(x => state.resRetired.includes(x.id)).length;
+  document.getElementById('resDrillStats').textContent =
+   'In Circle: ' + activeCircle.length + ' | Saved Review: ' + reviewCount + ' | Mastered: ' + retiredCount;
+
+  const pool = activeCircle.filter(x => {
+   if(subj !== 'all' && x.subject !== subj) return false;
+   if(scope === 'review') return x.priority === 'review';
+   if(scope === 'high') return x.priority === 'high';
+   return true;
+  });
+
+  const card = document.getElementById('resDrillCard');
+  if(!pool.length){
+   card.innerHTML = '<div class="fs-card"><p>No resources left in this circle filter. Add resources, switch filter, or tap <b>Reset Vault Circle</b> below.</p></div>';
+   curResDrill = null;
+   return;
+  }
+
+  /* Bias slightly toward items marked Needs Review or High Priority */
+  const priorityPool = pool.filter(x => x.priority === 'review' || x.priority === 'high');
+  const pickPool = (priorityPool.length && Math.random() < 0.65) ? priorityPool : pool;
+  curResDrill = pickPool[Math.floor(Math.random() * pickPool.length)];
+
+  const p = curResDrill.priority || 'none';
+  const badge = p === 'high' ? '<span class="prio-badge high">🔴 High Priority</span>' :
+                (p === 'review' ? '<span class="prio-badge review">🟡 Saved for Review</span>' : '');
+
+  card.innerHTML = '<div class="fs-card">' +
+   '<div class="tag"><span>' + escapeHtml(curResDrill.subject) + '</span>' + badge + '</div>' +
+   '<div class="eq-prompt">' + escapeHtml(curResDrill.title || 'Untitled Resource') + '</div>' +
+   '<button class="reveal-btn" id="revealResBtn" onclick="revealResDrill()">Reveal Notes &amp; Diagram</button>' +
+   '<div id="resDrillAfter" class="hidden"></div></div>';
+ };
+}
+
+function revealResDrill(){
+ if(!curResDrill) return;
+ document.getElementById('revealResBtn').classList.add('hidden');
+ const after = document.getElementById('resDrillAfter');
+ after.classList.remove('hidden');
+ after.innerHTML =
+  '<div class="eq-answer-box" style="margin-top:12px">' +
+  (curResDrill.note ? '<div class="eq-note">' + escapeHtml(curResDrill.note) + '</div>' : '') +
+  (curResDrill.imgData ? '<img class="drill-img" src="' + curResDrill.imgData + '" onclick="zoomImg(this.src)">' : '') +
+  (!curResDrill.note && !curResDrill.imgData ? '<div class="eq-note">No note or image attached.</div>' : '') +
+  '</div>' +
+  '<div class="actions">' +
+  '<button class="retire" onclick="retireResDrill()">🟢 Mastered (Hide)</button>' +
+  '<button class="save" onclick="saveResDrillForReview()">🟡 Save for Review / Extra</button>' +
+  '</div>' +
+  '<button class="opt" onclick="nextResDrill()" style="margin-top:12px">Keep in circle, next resource →</button>';
+}
+
+function retireResDrill(){
+ if(!curResDrill) return;
+ if(!state.resRetired.includes(curResDrill.id)) state.resRetired.push(curResDrill.id);
+ persist();
+ nextResDrill();
+}
+
+function saveResDrillForReview(){
+ if(!curResDrill || !db) return;
+ const tx = db.transaction('items','readwrite');
+ const store = tx.objectStore('items');
+ store.get(curResDrill.id).onsuccess = e => {
+  const item = e.target.result;
+  if(item){
+   item.priority = 'review';
+   store.put(item);
+  }
+ };
+ tx.oncomplete = () => {
+  nextResDrill();
+ };
+}
 
 function toggleBlurMode(){
  blurActive = !blurActive;
@@ -998,7 +1153,7 @@ function toggleBlurMode(){
  const btn = document.getElementById('blurToggleBtn');
  list.classList.toggle('blur-active', blurActive);
  btn.classList.toggle('active', blurActive);
- btn.textContent = blurActive ? '👁️ Blur Test: ON' : '👁️ Blur Test: OFF';
+ btn.textContent = blurActive ? '👁️ Blur: ON' : '👁️ Blur: OFF';
  if(!blurActive){
   document.querySelectorAll('.unblurred').forEach(el => el.classList.remove('unblurred'));
  }
@@ -1026,6 +1181,7 @@ function clearPastedImg(){
 }
 
 function openNewResource(){
+ if(resDrillMode) toggleResDrillMode();
  editingId = null;
  document.getElementById('formModeLabel').textContent = 'Add New Resource';
  document.getElementById('resTitle').value = '';
@@ -1207,7 +1363,10 @@ function buildTreeHtml(node, autoOpen){
  });
  node.items.forEach(item=>{
   const p=item.priority||'none';
-  const badge=p==='high'?'<span class="prio-badge high">🔴 High Priority</span>':(p==='review'?'<span class="prio-badge review">🟡 Needs Review</span>':'');
+  const isRetired=state.resRetired.includes(item.id);
+  const badge=p==='high'?'<span class="prio-badge high">🔴 High Priority</span>':
+              (p==='review'?'<span class="prio-badge review">🟡 Needs Review</span>':
+              (isRetired?'<span class="prio-badge master">🟢 Mastered</span>':''));
   html+='<div class="res-item p-'+p+'"><div class="tag"><span>'+escapeHtml(item.subject)+'</span>'+badge+'</div>'+
    (item.note?'<div class="res-note" onclick="handleNoteClick(this)">'+escapeHtml(item.note)+'</div>':'')+
    (item.imgData?'<img src="'+item.imgData+'" onclick="handleImgClick(this)">':'')+
@@ -1255,7 +1414,11 @@ function delResource(id){
  if(!confirm('Delete this resource?'))return;
  const tx=db.transaction('items','readwrite');
  tx.objectStore('items').delete(id);
- tx.oncomplete=renderResources;
+ tx.oncomplete=()=>{
+  state.resRetired = state.resRetired.filter(x => x !== id);
+  persist();
+  renderResources();
+ };
 }
 
 function zoomImg(src){
@@ -1326,6 +1489,7 @@ function importBackup(ev){
     if(!state.eqSaved)state.eqSaved=[];
     if(!state.stRetired)state.stRetired=[];
     if(!state.stSaved)state.stSaved=[];
+    if(!state.resRetired)state.resRetired=[];
     if(!state.wkState)state.wkState={};
     if(!state.errors)state.errors=[];
     if(!Array.isArray(state.upNext) || state.upNext.length!==3)state.upNext=["","",""];
