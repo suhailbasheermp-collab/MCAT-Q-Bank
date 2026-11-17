@@ -268,12 +268,12 @@
    <div id="resList"></div>
   </div>
 
-  <!-- Sub-view B: Vault Circle Drill (Active Recall on Your Saved Charts & Notes) -->
+  <!-- Sub-view B: Vault Circle Drill (3-Bucket: Active Circle | Saved Review | Mastered) -->
   <div id="resDrillView" class="hidden">
    <div class="filter-row">
     <select id="resDrillScope" onchange="nextResDrill()">
-     <option value="circle">Active Circle (Unretired)</option>
-     <option value="review">🟡 Saved for Review / Extra Only</option>
+     <option value="circle">Active Circle (Unseen / Unsaved)</option>
+     <option value="saved">🟡 Saved for Review List</option>
      <option value="high">🔴 High Priority Only</option>
     </select>
     <select id="resDrillSubj" onchange="nextResDrill()">
@@ -289,7 +289,7 @@
    <div id="resDrillCard"></div>
    <div class="stats">
     <span id="resDrillStats"></span>
-    <button class="reset-link" onclick="resetRetired('res')">Reset Vault Circle</button>
+    <button class="reset-link" onclick="resetRetired('res')">Reset Mastered</button>
    </div>
   </div>
  </section>
@@ -497,15 +497,16 @@ const KEY='mcatState';
 const TODAY=new Date().toDateString();
 let state;
 try {
- state=JSON.parse(localStorage.getItem(KEY)||'{"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"resRetired":[],"wkState":{},"errors":[],"upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}}');
+ state=JSON.parse(localStorage.getItem(KEY)||'{"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"resRetired":[],"resSaved":[],"wkState":{},"errors":[],"upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}}');
 } catch(e) {
- state={"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"resRetired":[],"wkState":{},"errors":[],"upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}};
+ state={"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"resRetired":[],"resSaved":[],"wkState":{},"errors":[],"upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}};
 }
 if(!state.eqRetired)state.eqRetired=[];
 if(!state.eqSaved)state.eqSaved=[];
 if(!state.stRetired)state.stRetired=[];
 if(!state.stSaved)state.stSaved=[];
 if(!state.resRetired)state.resRetired=[];
+if(!state.resSaved)state.resSaved=[];
 if(!state.wkState)state.wkState={};
 if(!state.errors)state.errors=[];
 if(!Array.isArray(state.upNext) || state.upNext.length!==3)state.upNext=["","",""];
@@ -1039,7 +1040,7 @@ function renderErrors(){
  }).join('');
 }
 
-/* IndexedDB Storage + Vault Circle Drill + Search + Blur Active Recall + Move/Edit + Priority Flags */
+/* IndexedDB Storage + 3-Bucket Vault Circle Drill (Active Circle | Saved Review | Mastered) */
 let db;
 const req=indexedDB.open('mcatResourcesDB',1);
 req.onupgradeneeded=e=>{e.target.result.createObjectStore('items',{keyPath:'id',autoIncrement:true});};
@@ -1051,6 +1052,10 @@ let currentPriority = 'none';
 let blurActive = false;
 let resDrillMode = false;
 let curResDrill = null;
+
+function resInCircle(item){
+ return item && !state.resRetired.includes(item.id) && !state.resSaved.includes(item.id);
+}
 
 function toggleResDrillMode(){
  resDrillMode = !resDrillMode;
@@ -1069,34 +1074,38 @@ function nextResDrill(){
  const subj = document.getElementById('resDrillSubj').value;
  db.transaction('items','readonly').objectStore('items').getAll().onsuccess = e => {
   const all = e.target.result;
-  const activeCircle = all.filter(x => !state.resRetired.includes(x.id));
-  const reviewCount = activeCircle.filter(x => x.priority === 'review').length;
-  const retiredCount = all.filter(x => state.resRetired.includes(x.id)).length;
-  document.getElementById('resDrillStats').textContent =
-   'In Circle: ' + activeCircle.length + ' | Saved Review: ' + reviewCount + ' | Mastered: ' + retiredCount;
+  const activeCircle = all.filter(resInCircle);
+  const savedReview = all.filter(x => state.resSaved.includes(x.id) && !state.resRetired.includes(x.id));
+  const masteredCount = all.filter(x => state.resRetired.includes(x.id)).length;
 
-  const pool = activeCircle.filter(x => {
-   if(subj !== 'all' && x.subject !== subj) return false;
-   if(scope === 'review') return x.priority === 'review';
-   if(scope === 'high') return x.priority === 'high';
-   return true;
-  });
+  document.getElementById('resDrillStats').textContent =
+   'In Circle: ' + activeCircle.length + ' | Saved Review: ' + savedReview.length + ' | Mastered: ' + masteredCount;
+
+  let pool = [];
+  if(scope === 'saved'){
+   pool = savedReview.filter(x => subj === 'all' || x.subject === subj);
+  } else if(scope === 'high'){
+   pool = activeCircle.filter(x => x.priority === 'high' && (subj === 'all' || x.subject === subj));
+  } else {
+   pool = activeCircle.filter(x => subj === 'all' || x.subject === subj);
+  }
 
   const card = document.getElementById('resDrillCard');
   if(!pool.length){
-   card.innerHTML = '<div class="fs-card"><p>No resources left in this circle filter. Add resources, switch filter, or tap <b>Reset Vault Circle</b> below.</p></div>';
+   const msg = scope === 'saved'
+    ? 'No items in your Saved for Review list yet.'
+    : 'No resources left in the Active Circle! Switch to <b>Saved for Review List</b> or tap <b>Reset Mastered</b> below.';
+   card.innerHTML = '<div class="fs-card"><p>' + msg + '</p></div>';
    curResDrill = null;
    return;
   }
 
-  /* Bias slightly toward items marked Needs Review or High Priority */
-  const priorityPool = pool.filter(x => x.priority === 'review' || x.priority === 'high');
-  const pickPool = (priorityPool.length && Math.random() < 0.65) ? priorityPool : pool;
-  curResDrill = pickPool[Math.floor(Math.random() * pickPool.length)];
+  curResDrill = pool[Math.floor(Math.random() * pool.length)];
 
   const p = curResDrill.priority || 'none';
-  const badge = p === 'high' ? '<span class="prio-badge high">🔴 High Priority</span>' :
-                (p === 'review' ? '<span class="prio-badge review">🟡 Saved for Review</span>' : '');
+  const isSaved = state.resSaved.includes(curResDrill.id);
+  const badge = isSaved ? '<span class="prio-badge review">🟡 Saved for Review</span>' :
+                (p === 'high' ? '<span class="prio-badge high">🔴 High Priority</span>' : '');
 
   card.innerHTML = '<div class="fs-card">' +
    '<div class="tag"><span>' + escapeHtml(curResDrill.subject) + '</span>' + badge + '</div>' +
@@ -1111,6 +1120,12 @@ function revealResDrill(){
  document.getElementById('revealResBtn').classList.add('hidden');
  const after = document.getElementById('resDrillAfter');
  after.classList.remove('hidden');
+
+ const isSaved = state.resSaved.includes(curResDrill.id);
+ const middleBtn = isSaved
+  ? '<button class="save" onclick="returnResDrillToCircle()">↩️ Put Back in Circle</button>'
+  : '<button class="save" onclick="saveResDrillForReview()">🟡 Save for Review</button>';
+
  after.innerHTML =
   '<div class="eq-answer-box" style="margin-top:12px">' +
   (curResDrill.note ? '<div class="eq-note">' + escapeHtml(curResDrill.note) + '</div>' : '') +
@@ -1119,32 +1134,33 @@ function revealResDrill(){
   '</div>' +
   '<div class="actions">' +
   '<button class="retire" onclick="retireResDrill()">🟢 Mastered (Hide)</button>' +
-  '<button class="save" onclick="saveResDrillForReview()">🟡 Save for Review / Extra</button>' +
+  middleBtn +
   '</div>' +
-  '<button class="opt" onclick="nextResDrill()" style="margin-top:12px">Keep in circle, next resource →</button>';
+  '<button class="opt" onclick="nextResDrill()" style="margin-top:12px">Keep here, next resource →</button>';
 }
 
 function retireResDrill(){
  if(!curResDrill) return;
+ state.resSaved = state.resSaved.filter(x => x !== curResDrill.id);
  if(!state.resRetired.includes(curResDrill.id)) state.resRetired.push(curResDrill.id);
  persist();
  nextResDrill();
 }
 
 function saveResDrillForReview(){
- if(!curResDrill || !db) return;
- const tx = db.transaction('items','readwrite');
- const store = tx.objectStore('items');
- store.get(curResDrill.id).onsuccess = e => {
-  const item = e.target.result;
-  if(item){
-   item.priority = 'review';
-   store.put(item);
-  }
- };
- tx.oncomplete = () => {
-  nextResDrill();
- };
+ if(!curResDrill) return;
+ state.resRetired = state.resRetired.filter(x => x !== curResDrill.id);
+ if(!state.resSaved.includes(curResDrill.id)) state.resSaved.push(curResDrill.id);
+ persist();
+ nextResDrill();
+}
+
+function returnResDrillToCircle(){
+ if(!curResDrill) return;
+ state.resSaved = state.resSaved.filter(x => x !== curResDrill.id);
+ state.resRetired = state.resRetired.filter(x => x !== curResDrill.id);
+ persist();
+ nextResDrill();
 }
 
 function toggleBlurMode(){
@@ -1364,8 +1380,9 @@ function buildTreeHtml(node, autoOpen){
  node.items.forEach(item=>{
   const p=item.priority||'none';
   const isRetired=state.resRetired.includes(item.id);
+  const isSaved=state.resSaved.includes(item.id);
   const badge=p==='high'?'<span class="prio-badge high">🔴 High Priority</span>':
-              (p==='review'?'<span class="prio-badge review">🟡 Needs Review</span>':
+              ((p==='review'||isSaved)?'<span class="prio-badge review">🟡 Saved for Review</span>':
               (isRetired?'<span class="prio-badge master">🟢 Mastered</span>':''));
   html+='<div class="res-item p-'+p+'"><div class="tag"><span>'+escapeHtml(item.subject)+'</span>'+badge+'</div>'+
    (item.note?'<div class="res-note" onclick="handleNoteClick(this)">'+escapeHtml(item.note)+'</div>':'')+
@@ -1389,8 +1406,10 @@ function renderResources(){
   updateTitleSuggestions(rawAll);
   document.getElementById('sub-res').textContent=rawAll.length+' saved';
   const all=rawAll.filter(x=>{
+   const isSaved=state.resSaved.includes(x.id);
+   const effectivePrio = isSaved ? 'review' : (x.priority||'none');
    const matchSubj=subjFilter==='all'||x.subject===subjFilter;
-   const matchPrio=prioFilter==='all'||(x.priority||'none')===prioFilter;
+   const matchPrio=prioFilter==='all'||effectivePrio===prioFilter;
    const matchQuery=!query || (x.title||'').toLowerCase().includes(query) || (x.note||'').toLowerCase().includes(query);
    return matchSubj && matchPrio && matchQuery;
   });
@@ -1416,6 +1435,7 @@ function delResource(id){
  tx.objectStore('items').delete(id);
  tx.oncomplete=()=>{
   state.resRetired = state.resRetired.filter(x => x !== id);
+  state.resSaved = state.resSaved.filter(x => x !== id);
   persist();
   renderResources();
  };
@@ -1490,6 +1510,7 @@ function importBackup(ev){
     if(!state.stRetired)state.stRetired=[];
     if(!state.stSaved)state.stSaved=[];
     if(!state.resRetired)state.resRetired=[];
+    if(!state.resSaved)state.resSaved=[];
     if(!state.wkState)state.wkState={};
     if(!state.errors)state.errors=[];
     if(!Array.isArray(state.upNext) || state.upNext.length!==3)state.upNext=["","",""];
