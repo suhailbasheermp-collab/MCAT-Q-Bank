@@ -68,10 +68,13 @@
  .struct-box{background:#fff;border:1px solid #e5e9f0;border-radius:10px;padding:12px;margin:8px 0}
  .drill-img{width:100%;max-height:300px;object-fit:contain;border-radius:8px;margin-top:10px;background:#fff;border:1px solid #dce1ea;cursor:pointer}
 
- /* Rich Paste Box for Android Image & Text Pasting */
- .rich-box{min-height:76px;padding:10px;margin-bottom:8px;font-size:15px;border:1px solid #c5cbd6;border-radius:8px;background:#fff;white-space:pre-wrap;word-break:break-word;outline:none}
+ /* Rich Paste Box & 1-Tap Equation Symbol Toolbar */
+ .rich-box{min-height:76px;padding:10px;margin-bottom:6px;font-size:15px;border:1px solid #c5cbd6;border-radius:8px;background:#fff;white-space:pre-wrap;word-break:break-word;outline:none;line-height:1.45}
  .rich-box:empty::before{content:attr(data-placeholder);color:#888}
  .rich-box img{max-width:100%;max-height:160px;display:block;margin-top:6px;border-radius:6px}
+ .sym-bar{display:flex;gap:5px;overflow-x:auto;padding:4px 0 8px 0;margin-bottom:4px;-webkit-overflow-scrolling:touch}
+ .sym-btn{flex-shrink:0;min-width:34px;height:34px;padding:0 8px;background:#f0f4fa;color:#1f3a5f;border:1px solid #c5d2e6;border-radius:7px;font-size:15px;font-weight:700;font-family:ui-monospace,monospace;cursor:pointer;display:flex;align-items:center;justify-content:center}
+ .sym-btn:active{background:#1f3a5f;color:#fff}
  .paste-btn{width:100%;padding:10px;margin-bottom:10px;background:#eef3fa;color:#1f3a5f;border:1px dashed #1f3a5f;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
 
  /* Priority Selector & Badges */
@@ -235,7 +238,29 @@
      <button type="button" class="prio-opt" id="prio-review" onclick="setPriority('review')">🟡 Needs Review</button>
     </div>
 
-    <div id="resNote" class="rich-box" contenteditable="true" data-placeholder="Type notes OR paste copied image here..."></div>
+    <div id="resNote" class="rich-box" contenteditable="true" spellcheck="false" data-placeholder="Type notes, equations (use ^2 for ²), or paste image..."></div>
+
+    <!-- 1-Tap MCAT Math & Symbol Bar -->
+    <div class="sym-bar" aria-label="Insert math symbol">
+     <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('θ')">θ</button>
+     <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('Δ')">Δ</button>
+     <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('λ')">λ</button>
+     <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('μ')">μ</button>
+     <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('π')">π</button>
+     <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('ω')">ω</button>
+     <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('√')">√</button>
+     <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('²')">²</button>
+     <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('³')">³</button>
+     <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('⁻¹')">⁻¹</button>
+     <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('±')">±</button>
+     <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('≈')">≈</button>
+     <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('→')">→</button>
+     <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('⇌')">⇌</button>
+     <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('°')">°</button>
+     <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('⁺')">⁺</button>
+     <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('⁻')">⁻</button>
+    </div>
+
     <button type="button" class="paste-btn" onclick="pasteFromClipboard()">📋 Paste Copied Image from Clipboard</button>
     <div id="pastePreview"></div>
     <label style="font-size:13px;color:#555;display:block;margin-bottom:4px">Or attach/replace chart from phone (optional):</label>
@@ -1259,6 +1284,36 @@ function compressImage(file){
 }
 
 const noteBox = document.getElementById('resNote');
+
+/* Insert symbol from 1-tap equation bar */
+function insertSym(sym){
+ noteBox.focus();
+ document.execCommand('insertText', false, sym);
+}
+
+/* Auto-convert ^2, ^3, ^-1, ^+, ^- into Unicode superscripts as you type */
+noteBox.addEventListener('input', function(){
+ const sel = window.getSelection();
+ if(!sel.rangeCount || !sel.isCollapsed) return;
+ const node = sel.focusNode;
+ if(!node || node.nodeType !== Node.TEXT_NODE) return;
+ const pos = sel.focusOffset;
+ const before = node.textContent.slice(0, pos);
+ const map = {'^2':'²','^3':'³','^4':'⁴','^-1':'⁻¹','^-2':'⁻²','^+':'⁺','^-':'⁻','^0':'⁰','^1':'¹'};
+ for(const [pat, rep] of Object.entries(map)){
+  if(before.endsWith(pat)){
+   const start = pos - pat.length;
+   node.textContent = node.textContent.slice(0, start) + rep + node.textContent.slice(pos);
+   const range = document.createRange();
+   range.setStart(node, start + rep.length);
+   range.collapse(true);
+   sel.removeAllRanges();
+   sel.addRange(range);
+   break;
+  }
+ }
+});
+
 noteBox.addEventListener('paste', async function(e){
  const cd = e.clipboardData || e.originalEvent.clipboardData;
  if(cd && cd.items){
