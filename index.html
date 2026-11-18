@@ -18,14 +18,15 @@
 
  main{padding:12px 14px;max-width:640px;margin:auto}
 
- /* Catchy Daily Quote / Inspiration Banner */
  .quote-banner{background:linear-gradient(135deg,#1f3a5f 0%,#2b5284 100%);color:#fff;border-radius:12px;padding:11px 14px;margin-bottom:10px;box-shadow:0 3px 10px rgba(31,58,95,0.18);border-left:4px solid #f4b41a;display:flex;align-items:flex-start;gap:10px}
  .quote-icon{font-size:18px;line-height:1.2;flex-shrink:0;margin-top:1px}
  .quote-text{flex:1;font-size:13.5px;font-weight:600;font-style:italic;line-height:1.4;outline:none;min-height:19px;word-break:break-word}
  .quote-text:empty::before{content:attr(data-placeholder);color:rgba(255,255,255,0.75);font-weight:500}
  .quote-text:focus{background:rgba(255,255,255,0.12);border-radius:6px;padding:2px 6px;margin:-2px -6px}
 
- /* Standalone Timer Drawer */
+ .focus-rule{background:#fdecea;border:1px solid #f5c2be;border-left:4px solid #c0392b;border-radius:10px;padding:9px 12px;margin-bottom:10px;font-size:13px;line-height:1.4;color:#5a1d17}
+ .focus-rule b{color:#c0392b}
+
  .timer-drawer{background:#fff;border:1.5px solid #1f3a5f;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 4px 12px rgba(31,58,95,0.12)}
  .timer-display{font-size:32px;font-weight:800;font-family:ui-monospace,monospace;color:#1f3a5f;text-align:center;margin:4px 0 12px 0;letter-spacing:1px}
  .timer-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
@@ -34,10 +35,8 @@
  .timer-btns{display:flex;gap:8px}
  .timer-btns button{flex:1;padding:10px;border-radius:8px;border:none;font-size:14px;font-weight:700;cursor:pointer;color:#fff}
 
- /* Daily Micro-Habit Strip */
  .habit-strip{background:#fff;border:1px solid #d5dce6;border-radius:10px;padding:8px 12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600;color:#1f3a5f;box-shadow:0 1px 4px rgba(0,0,0,0.03)}
 
- /* Up Next to Learn (3-Slot Queue) */
  .next-box{background:#fff;border:1px solid #d5dce6;border-radius:12px;padding:10px 12px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,0.03)}
  .next-head{font-size:12px;font-weight:700;color:#1f3a5f;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
  .next-slot{display:flex;align-items:center;gap:8px;margin-bottom:6px}
@@ -47,7 +46,6 @@
  .next-input:focus{outline:none;border-color:#1f3a5f;background:#fff}
  .next-done{background:#eef3fa;color:#2e9e4f;border:1px solid #c5cbd6;border-radius:8px;padding:6px 9px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0}
 
- /* 6 Central Navigation Tabs */
  .hub-tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-bottom:16px}
  .hub-tab{background:#fff;border:2px solid #d5dce6;border-radius:11px;padding:9px 1px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.04);transition:all 0.15s ease;color:#1f3a5f}
  .hub-tab .tab-icon{font-size:16px;line-height:1}
@@ -72,14 +70,12 @@
  .rev{background:#fff;padding:12px;border-radius:8px;margin:10px 0;border:1px solid #dce1ea}
  .rev button{margin-top:8px;padding:8px 12px;border-radius:6px;border:1px solid #999;background:#fff;cursor:pointer}
 
- /* Sub-bar inside Tabs */
  .sub-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:6px;flex-wrap:wrap}
  .sub-bar h2{font-size:17px;margin:0;color:#1f3a5f}
  .pill-group{display:flex;gap:6px}
  .pill-btn{background:#fff;color:#1f3a5f;border:1.5px solid #1f3a5f;border-radius:8px;padding:7px 10px;font-size:12.5px;font-weight:600;cursor:pointer}
  .pill-btn.active{background:#1f3a5f;color:#fff}
 
- /* Flashcard Styling */
  .fs-card{background:#fff;border:1px solid #c5cbd6;border-radius:14px;padding:20px 16px;margin:8px 0;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
  .eq-prompt{font-size:18px;font-weight:600;line-height:1.45;margin:10px 0 18px 0}
  .eq-answer-box{background:#eef3fa;border-left:4px solid #1f3a5f;padding:16px;border-radius:8px;margin-bottom:16px}
@@ -89,7 +85,6 @@
  .struct-box{background:#fff;border:1px solid #e5e9f0;border-radius:10px;padding:12px;margin:8px 0}
  .drill-img{width:100%;max-height:300px;object-fit:contain;border-radius:8px;margin-top:10px;background:#fff;border:1px solid #dce1ea;cursor:pointer}
 
- /* Rich Paste Box & 1-Tap Equation Symbol Toolbar */
  .rich-box{min-height:76px;padding:10px;margin-bottom:6px;font-size:15px;border:1px solid #c5cbd6;border-radius:8px;background:#fff;white-space:pre-wrap;word-break:break-word;outline:none;line-height:1.45}
  .rich-box:empty::before{content:attr(data-placeholder);color:#888}
  .rich-box img{max-width:100%;max-height:160px;display:block;margin-top:6px;border-radius:6px}
@@ -98,7 +93,6 @@
  .sym-btn:active{background:#1f3a5f;color:#fff}
  .paste-btn{width:100%;padding:10px;margin-bottom:10px;background:#eef3fa;color:#1f3a5f;border:1px dashed #1f3a5f;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
 
- /* Priority Selector & Badges */
  .prio-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
  .prio-opt{padding:9px 6px;border:1.5px solid #c5cbd6;border-radius:8px;background:#fff;font-size:12px;font-weight:600;cursor:pointer;text-align:center}
  .prio-opt.sel-none{border-color:#1f3a5f;background:#eef3fa;color:#1f3a5f}
@@ -110,11 +104,12 @@
  .prio-badge.review{background:#fef6e4;color:#9a6300;border:1px solid #f7dfa5}
  .prio-badge.master{background:#d6f5dd;color:#1e7035;border:1px solid #a8e4b7}
 
- /* Resources Section & Nested Toggles + Blur Active Recall */
  .res-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:6px;flex-wrap:wrap}
  .res-header h2{font-size:17px;margin:0;color:#1f3a5f}
  .btn-primary{background:#1f3a5f;color:#fff;border:none;padding:8px 12px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
- .backup-bar{display:flex;gap:8px;margin-bottom:10px}
+ .backup-bar{display:flex;gap:8px;margin-bottom:4px}
+ .backup-info{font-size:11.5px;color:#666;margin:0 0 10px 2px}
+ .backup-info.stale{color:#c0392b;font-weight:600}
  .btn-sec{flex:1;background:#fff;color:#1f3a5f;border:1.5px solid #1f3a5f;padding:8px 8px;border-radius:8px;font-size:12px;font-weight:600;text-align:center;cursor:pointer}
  .btn-sec.active{background:#1f3a5f;color:#fff}
  .res-form{background:#fff;padding:14px;border-radius:10px;border:1px solid #c5cbd6;margin-bottom:14px}
@@ -140,7 +135,6 @@
  .res-edit{color:#1f3a5f;border:none;background:none;font-size:13px;font-weight:600;padding:4px 0;cursor:pointer}
  .res-del{color:#c0392b;border:none;background:none;font-size:13px;padding:4px 0;cursor:pointer}
 
- /* Pictorial Error Pattern Charts */
  .chart-card{background:#fff;border:1px solid #dce1ea;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,0.03)}
  .chart-title{font-size:14px;font-weight:700;color:#1f3a5f;margin:0 0 10px 0;display:flex;justify-content:space-between;align-items:center}
  .bar-row{margin-bottom:9px;cursor:pointer}
@@ -150,7 +144,6 @@
  .hotspot-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
  .hotspot-chip{background:#eef3fa;color:#1f3a5f;border:1px solid #c5d4ea;border-radius:99px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer}
 
- /* Content Syllabus Checklist Styling */
  .syl-progress-card{background:#fff;border:1px solid #dce1ea;border-radius:12px;padding:12px 14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,0.03)}
  .syl-prog-top{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;font-weight:700;color:#1f3a5f;margin-bottom:6px}
  details.syl-subj{background:#fff;border:1.5px solid #d5dce6;border-radius:10px;margin-bottom:10px;overflow:hidden}
@@ -167,7 +160,6 @@
  .syl-row input[type="checkbox"]{width:18px;height:18px;margin:2px 0 0 0;flex-shrink:0;accent-color:#2e9e4f;cursor:pointer}
  .syl-row.checked span{text-decoration:line-through;color:#6c757d}
 
- /* Fullscreen Image Zoom Modal */
  #imgModal{position:fixed;inset:0;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;z-index:999;padding:12px}
  #imgModal img{max-width:100%;max-height:100%;object-fit:contain}
 </style>
@@ -182,13 +174,13 @@
 </header>
 
 <main>
- <!-- Catchy Daily Quote / Inspiration Banner -->
  <div class="quote-banner">
   <span class="quote-icon">✨</span>
   <div id="dailyQuoteBox" class="quote-text" contenteditable="true" spellcheck="false" data-placeholder="Tap here to write your daily inspiration or target score mantra..." oninput="saveDailyQuote()"></div>
  </div>
 
- <!-- Standalone General Timer Drawer -->
+ <div id="focusRule" class="focus-rule hidden"></div>
+
  <div id="timerDrawer" class="timer-drawer hidden">
   <div class="timer-display" id="timerDisplay">20:00</div>
   <div class="timer-grid">
@@ -208,13 +200,11 @@
   </div>
  </div>
 
- <!-- Daily Micro-Habit Strip -->
  <div class="habit-strip">
   <span>⚡ Today's Drill</span>
   <span id="habitSummary">0 Eq · 0 St · 0 Works</span>
  </div>
 
- <!-- 3-Slot Editable 'Up Next to Learn' List -->
  <div class="next-box">
   <div class="next-head">
    <span>💡 Up Next to Learn (3 Slots)</span>
@@ -237,7 +227,6 @@
   </div>
  </div>
 
- <!-- 6 Central Navigation Tabs -->
  <div class="hub-tabs" role="tablist">
   <button class="hub-tab active" id="tab-res" onclick="switchTab('res')">
    <span class="tab-icon">🗂️</span>
@@ -247,17 +236,17 @@
   <button class="hub-tab" id="tab-eq" onclick="switchTab('eq')">
    <span class="tab-icon">∑</span>
    <span class="tab-title">Equations</span>
-   <span class="tab-sub" id="sub-eq">125 left</span>
+   <span class="tab-sub" id="sub-eq">0 due</span>
   </button>
   <button class="hub-tab" id="tab-st" onclick="switchTab('st')">
    <span class="tab-icon">🧬</span>
    <span class="tab-title">Structures</span>
-   <span class="tab-sub" id="sub-st">62 left</span>
+   <span class="tab-sub" id="sub-st">0 due</span>
   </button>
   <button class="hub-tab" id="tab-wk" onclick="switchTab('wk')">
    <span class="tab-icon">🧮</span>
    <span class="tab-title">Works</span>
-   <span class="tab-sub" id="sub-wk">100 due</span>
+   <span class="tab-sub" id="sub-wk">0 due</span>
   </button>
   <button class="hub-tab" id="tab-er" onclick="switchTab('er')">
    <span class="tab-icon">📊</span>
@@ -271,7 +260,7 @@
   </button>
  </div>
 
- <!-- TAB 1: RESOURCES & VAULT CIRCLE DRILL -->
+ <!-- TAB 1: VAULT -->
  <section id="panel-res" class="tab-panel active">
   <div class="res-header">
    <h2>Study Vault</h2>
@@ -281,13 +270,13 @@
    </div>
   </div>
 
-  <!-- Sub-view A: Browse Folders & Add/Edit Form -->
   <div id="resBrowseView">
    <div class="backup-bar">
     <button class="btn-sec" onclick="exportBackup()">💾 Save Backup</button>
     <label class="btn-sec" style="margin:0">Restore<input type="file" id="restoreFile" accept=".json,application/json" style="display:none" onchange="importBackup(event)"></label>
     <button class="btn-sec" id="blurToggleBtn" onclick="toggleBlurMode()">👁️ Blur: OFF</button>
    </div>
+   <div class="backup-info" id="backupInfo"></div>
 
    <div id="resForm" class="res-form hidden">
     <div id="formModeLabel" class="form-mode-label">New Resource</div>
@@ -310,9 +299,8 @@
      <button type="button" class="prio-opt" id="prio-review" onclick="setPriority('review')">🟡 Needs Review</button>
     </div>
 
-    <div id="resNote" class="rich-box" contenteditable="true" spellcheck="false" data-placeholder="Type notes, equations (use ^2 for ²), or paste image..."></div>
+    <div id="resNote" class="rich-box" contenteditable="true" spellcheck="false" data-placeholder="Type notes, equations (^2 becomes ², ^-1 becomes ⁻¹ after you type the next character), or paste image..."></div>
 
-    <!-- 1-Tap MCAT Math & Symbol Bar -->
     <div class="sym-bar" aria-label="Insert math symbol">
      <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('θ')">θ</button>
      <button type="button" class="sym-btn" onmousedown="event.preventDefault()" onclick="insertSym('Δ')">Δ</button>
@@ -365,12 +353,11 @@
    <div id="resList"></div>
   </div>
 
-  <!-- Sub-view B: Vault Circle Drill (3-Bucket: Active Circle | Saved Review | Mastered) -->
   <div id="resDrillView" class="hidden">
    <div class="filter-row">
     <select id="resDrillScope" onchange="nextResDrill()">
      <option value="circle">Active Circle (Unseen / Unsaved)</option>
-     <option value="saved">🟡 Saved for Review List</option>
+     <option value="saved">🟡 Needs Review List</option>
      <option value="high">🔴 High Priority Only</option>
     </select>
     <select id="resDrillSubj" onchange="nextResDrill()">
@@ -391,13 +378,13 @@
   </div>
  </section>
 
- <!-- TAB 2: EQUATIONS DRILL -->
+ <!-- TAB 2: EQUATIONS -->
  <section id="panel-eq" class="tab-panel">
   <div class="sub-bar">
    <h2>Equation Flashcards</h2>
-   <button class="pill-btn" id="eqModeBtn" onclick="toggleEqMode()">Saved (0)</button>
+   <button class="pill-btn" id="eqModeBtn" onclick="deckToggleSaved('eq')">Practice (0)</button>
   </div>
-  <select id="eqSubj" onchange="nextEq()">
+  <select id="eqSubj" onchange="deckNext('eq')">
    <option value="all">All subjects</option>
    <option value="Physics">Physics</option>
    <option value="General Chemistry">General Chemistry</option>
@@ -410,45 +397,38 @@
    <div id="eqCard"></div>
    <div class="stats">
     <span id="eqStats"></span>
-    <button class="reset-link" onclick="resetRetired('eq')">Reset Retired</button>
+    <button class="reset-link" onclick="resetRetired('eq')">Reset Progress</button>
    </div>
   </div>
   <div id="eqSavedView" class="hidden">
-   <h3>Saved Equations</h3>
+   <h3>Needs Practice</h3>
    <div id="eqSavedList"></div>
   </div>
  </section>
 
- <!-- TAB 3: STRUCTURES DRILL -->
+ <!-- TAB 3: STRUCTURES -->
  <section id="panel-st" class="tab-panel">
   <div class="sub-bar">
    <h2>Structure Identification</h2>
-   <button class="pill-btn" id="stModeBtn" onclick="toggleStMode()">Saved (0)</button>
+   <button class="pill-btn" id="stModeBtn" onclick="deckToggleSaved('st')">Practice (0)</button>
   </div>
-  <select id="stCat" onchange="nextSt()">
-   <option value="all">All structures (62)</option>
-   <option value="Amino Acids">Amino Acids (20)</option>
-   <option value="Bases & Nucleotides">Bases &amp; Nucleosides (6)</option>
-   <option value="Carbohydrates">Carbohydrates (8)</option>
-   <option value="Vitamins & Cofactors">Vitamins &amp; Cofactors (5)</option>
-   <option value="Neurotransmitters & Hormones">Neurotransmitters &amp; Hormones (6)</option>
-   <option value="Metabolism & Organic">Metabolism &amp; Lipids (13)</option>
-   <option value="Organic Functional Groups">Functional Groups (4)</option>
+  <select id="stCat" onchange="deckNext('st')">
+   <option value="all">All structures</option>
   </select>
   <div id="stDeckView">
    <div id="stCard"></div>
    <div class="stats">
     <span id="stStats"></span>
-    <button class="reset-link" onclick="resetRetired('st')">Reset Retired</button>
+    <button class="reset-link" onclick="resetRetired('st')">Reset Progress</button>
    </div>
   </div>
   <div id="stSavedView" class="hidden">
-   <h3>Saved Structures</h3>
+   <h3>Needs Practice</h3>
    <div id="stSavedList"></div>
   </div>
  </section>
 
- <!-- TAB 4: WORKS (CALCULATION BLUEPRINTS & MENTAL MATH) -->
+ <!-- TAB 4: WORKS -->
  <section id="panel-wk" class="tab-panel">
   <div class="sub-bar">
    <h2>Calculation Blueprints</h2>
@@ -458,14 +438,13 @@
    </div>
   </div>
 
-  <!-- Sub-view A: Spaced Calculation Blueprints -->
   <div id="wkDeckView">
    <div class="filter-row">
     <select id="wkFilter" onchange="nextWk()">
      <option value="due">Due Now (Practice + New + Due)</option>
      <option value="practice">🟡 Needs Practice Only</option>
      <option value="mastered">🟢 Mastered (Scheduled)</option>
-     <option value="all">All 100 Setups</option>
+     <option value="all" id="wkAllOpt">All Setups</option>
     </select>
     <select id="wkSubj" onchange="nextWk()">
      <option value="all">All subjects</option>
@@ -484,12 +463,10 @@
    </div>
   </div>
 
-  <!-- Sub-view B: Browse All List -->
   <div id="wkListView" class="hidden">
    <div id="wkAllList"></div>
   </div>
 
-  <!-- Sub-view C: No-Calculator MCAT Mental Math & Logs Drill -->
   <div id="wkMathView" class="hidden">
    <div class="fs-card">
     <div class="tag"><span>No-Calculator MCAT Mental Math</span><span id="mathStreak">Streak: 0</span></div>
@@ -500,13 +477,17 @@
       <div class="eq-formula" id="mathAns"></div>
       <div class="eq-note" id="mathTrick"></div>
      </div>
-     <button class="opt" onclick="nextMath()" style="background:#1f3a5f;color:#fff;font-weight:600;text-align:center">Next Mental Math Problem →</button>
+     <div class="hint" style="margin:0 0 8px 2px">Did you get it right before looking?</div>
+     <div class="actions">
+      <button class="retire" onclick="gradeMath(true)">✓ Got it</button>
+      <button class="save" style="background:#c0392b" onclick="gradeMath(false)">✗ Missed</button>
+     </div>
     </div>
    </div>
   </div>
  </section>
 
- <!-- TAB 5: PICTORIAL ERROR PATTERN TRACKER -->
+ <!-- TAB 5: ERRORS -->
  <section id="panel-er" class="tab-panel">
   <div class="res-header">
    <h2>Error Pattern Tracker</h2>
@@ -552,10 +533,8 @@
    </div>
   </div>
 
-  <!-- Visual Bar Charts -->
   <div id="errDashboard"></div>
 
-  <!-- Filter & History -->
   <div class="filter-row">
    <select id="errFilterType" onchange="renderErrors()">
     <option value="all">All error types</option>
@@ -583,7 +562,7 @@
   <div id="errList"></div>
  </section>
 
- <!-- TAB 6: CONTENT SYLLABUS CHECKLIST -->
+ <!-- TAB 6: CONTENT -->
  <section id="panel-ct" class="tab-panel">
   <div class="sub-bar">
    <h2>Content Review Syllabus</h2>
@@ -615,513 +594,472 @@
 <script src="works.js"></script>
 <script src="syllabus.js"></script>
 <script>
+/* ============ Core helpers ============ */
 const KEY='mcatState';
-const TODAY=new Date().toDateString();
+const DAY=86400000;
+const SR_INTERVALS=[3,7,14,30];
+function todayKey(){return new Date().toDateString();}
+function escapeHtml(s){
+ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+/* Safe argument for inline onclick="fn(...)" attributes; works for numbers and strings */
+function jsArg(v){return JSON.stringify(v).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+function hasId(x){return x && x.id!==undefined && x.id!==null;}
+function val(id){return document.getElementById(id).value;}
+
+/* ============ State ============ */
+function defaultState(){
+ return {
+  eqState:{},stState:{},resRetired:[],resSaved:[],wkState:{},errors:[],
+  syllabusDone:{},dailyQuote:'',upNext:['','',''],
+  today:{day:'',eq:0,st:0,wk:0},mathStreak:0,mathBest:0,lastBackup:0
+ };
+}
+function migrateLegacy(s){
+ ['eq','st'].forEach(k=>{
+  const map=s[k+'State'];
+  (s[k+'Retired']||[]).forEach(id=>{
+   if(!map[id])map[id]={status:'mastered',level:1,due:Date.now()+(3+Math.floor(Math.random()*12))*DAY};
+  });
+  (s[k+'Saved']||[]).forEach(id=>{
+   if(!map[id])map[id]={status:'practice',level:0,due:0};
+  });
+  delete s[k+'Retired'];delete s[k+'Saved'];
+ });
+}
+function normalizeState(s){
+ const d=defaultState();
+ s=(s&&typeof s==='object')?s:{};
+ Object.keys(d).forEach(k=>{
+  if(s[k]===undefined||s[k]===null||Array.isArray(d[k])!==Array.isArray(s[k])||typeof d[k]!==typeof s[k])s[k]=d[k];
+ });
+ if(s.upNext.length!==3)s.upNext=['','',''];
+ migrateLegacy(s);
+ if(s.today.day!==todayKey())s.today={day:todayKey(),eq:0,st:0,wk:0};
+ return s;
+}
 let state;
-try {
- state=JSON.parse(localStorage.getItem(KEY)||'{"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"resRetired":[],"resSaved":[],"wkState":{},"errors":[],"syllabusDone":{},"dailyQuote":"","upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}}');
-} catch(e) {
- state={"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"resRetired":[],"resSaved":[],"wkState":{},"errors":[],"syllabusDone":{},"dailyQuote":"","upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}};
+try{state=normalizeState(JSON.parse(localStorage.getItem(KEY)||'null'));}
+catch(e){state=normalizeState(null);}
+
+let persistWarned=false;
+function persist(){
+ try{localStorage.setItem(KEY,JSON.stringify(state));}
+ catch(e){
+  if(!persistWarned){persistWarned=true;alert('Could not save progress (storage full or blocked). Save a backup now.');}
+ }
 }
-if(!state.eqRetired)state.eqRetired=[];
-if(!state.eqSaved)state.eqSaved=[];
-if(!state.stRetired)state.stRetired=[];
-if(!state.stSaved)state.stSaved=[];
-if(!state.resRetired)state.resRetired=[];
-if(!state.resSaved)state.resSaved=[];
-if(!state.wkState)state.wkState={};
-if(!state.errors)state.errors=[];
-if(!state.syllabusDone || typeof state.syllabusDone!=='object')state.syllabusDone={};
-if(typeof state.dailyQuote!=='string')state.dailyQuote='';
-if(!Array.isArray(state.upNext) || state.upNext.length!==3)state.upNext=["","",""];
-if(!state.today || state.today.day!==TODAY){
- state.today={day:TODAY,eq:0,st:0,wk:0};
+persist();
+/* Ask the browser not to evict our data under storage pressure */
+if(navigator.storage&&navigator.storage.persist){navigator.storage.persist().catch(()=>{});}
+
+/* ============ Spaced repetition helpers (shared) ============ */
+function srGet(map,id){return map[id]||{status:'new',level:0,due:0};}
+function srIsDue(map,id){
+ const e=srGet(map,id);
+ if(e.status==='new'||e.status==='practice')return true;
+ return Date.now()>=(e.due||0);
+}
+/* What happens if the card is marked mastered right now */
+function srPlan(e){
+ if(e.status==='mastered'&&Date.now()<(e.due||0))return {early:true,lvl:e.level||0,days:null};
+ const lvl=e.status==='mastered'?Math.min((e.level||0)+1,SR_INTERVALS.length-1):0;
+ return {early:false,lvl,days:SR_INTERVALS[lvl]};
+}
+function srMaster(map,id){
+ const p=srPlan(srGet(map,id));
+ if(p.early)return;
+ map[id]={status:'mastered',level:p.lvl,due:Date.now()+p.days*DAY};
+}
+function srPractice(map,id){map[id]={status:'practice',level:0,due:0};}
+function srMasterLabel(e){
+ const p=srPlan(e);
+ return p.early?'🟢 Mastered (keeps schedule)':'🟢 Mastered ('+p.days+'d)';
+}
+function formatDueText(e){
+ if(e.status==='new')return '<span class="prio-badge">New</span>';
+ if(e.status==='practice')return '<span class="prio-badge review">🟡 Needs Practice</span>';
+ const diffDays=Math.ceil(((e.due||0)-Date.now())/DAY);
+ if(diffDays<=0)return '<span class="prio-badge review">🔄 Due for Review</span>';
+ return '<span class="prio-badge master">🟢 Mastered ('+diffDays+'d)</span>';
+}
+/* Pick a random card, avoid repeating the last one, favor practice cards */
+function pickCard(pool,map,lastId){
+ let p=pool.length>1?pool.filter(x=>x.id!==lastId):pool;
+ const prac=p.filter(x=>srGet(map,x.id).status==='practice');
+ if(prac.length&&Math.random()<0.65)p=prac;
+ return p[Math.floor(Math.random()*p.length)];
 }
 
-function persist(){localStorage.setItem(KEY,JSON.stringify(state));}
-
-/* Daily Quote / Inspiration Banner */
+/* ============ Daily quote ============ */
 function renderDailyQuote(){
- const box = document.getElementById('dailyQuoteBox');
- if(box) box.innerText = state.dailyQuote || '';
+ const box=document.getElementById('dailyQuoteBox');
+ if(box)box.innerText=state.dailyQuote||'';
 }
 function saveDailyQuote(){
- const box = document.getElementById('dailyQuoteBox');
- state.dailyQuote = box.innerText.trim();
+ state.dailyQuote=document.getElementById('dailyQuoteBox').innerText.trim();
  persist();
 }
 
-/* Standalone General Timer with Timestamp Tracking & Wake Lock */
-let timerInterval = null;
-let timerTotalSec = 20 * 60;
-let timerRemSec = 20 * 60;
-let timerEndAt = 0;
-let timerRunning = false;
-let chimeTriggered = false;
-let wakeLock = null;
+/* ============ Timer ============ */
+let timerInterval=null,timerTotalSec=20*60,timerRemSec=20*60,timerEndAt=0,timerRunning=false,chimeTriggered=false,wakeLock=null,audioCtx=null;
 
+/* Must run inside a user tap so iOS/Chrome allow sound later */
+function unlockAudio(){
+ try{
+  if(!audioCtx){const AC=window.AudioContext||window.webkitAudioContext;if(AC)audioCtx=new AC();}
+  if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();
+ }catch(e){}
+}
 async function requestWakeLock(){
  try{
-  if('wakeLock' in navigator && !wakeLock){
-   wakeLock = await navigator.wakeLock.request('screen');
-   wakeLock.addEventListener('release', () => { wakeLock = null; });
+  if('wakeLock' in navigator&&!wakeLock){
+   wakeLock=await navigator.wakeLock.request('screen');
+   wakeLock.addEventListener('release',()=>{wakeLock=null;});
   }
  }catch(e){}
 }
-
 function releaseWakeLock(){
- if(wakeLock){
-  wakeLock.release().catch(()=>{});
-  wakeLock = null;
- }
+ if(wakeLock){wakeLock.release().catch(()=>{});wakeLock=null;}
 }
-
-document.addEventListener('visibilitychange', () => {
- if(document.visibilityState === 'visible' && timerRunning){
-  tickTimer();
-  requestWakeLock();
+document.addEventListener('visibilitychange',()=>{
+ if(document.visibilityState==='visible'){
+  updateHabitStrip();
+  if(timerRunning){tickTimer();requestWakeLock();unlockAudio();}
  }
 });
-
 function playGentleChime(isEnd){
  try{
-  const ctx = new (window.AudioContext || window.webkitAudioContext)();
-  const notes = isEnd ? [523.25, 659.25, 783.99] : [587.33, 880];
-  notes.forEach((freq, idx) => {
-   const osc = ctx.createOscillator();
-   const gain = ctx.createGain();
-   osc.type = 'sine';
-   osc.frequency.value = freq;
-   const t0 = ctx.currentTime + idx * 0.22;
-   gain.gain.setValueAtTime(0.001, t0);
-   gain.gain.exponentialRampToValueAtTime(0.22, t0 + 0.04);
-   gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.75);
-   osc.connect(gain);
-   gain.connect(ctx.destination);
-   osc.start(t0);
-   osc.stop(t0 + 0.8);
-  });
+  if(audioCtx){
+   if(audioCtx.state==='suspended')audioCtx.resume();
+   const ctx=audioCtx;
+   const notes=isEnd?[523.25,659.25,783.99]:[587.33,880];
+   notes.forEach((freq,idx)=>{
+    const osc=ctx.createOscillator();
+    const gain=ctx.createGain();
+    osc.type='sine';
+    osc.frequency.value=freq;
+    const t0=ctx.currentTime+idx*0.22;
+    gain.gain.setValueAtTime(0.001,t0);
+    gain.gain.exponentialRampToValueAtTime(0.22,t0+0.04);
+    gain.gain.exponentialRampToValueAtTime(0.0001,t0+0.75);
+    osc.connect(gain);gain.connect(ctx.destination);
+    osc.start(t0);osc.stop(t0+0.8);
+   });
+  }
  }catch(e){}
- if(navigator.vibrate) navigator.vibrate(isEnd ? [200, 100, 200] : [150]);
- const btn = document.getElementById('hdrTimerBtn');
+ if(navigator.vibrate)navigator.vibrate(isEnd?[200,100,200]:[150]);
+ const btn=document.getElementById('hdrTimerBtn');
  btn.classList.add('chime-flash');
- setTimeout(() => btn.classList.remove('chime-flash'), 1600);
+ setTimeout(()=>btn.classList.remove('chime-flash'),1600);
 }
-
 function formatClock(sec){
- const m = Math.floor(sec / 60);
- const s = sec % 60;
- return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+ return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');
 }
-
 function updateTimerUI(){
- const str = formatClock(timerRemSec);
- document.getElementById('timerDisplay').textContent = str;
- const hdrBtn = document.getElementById('hdrTimerBtn');
- hdrBtn.classList.toggle('running', timerRunning);
- hdrBtn.textContent = (timerRunning || timerRemSec !== timerTotalSec) ? '⏱️ ' + str : '⏱️ Timer';
- document.getElementById('timerStartBtn').textContent = timerRunning ? 'Pause' : 'Start';
+ const str=formatClock(timerRemSec);
+ document.getElementById('timerDisplay').textContent=str;
+ const hdrBtn=document.getElementById('hdrTimerBtn');
+ hdrBtn.classList.toggle('running',timerRunning);
+ hdrBtn.textContent=(timerRunning||timerRemSec!==timerTotalSec)?'⏱️ '+str:'⏱️ Timer';
+ document.getElementById('timerStartBtn').textContent=timerRunning?'Pause':'Start';
 }
-
-function toggleTimerDrawer(){
- document.getElementById('timerDrawer').classList.toggle('hidden');
-}
-
+function toggleTimerDrawer(){document.getElementById('timerDrawer').classList.toggle('hidden');}
 function syncTimerInputs(){
- if(timerRunning) return;
- const mins = Math.max(1, parseInt(document.getElementById('timerTotalMin').value, 10) || 1);
- timerTotalSec = mins * 60;
- timerRemSec = timerTotalSec;
- chimeTriggered = false;
+ if(timerRunning)return;
+ const mins=Math.max(1,parseInt(document.getElementById('timerTotalMin').value,10)||1);
+ timerTotalSec=mins*60;timerRemSec=timerTotalSec;chimeTriggered=false;
  updateTimerUI();
 }
-
 function tickTimer(){
- if(!timerRunning) return;
- timerRemSec = Math.max(0, Math.ceil((timerEndAt - Date.now()) / 1000));
- const elapsedSec = timerTotalSec - timerRemSec;
- const chimeMin = parseInt(document.getElementById('timerChimeMin').value, 10);
-
- if(!chimeTriggered && chimeMin > 0 && elapsedSec >= chimeMin * 60 && timerRemSec > 0){
-  chimeTriggered = true;
-  playGentleChime(false);
+ if(!timerRunning)return;
+ timerRemSec=Math.max(0,Math.ceil((timerEndAt-Date.now())/1000));
+ const elapsedSec=timerTotalSec-timerRemSec;
+ const chimeMin=parseInt(document.getElementById('timerChimeMin').value,10);
+ if(!chimeTriggered&&chimeMin>0&&elapsedSec>=chimeMin*60&&timerRemSec>0){
+  chimeTriggered=true;playGentleChime(false);
  }
- if(timerRemSec <= 0){
-  timerRemSec = 0;
-  clearInterval(timerInterval);
-  timerRunning = false;
-  releaseWakeLock();
-  playGentleChime(true);
+ if(timerRemSec<=0){
+  timerRemSec=0;clearInterval(timerInterval);timerRunning=false;
+  releaseWakeLock();playGentleChime(true);
  }
  updateTimerUI();
 }
-
 function toggleTimerRun(){
+ unlockAudio();
  if(timerRunning){
-  tickTimer();
-  clearInterval(timerInterval);
-  timerRunning = false;
-  releaseWakeLock();
-  updateTimerUI();
-  return;
+  tickTimer();clearInterval(timerInterval);timerRunning=false;
+  releaseWakeLock();updateTimerUI();return;
  }
- if(timerRemSec <= 0) syncTimerInputs();
- timerEndAt = Date.now() + (timerRemSec * 1000);
- timerRunning = true;
- requestWakeLock();
- updateTimerUI();
- timerInterval = setInterval(tickTimer, 500);
+ if(timerRemSec<=0)syncTimerInputs();
+ else if(timerRemSec===timerTotalSec)chimeTriggered=false;
+ timerEndAt=Date.now()+timerRemSec*1000;
+ timerRunning=true;
+ requestWakeLock();updateTimerUI();
+ timerInterval=setInterval(tickTimer,500);
 }
-
 function resetTimer(){
- clearInterval(timerInterval);
- timerRunning = false;
- releaseWakeLock();
- syncTimerInputs();
+ clearInterval(timerInterval);timerRunning=false;
+ releaseWakeLock();syncTimerInputs();
 }
 
-/* Up Next to Learn (3 Editable Slots) */
+/* ============ Up next ============ */
 function renderUpNext(){
  for(let i=0;i<3;i++){
   const el=document.getElementById('nextSlot'+i);
   if(el)el.value=state.upNext[i]||'';
  }
 }
-function saveNextSlot(idx){
- state.upNext[idx]=document.getElementById('nextSlot'+idx).value;
- persist();
-}
+function saveNextSlot(idx){state.upNext[idx]=document.getElementById('nextSlot'+idx).value;persist();}
 function clearNextSlot(idx){
  state.upNext[idx]='';
  document.getElementById('nextSlot'+idx).value='';
  persist();
 }
 
+/* ============ Daily habit strip (date checked on every use) ============ */
+function ensureToday(){
+ if(!state.today||state.today.day!==todayKey())state.today={day:todayKey(),eq:0,st:0,wk:0};
+}
 function bumpHabit(kind){
- if(!state.today || state.today.day!==TODAY)state.today={day:TODAY,eq:0,st:0,wk:0};
+ ensureToday();
  state.today[kind]=(state.today[kind]||0)+1;
  persist();
  updateHabitStrip();
 }
-
 function updateHabitStrip(){
- if(!state.today || state.today.day!==TODAY)state.today={day:TODAY,eq:0,st:0,wk:0};
+ ensureToday();
  document.getElementById('habitSummary').textContent=
   (state.today.eq||0)+' Eq · '+(state.today.st||0)+' St · '+(state.today.wk||0)+' Works';
 }
 
-/* Central Tab Switcher */
+/* ============ Tabs ============ */
 function switchTab(which){
  ['res','eq','st','wk','er','ct'].forEach(t=>{
   document.getElementById('tab-'+t).classList.toggle('active',t===which);
   document.getElementById('panel-'+t).classList.toggle('active',t===which);
  });
- if(which==='res'){
-  if(resDrillMode)nextResDrill();
-  else renderResources();
+ if(which==='res'){if(resDrillMode)nextResDrill();else renderResources();}
+ if(which==='eq'||which==='st'){
+  const d=DECKS[which];
+  d.showingSaved=false;
+  document.getElementById(d.deckView).classList.remove('hidden');
+  document.getElementById(d.savedView).classList.add('hidden');
+  document.getElementById(d.modeBtn).classList.remove('active');
+  deckNext(which);
  }
- if(which==='eq'){
-  eqShowingSaved=false;
-  document.getElementById('eqDeckView').classList.remove('hidden');
-  document.getElementById('eqSavedView').classList.add('hidden');
-  nextEq();
- }
- if(which==='st'){
-  stShowingSaved=false;
-  document.getElementById('stDeckView').classList.remove('hidden');
-  document.getElementById('stSavedView').classList.add('hidden');
-  nextSt();
- }
- if(which==='wk'){
-  setWkSubView('deck');
- }
- if(which==='er'){
-  renderErrors();
- }
- if(which==='ct'){
-  renderSyllabus();
- }
+ if(which==='wk')setWkSubView('deck');
+ if(which==='er')renderErrors();
+ if(which==='ct')renderSyllabus();
 }
-
 function resetRetired(type){
  if(!confirm('Reset progress for this section?'))return;
- if(type==='eq'){state.eqRetired=[];persist();nextEq();}
- if(type==='st'){state.stRetired=[];persist();nextSt();}
+ if(type==='eq'){state.eqState={};persist();deckNext('eq');}
+ if(type==='st'){state.stState={};persist();deckNext('st');}
  if(type==='wk'){state.wkState={};persist();nextWk();}
  if(type==='res'){state.resRetired=[];persist();nextResDrill();}
 }
 
-/* TAB 6: CONTENT SYLLABUS CHECKLIST */
+/* ============ Syllabus ============ */
 function sylPool(){return typeof SYLLABUS!=='undefined'?SYLLABUS:[];}
-
 function updateSyllabusStats(){
- const pool = sylPool();
- let total = 0, done = 0;
- pool.forEach(subj => {
-  subj.topics.forEach(t => {
-   t.items.forEach((item, idx) => {
-    total++;
-    const key = t.id + ':' + idx;
-    if(state.syllabusDone[key]) done++;
-   });
-  });
- });
- const pct = total ? Math.round((done / total) * 100) : 0;
- document.getElementById('sub-ct').textContent = pct + '% done';
- const txtEl = document.getElementById('sylOverallText');
- const pctEl = document.getElementById('sylOverallPct');
- const barEl = document.getElementById('sylOverallBar');
- if(txtEl) txtEl.textContent = 'Overall Progress: ' + done + ' / ' + total + ' subtopics';
- if(pctEl) pctEl.textContent = pct + '%';
- if(barEl) barEl.style.width = pct + '%';
+ let total=0,done=0;
+ sylPool().forEach(subj=>subj.topics.forEach(t=>t.items.forEach((item,idx)=>{
+  total++;if(state.syllabusDone[t.id+':'+idx])done++;
+ })));
+ const pct=total?Math.round(done/total*100):0;
+ document.getElementById('sub-ct').textContent=pct+'% done';
+ document.getElementById('sylOverallText').textContent='Overall Progress: '+done+' / '+total+' subtopics';
+ document.getElementById('sylOverallPct').textContent=pct+'%';
+ document.getElementById('sylOverallBar').style.width=pct+'%';
 }
-
 function toggleSyllabusItem(key){
- if(state.syllabusDone[key]){
-  delete state.syllabusDone[key];
- } else {
-  state.syllabusDone[key] = true;
- }
+ if(state.syllabusDone[key])delete state.syllabusDone[key];
+ else state.syllabusDone[key]=true;
  persist();
- const openIds = [...document.querySelectorAll('#sylContainer details[open]')].map(d => d.dataset.sid);
+ const openIds=[...document.querySelectorAll('#sylContainer details[open]')].map(d=>d.dataset.sid);
  renderSyllabus(openIds);
 }
-
 function setSyllabusOpen(open){
- document.querySelectorAll('#sylContainer details').forEach(d => {
-  d.open = open;
- });
+ document.querySelectorAll('#sylContainer details').forEach(d=>{d.open=open;});
 }
-
 function renderSyllabus(preserveOpenIds){
  updateSyllabusStats();
- const container = document.getElementById('sylContainer');
- const query = (document.getElementById('sylSearch').value || '').trim().toLowerCase();
- const pool = sylPool();
- if(!pool.length){
-  container.innerHTML = '<p class="stats">Syllabus data not loaded.</p>';
-  return;
- }
-
- const openSet = new Set(preserveOpenIds || []);
- let html = '';
- let matchFound = false;
-
- pool.forEach(subj => {
-  let subjTotal = 0, subjDone = 0;
-  let topicsHtml = '';
-
-  subj.topics.forEach(t => {
-   let topTotal = t.items.length;
-   let topDone = 0;
-   let itemsHtml = '';
-   let topHasMatch = !query || subj.subject.toLowerCase().includes(query) || t.title.toLowerCase().includes(query);
-
-   t.items.forEach((item, idx) => {
-    const key = t.id + ':' + idx;
-    const isChecked = Boolean(state.syllabusDone[key]);
-    if(isChecked) topDone++;
-    const itemMatch = topHasMatch || item.toLowerCase().includes(query);
-    if(itemMatch){
-     itemsHtml += '<label class="syl-row' + (isChecked ? ' checked' : '') + '">' +
-      '<input type="checkbox"' + (isChecked ? ' checked' : '') + ' onchange="toggleSyllabusItem(\'' + key + '\')">' +
-      '<span>' + escapeHtml(item) + '</span></label>';
+ const container=document.getElementById('sylContainer');
+ const query=(document.getElementById('sylSearch').value||'').trim().toLowerCase();
+ const pool=sylPool();
+ if(!pool.length){container.innerHTML='<p class="stats">Syllabus data not loaded.</p>';return;}
+ const openSet=new Set(preserveOpenIds||[]);
+ let html='',matchFound=false;
+ pool.forEach(subj=>{
+  let subjTotal=0,subjDone=0,topicsHtml='';
+  subj.topics.forEach(t=>{
+   const topTotal=t.items.length;
+   let topDone=0,itemsHtml='';
+   const topHasMatch=!query||subj.subject.toLowerCase().includes(query)||t.title.toLowerCase().includes(query);
+   t.items.forEach((item,idx)=>{
+    const key=t.id+':'+idx;
+    const isChecked=Boolean(state.syllabusDone[key]);
+    if(isChecked)topDone++;
+    if(topHasMatch||item.toLowerCase().includes(query)){
+     itemsHtml+='<label class="syl-row'+(isChecked?' checked':'')+'">'+
+      '<input type="checkbox"'+(isChecked?' checked':'')+' onchange="toggleSyllabusItem('+jsArg(key)+')">'+
+      '<span>'+escapeHtml(item)+'</span></label>';
     }
    });
-
-   subjTotal += topTotal;
-   subjDone += topDone;
-
+   subjTotal+=topTotal;subjDone+=topDone;
    if(itemsHtml){
-    matchFound = true;
-    const allDone = topDone === topTotal && topTotal > 0;
-    const isOpen = Boolean(query) || openSet.has(t.id);
-    const badge = allDone
-     ? '<span class="prio-badge master">✓ Completed (' + topDone + '/' + topTotal + ')</span>'
-     : '<span class="prio-badge">' + topDone + ' / ' + topTotal + '</span>';
-
-    topicsHtml += '<details class="syl-topic' + (allDone ? ' done-topic' : '') + '" data-sid="' + t.id + '"' + (isOpen ? ' open' : '') + '>' +
-     '<summary><span class="sum-left">' + escapeHtml(t.title) + '</span>' + badge + '</summary>' +
-     '<div class="syl-topic-body">' + itemsHtml + '</div></details>';
+    matchFound=true;
+    const allDone=topDone===topTotal&&topTotal>0;
+    const isOpen=Boolean(query)||openSet.has(t.id);
+    const badge=allDone?'<span class="prio-badge master">✓ Completed ('+topDone+'/'+topTotal+')</span>':'<span class="prio-badge">'+topDone+' / '+topTotal+'</span>';
+    topicsHtml+='<details class="syl-topic'+(allDone?' done-topic':'')+'" data-sid="'+escapeHtml(t.id)+'"'+(isOpen?' open':'')+'>'+
+     '<summary><span class="sum-left">'+escapeHtml(t.title)+'</span>'+badge+'</summary>'+
+     '<div class="syl-topic-body">'+itemsHtml+'</div></details>';
    }
   });
-
   if(topicsHtml){
-   const subjPct = subjTotal ? Math.round((subjDone / subjTotal) * 100) : 0;
-   const subjAllDone = subjDone === subjTotal && subjTotal > 0;
-   const isSubjOpen = Boolean(query) || openSet.has(subj.id);
-   const subjBadge = subjAllDone
-    ? '<span class="prio-badge master">✓ 100% (' + subjDone + '/' + subjTotal + ')</span>'
-    : '<span class="prio-badge">' + subjDone + '/' + subjTotal + ' (' + subjPct + '%)</span>';
-
-   html += '<details class="syl-subj" data-sid="' + subj.id + '"' + (isSubjOpen ? ' open' : '') + '>' +
-    '<summary><span>' + escapeHtml(subj.subject) + '</span>' + subjBadge + '</summary>' +
-    '<div class="syl-subj-body">' + topicsHtml + '</div></details>';
+   const subjPct=subjTotal?Math.round(subjDone/subjTotal*100):0;
+   const subjAllDone=subjDone===subjTotal&&subjTotal>0;
+   const isSubjOpen=Boolean(query)||openSet.has(subj.id);
+   const subjBadge=subjAllDone?'<span class="prio-badge master">✓ 100% ('+subjDone+'/'+subjTotal+')</span>':'<span class="prio-badge">'+subjDone+'/'+subjTotal+' ('+subjPct+'%)</span>';
+   html+='<details class="syl-subj" data-sid="'+escapeHtml(subj.id)+'"'+(isSubjOpen?' open':'')+'>'+
+    '<summary><span>'+escapeHtml(subj.subject)+'</span>'+subjBadge+'</summary>'+
+    '<div class="syl-subj-body">'+topicsHtml+'</div></details>';
   }
  });
-
- container.innerHTML = matchFound ? html : '<p class="stats">No matching syllabus topics found.</p>';
+ container.innerHTML=matchFound?html:'<p class="stats">No matching syllabus topics found.</p>';
 }
 
-/* Equations Flashcard Logic */
-let curEq=null, eqShowingSaved=false;
-function eqPool(){return typeof EQUATIONS!=='undefined'?EQUATIONS:[];}
-function eqInCircle(e){return e && e.id && !state.eqRetired.includes(e.id)&&!state.eqSaved.includes(e.id);}
-function toggleEqMode(){
- eqShowingSaved=!eqShowingSaved;
- document.getElementById('eqDeckView').classList.toggle('hidden',eqShowingSaved);
- document.getElementById('eqSavedView').classList.toggle('hidden',!eqShowingSaved);
- const btn=document.getElementById('eqModeBtn');
- btn.classList.toggle('active',eqShowingSaved);
- btn.textContent=eqShowingSaved?'Back to Drill':'Saved ('+state.eqSaved.length+')';
- if(eqShowingSaved)renderEqSaved();
-}
-function updateEqStats(){
- const all=eqPool();
- const inC=all.filter(eqInCircle).length;
- document.getElementById('eqStats').textContent='Circle: '+inC+' | Saved: '+state.eqSaved.length+' | Retired: '+state.eqRetired.length;
- document.getElementById('sub-eq').textContent=inC+' left';
- if(!eqShowingSaved){
-  const btn=document.getElementById('eqModeBtn');
-  btn.classList.remove('active');
-  btn.textContent='Saved ('+state.eqSaved.length+')';
+/* ============ Equations + Structures (spaced repetition decks) ============ */
+const DECKS={
+ eq:{
+  stateKey:'eqState',cur:null,last:null,showingSaved:false,
+  pool:()=>typeof EQUATIONS!=='undefined'?EQUATIONS:[],
+  match:x=>{const f=val('eqSubj');return f==='all'||x.subject===f;},
+  card:'eqCard',stats:'eqStats',sub:'sub-eq',modeBtn:'eqModeBtn',deckView:'eqDeckView',savedView:'eqSavedView',savedList:'eqSavedList',
+  revealText:'Show Equation',emptyText:'Nothing due in Equations right now. Check the Practice list, or come back later.',
+  front:(x,e)=>'<div class="tag"><span>'+x.subject+' \u00b7 '+x.topic+'</span>'+formatDueText(e)+'</div><div class="eq-prompt">'+x.q+'</div>',
+  back:x=>'<div class="eq-answer-box"><div class="eq-formula">'+x.eq+'</div>'+(x.note?'<div class="eq-note">'+x.note+'</div>':'')+'</div>'
+ },
+ st:{
+  stateKey:'stState',cur:null,last:null,showingSaved:false,
+  pool:()=>typeof STRUCTURES!=='undefined'?STRUCTURES:[],
+  match:x=>{const f=val('stCat');return f==='all'||x.cat===f;},
+  card:'stCard',stats:'stStats',sub:'sub-st',modeBtn:'stModeBtn',deckView:'stDeckView',savedView:'stSavedView',savedList:'stSavedList',
+  revealText:'Flip / Show Structure Name',emptyText:'Nothing due in Structures right now. Check the Practice list, or come back later.',
+  front:(x,e)=>'<div class="tag"><span>Identify this structure</span>'+formatDueText(e)+'</div><div class="struct-box">'+x.svg+'</div>',
+  back:x=>'<div class="eq-answer-box"><div class="tag" style="margin-bottom:4px"><span>'+x.cat+'</span></div><div class="eq-formula" style="font-family:system-ui,sans-serif">'+x.name+'</div><div class="eq-note">'+x.info+'</div></div>'
  }
+};
+function deckCards(k){return DECKS[k].pool().filter(hasId);}
+function deckStats(k){
+ const d=DECKS[k],map=state[d.stateKey],all=deckCards(k);
+ let due=0,prac=0,mast=0;
+ all.forEach(x=>{
+  const e=srGet(map,x.id);
+  if(srIsDue(map,x.id))due++;
+  if(e.status==='practice')prac++;
+  if(e.status==='mastered')mast++;
+ });
+ document.getElementById(d.stats).textContent='Due: '+due+' | Practice: '+prac+' | Mastered: '+mast+' / '+all.length;
+ document.getElementById(d.sub).textContent=due+' due';
+ const btn=document.getElementById(d.modeBtn);
+ btn.textContent=d.showingSaved?'Back to Drill':'Practice ('+prac+')';
 }
-function nextEq(){
- const subj=document.getElementById('eqSubj').value;
- const pool=eqPool().filter(e=>eqInCircle(e)&&(subj==='all'||e.subject===subj));
- const card=document.getElementById('eqCard');
+function deckNext(k){
+ const d=DECKS[k],map=state[d.stateKey];
+ const pool=deckCards(k).filter(x=>d.match(x)&&srIsDue(map,x.id));
+ const card=document.getElementById(d.card);
  if(!pool.length){
-  card.innerHTML='<div class="fs-card"><p>No equations left in this circle. Check Saved or tap Reset Retired.</p></div>';
-  curEq=null;updateEqStats();return;
+  card.innerHTML='<div class="fs-card"><p>'+d.emptyText+'</p></div>';
+  d.cur=null;deckStats(k);return;
  }
- curEq=pool[Math.floor(Math.random()*pool.length)];
- card.innerHTML='<div class="fs-card"><div class="tag"><span>'+curEq.subject+' \u00b7 '+curEq.topic+'</span></div>'+
-  '<div class="eq-prompt">'+curEq.q+'</div>'+
-  '<button class="reveal-btn" id="revealEqBtn" onclick="revealEq()">Show Equation</button>'+
-  '<div id="eqAfter" class="hidden"></div></div>';
- updateEqStats();
+ const x=pickCard(pool,map,d.last);
+ d.cur=x;d.last=x.id;
+ card.innerHTML='<div class="fs-card">'+d.front(x,srGet(map,x.id))+
+  '<button class="reveal-btn" id="reveal-'+k+'" onclick="deckReveal(\''+k+'\')">'+d.revealText+'</button>'+
+  '<div id="after-'+k+'" class="hidden"></div></div>';
+ deckStats(k);
 }
-function revealEq(){
- document.getElementById('revealEqBtn').classList.add('hidden');
- const after=document.getElementById('eqAfter');
+function deckReveal(k){
+ const d=DECKS[k];if(!d.cur)return;
+ document.getElementById('reveal-'+k).classList.add('hidden');
+ const after=document.getElementById('after-'+k);
  after.classList.remove('hidden');
- after.innerHTML='<div class="eq-answer-box"><div class="eq-formula">'+curEq.eq+'</div>'+
-  (curEq.note?'<div class="eq-note">'+curEq.note+'</div>':'')+'</div>'+
-  '<div class="actions"><button class="retire" onclick="retireEq()">Mastered, retire it</button><button class="save" onclick="saveEq()">Save for review</button></div>'+
-  '<button class="opt" onclick="bumpHabit(\'eq\');nextEq()" style="margin-top:12px">Keep in circle, next equation</button>';
+ const e=srGet(state[d.stateKey],d.cur.id);
+ after.innerHTML=d.back(d.cur)+
+  '<div class="actions"><button class="retire" onclick="deckMark(\''+k+'\',true)">'+srMasterLabel(e)+'</button>'+
+  '<button class="save" onclick="deckMark(\''+k+'\',false)">🟡 Needs Practice</button></div>'+
+  '<button class="opt" onclick="deckNext(\''+k+'\')" style="margin-top:12px">Skip, next card</button>';
 }
-function retireEq(){state.eqRetired.push(curEq.id);bumpHabit('eq');nextEq();}
-function saveEq(){state.eqSaved.push(curEq.id);bumpHabit('eq');nextEq();}
-function renderEqSaved(){
- const list=document.getElementById('eqSavedList');
- const items=eqPool().filter(e=>e && state.eqSaved.includes(e.id));
- if(!items.length){list.innerHTML='<p>No equations saved yet.</p>';return;}
- list.innerHTML=items.map(e=>'<div class="rev"><div class="tag"><span>'+e.subject+' \u00b7 '+e.topic+'</span></div><div><b>'+e.q+'</b></div>'+
-  '<div class="eq-formula" style="font-size:17px;margin-top:8px">'+e.eq+'</div>'+
-  (e.note?'<div class="eq-note" style="margin-bottom:8px">'+e.note+'</div>':'')+
-  '<button onclick="unsaveEq('+e.id+')">Put back in circle</button> <button onclick="retireSavedEq('+e.id+')">Retire</button></div>').join('');
+function deckMark(k,mastered){
+ const d=DECKS[k];if(!d.cur)return;
+ const map=state[d.stateKey];
+ if(mastered)srMaster(map,d.cur.id);else srPractice(map,d.cur.id);
+ bumpHabit(k);
+ deckNext(k);
 }
-function unsaveEq(id){state.eqSaved=state.eqSaved.filter(x=>x!==id);persist();renderEqSaved();updateEqStats();}
-function retireSavedEq(id){state.eqSaved=state.eqSaved.filter(x=>x!==id);state.eqRetired.push(id);persist();renderEqSaved();updateEqStats();}
-
-/* Structures Flashcard Logic */
-let curSt=null, stShowingSaved=false;
-function stPool(){return typeof STRUCTURES!=='undefined'?STRUCTURES:[];}
-function stInCircle(s){return s && s.id && !state.stRetired.includes(s.id)&&!state.stSaved.includes(s.id);}
-function toggleStMode(){
- stShowingSaved=!stShowingSaved;
- document.getElementById('stDeckView').classList.toggle('hidden',stShowingSaved);
- document.getElementById('stSavedView').classList.toggle('hidden',!stShowingSaved);
- const btn=document.getElementById('stModeBtn');
- btn.classList.toggle('active',stShowingSaved);
- btn.textContent=stShowingSaved?'Back to Drill':'Saved ('+state.stSaved.length+')';
- if(stShowingSaved)renderStSaved();
+function deckToggleSaved(k){
+ const d=DECKS[k];
+ d.showingSaved=!d.showingSaved;
+ document.getElementById(d.deckView).classList.toggle('hidden',d.showingSaved);
+ document.getElementById(d.savedView).classList.toggle('hidden',!d.showingSaved);
+ document.getElementById(d.modeBtn).classList.toggle('active',d.showingSaved);
+ if(d.showingSaved)deckRenderSaved(k);
+ deckStats(k);
 }
-function updateStStats(){
- const all=stPool();
- const inC=all.filter(stInCircle).length;
- document.getElementById('stStats').textContent='Circle: '+inC+' | Saved: '+state.stSaved.length+' | Retired: '+state.stRetired.length;
- document.getElementById('sub-st').textContent=inC+' left';
- if(!stShowingSaved){
-  const btn=document.getElementById('stModeBtn');
-  btn.classList.remove('active');
-  btn.textContent='Saved ('+state.stSaved.length+')';
- }
+function deckRenderSaved(k){
+ const d=DECKS[k],map=state[d.stateKey];
+ const list=document.getElementById(d.savedList);
+ const items=deckCards(k).filter(x=>srGet(map,x.id).status==='practice');
+ if(!items.length){list.innerHTML='<p>Nothing in the practice list.</p>';return;}
+ list.innerHTML=items.map(x=>{
+  const body=k==='eq'
+   ?'<div class="tag"><span>'+x.subject+' \u00b7 '+x.topic+'</span></div><div><b>'+x.q+'</b></div>'+d.back(x)
+   :'<div class="tag"><span>'+x.cat+'</span></div><div><b>'+x.name+'</b></div><div class="struct-box">'+x.svg+'</div><div class="eq-note" style="margin-bottom:8px">'+x.info+'</div>';
+  return '<div class="rev">'+body+
+   '<button onclick="deckSavedAct(\''+k+'\','+jsArg(x.id)+',true)">🟢 Mark mastered</button> '+
+   '<button onclick="deckSavedAct(\''+k+'\','+jsArg(x.id)+',false)">Back to new</button></div>';
+ }).join('');
 }
-function nextSt(){
- const cat=document.getElementById('stCat').value;
- const pool=stPool().filter(s=>stInCircle(s)&&(cat==='all'||s.cat===cat));
- const card=document.getElementById('stCard');
- if(!pool.length){
-  card.innerHTML='<div class="fs-card"><p>No structures left in this circle. Check Saved or tap Reset Retired.</p></div>';
-  curSt=null;updateStStats();return;
- }
- curSt=pool[Math.floor(Math.random()*pool.length)];
- card.innerHTML='<div class="fs-card"><div class="tag"><span>Identify this structure</span></div>'+
-  '<div class="struct-box">'+curSt.svg+'</div>'+
-  '<button class="reveal-btn" id="revealStBtn" onclick="revealSt()">Flip / Show Structure Name</button>'+
-  '<div id="stAfter" class="hidden"></div></div>';
- updateStStats();
+function deckSavedAct(k,id,mastered){
+ const map=state[DECKS[k].stateKey];
+ if(mastered)srMaster(map,id);else delete map[id];
+ persist();deckRenderSaved(k);deckStats(k);
 }
-function revealSt(){
- document.getElementById('revealStBtn').classList.add('hidden');
- const after=document.getElementById('stAfter');
- after.classList.remove('hidden');
- after.innerHTML='<div class="eq-answer-box" style="margin-top:12px"><div class="tag" style="margin-bottom:4px"><span>'+curSt.cat+'</span></div>'+
-  '<div class="eq-formula" style="font-family:system-ui,sans-serif">'+curSt.name+'</div>'+
-  '<div class="eq-note">'+curSt.info+'</div></div>'+
-  '<div class="actions"><button class="retire" onclick="retireSt()">Mastered, retire it</button><button class="save" onclick="saveSt()">Save for review</button></div>'+
-  '<button class="opt" onclick="bumpHabit(\'st\');nextSt()" style="margin-top:12px">Keep in circle, next structure</button>';
-}
-function retireSt(){state.stRetired.push(curSt.id);bumpHabit('st');nextSt();}
-function saveSt(){state.stSaved.push(curSt.id);bumpHabit('st');nextSt();}
-function renderStSaved(){
- const list=document.getElementById('stSavedList');
- const items=stPool().filter(s=>s && state.stSaved.includes(s.id));
- if(!items.length){list.innerHTML='<p>No structures saved yet.</p>';return;}
- list.innerHTML=items.map(s=>'<div class="rev"><div class="tag"><span>'+s.cat+'</span></div><div><b>'+s.name+'</b></div>'+
-  '<div class="struct-box">'+s.svg+'</div>'+
-  '<div class="eq-note" style="margin-bottom:8px">'+s.info+'</div>'+
-  '<button onclick="unsaveSt('+s.id+')">Put back in circle</button> <button onclick="retireSavedSt('+s.id+')">Retire</button></div>').join('');
-}
-function unsaveSt(id){state.stSaved=state.stSaved.filter(x=>x!==id);persist();renderStSaved();updateStStats();}
-function retireSavedSt(id){state.stSaved=state.stSaved.filter(x=>x!==id);state.stRetired.push(id);persist();renderStSaved();updateStStats();}
-
-/* Works (Calculation Blueprints + Spaced Periodic Tracker + Mental Math) */
-const WK_INTERVALS = [3, 7, 14, 30];
-let curWk=null, wkSubView='deck';
-
-function wkPool(){return typeof WORKS!=='undefined'?WORKS:[];}
-function getWkEntry(id){return state.wkState[id] || {status:'new',level:0,due:0};}
-function isWkDue(w){
- const e=getWkEntry(w.id);
- if(e.status==='new'||e.status==='practice')return true;
- return Date.now() >= (e.due||0);
-}
-function formatDueText(e){
- if(e.status==='new')return '<span class="prio-badge">New</span>';
- if(e.status==='practice')return '<span class="prio-badge review">🟡 Needs Practice</span>';
- const diffDays = Math.ceil(((e.due||0) - Date.now()) / 86400000);
- if(diffDays <= 0)return '<span class="prio-badge review">🔄 Due for Review</span>';
- return '<span class="prio-badge master">🟢 Mastered ('+diffDays+'d)</span>';
+function buildStCats(){
+ const sel=document.getElementById('stCat');
+ const cats=[],counts={};
+ deckCards('st').forEach(s=>{if(!(s.cat in counts)){counts[s.cat]=0;cats.push(s.cat);}counts[s.cat]++;});
+ const prev=sel.value;
+ sel.innerHTML='';
+ const mk=(v,t)=>{const o=document.createElement('option');o.value=v;o.textContent=t;sel.appendChild(o);};
+ mk('all','All structures ('+deckCards('st').length+')');
+ cats.forEach(c=>mk(c,c+' ('+counts[c]+')'));
+ if(cats.includes(prev))sel.value=prev;
 }
 
+/* ============ Works ============ */
+let curWk=null,lastWk=null,wkSubView='deck';
+function wkPool(){return (typeof WORKS!=='undefined'?WORKS:[]).filter(hasId);}
+function getWkEntry(id){return srGet(state.wkState,id);}
+function isWkDue(w){return srIsDue(state.wkState,w.id);}
 function updateWkStats(){
  const all=wkPool();
- let dueCount=0, pracCount=0, mastCount=0;
+ let due=0,prac=0,mast=0;
  all.forEach(w=>{
   const e=getWkEntry(w.id);
-  if(isWkDue(w))dueCount++;
-  if(e.status==='practice')pracCount++;
-  if(e.status==='mastered')mastCount++;
+  if(isWkDue(w))due++;
+  if(e.status==='practice')prac++;
+  if(e.status==='mastered')mast++;
  });
- document.getElementById('wkStats').textContent='Due Now: '+dueCount+' | Needs Practice: '+pracCount+' | Mastered: '+mastCount+' / '+all.length;
- document.getElementById('sub-wk').textContent=dueCount+' due';
+ document.getElementById('wkStats').textContent='Due Now: '+due+' | Needs Practice: '+prac+' | Mastered: '+mast+' / '+all.length;
+ document.getElementById('sub-wk').textContent=due+' due';
+ document.getElementById('wkAllOpt').textContent='All '+all.length+' Setups';
 }
-
 function setWkSubView(mode){
- if(wkSubView===mode && mode!=='deck') mode='deck';
+ if(wkSubView===mode&&mode!=='deck')mode='deck';
  wkSubView=mode;
  document.getElementById('wkDeckView').classList.toggle('hidden',mode!=='deck');
  document.getElementById('wkListView').classList.toggle('hidden',mode!=='list');
@@ -1134,12 +1072,10 @@ function setWkSubView(mode){
  else if(mode==='math')nextMath();
  else nextWk();
 }
-
 function getFilteredWorks(){
- const mode=document.getElementById('wkFilter').value;
- const subj=document.getElementById('wkSubj').value;
+ const mode=val('wkFilter'),subj=val('wkSubj');
  return wkPool().filter(w=>{
-  if(subj!=='all' && w.subject!==subj)return false;
+  if(subj!=='all'&&w.subject!==subj)return false;
   const e=getWkEntry(w.id);
   if(mode==='due')return isWkDue(w);
   if(mode==='practice')return e.status==='practice';
@@ -1147,67 +1083,52 @@ function getFilteredWorks(){
   return true;
  });
 }
-
 function nextWk(){
  const pool=getFilteredWorks();
  const card=document.getElementById('wkCard');
  if(!pool.length){
-  card.innerHTML='<div class="fs-card"><p>No calculation blueprints match this filter right now. Switch filter to "All 100 Setups" or try ⚡ Mental Math.</p></div>';
+  card.innerHTML='<div class="fs-card"><p>No calculation blueprints match this filter right now. Switch the filter to "All Setups" or try ⚡ Mental Math.</p></div>';
   curWk=null;updateWkStats();return;
  }
- const practicePool=pool.filter(w=>getWkEntry(w.id).status==='practice');
- const pickPool=(practicePool.length && Math.random()<0.65)?practicePool:pool;
- curWk=pickPool[Math.floor(Math.random()*pickPool.length)];
+ curWk=pickCard(pool,state.wkState,lastWk);
+ lastWk=curWk.id;
  const e=getWkEntry(curWk.id);
- const nextDays=WK_INTERVALS[Math.min(e.level||0, WK_INTERVALS.length-1)];
-
  card.innerHTML='<div class="fs-card"><div class="tag"><span>'+curWk.subject+' \u00b7 '+curWk.topic+'</span>'+formatDueText(e)+'</div>'+
   '<div class="eq-prompt">'+curWk.q+'</div>'+
-  '<button class="reveal-btn" id="revealWkBtn" onclick="revealWk('+nextDays+')">Flip / Show Solution Blueprint</button>'+
+  '<button class="reveal-btn" id="revealWkBtn" onclick="revealWk()">Flip / Show Solution Blueprint</button>'+
   '<div id="wkAfter" class="hidden"></div></div>';
  updateWkStats();
 }
-
-function revealWk(nextDays){
+function revealWk(){
+ if(!curWk)return;
  document.getElementById('revealWkBtn').classList.add('hidden');
  const after=document.getElementById('wkAfter');
  after.classList.remove('hidden');
+ const e=getWkEntry(curWk.id);
  after.innerHTML='<div class="eq-answer-box" style="margin-top:12px">'+
   '<div class="eq-formula">'+curWk.tool+'</div>'+
   '<div class="eq-note">'+curWk.steps+'</div></div>'+
   '<div class="actions">'+
-  '<button class="retire" onclick="markWkMastered()">🟢 Mastered ('+nextDays+'d)</button>'+
+  '<button class="retire" onclick="markWkMastered()">'+srMasterLabel(e)+'</button>'+
   '<button class="save" onclick="markWkPractice()">🟡 Needs Practice</button>'+
   '</div>'+
   '<button class="opt" onclick="nextWk()" style="margin-top:12px">Skip / Next Blueprint</button>';
 }
-
 function markWkMastered(){
- const e=getWkEntry(curWk.id);
- const lvl=e.status==='mastered'?Math.min((e.level||0)+1, WK_INTERVALS.length-1):0;
- const days=WK_INTERVALS[lvl];
- state.wkState[curWk.id]={status:'mastered',level:lvl,due:Date.now()+(days*86400000)};
- bumpHabit('wk');
- nextWk();
+ if(!curWk)return;
+ srMaster(state.wkState,curWk.id);
+ bumpHabit('wk');nextWk();
 }
-
 function markWkPractice(){
- state.wkState[curWk.id]={status:'practice',level:0,due:0};
- bumpHabit('wk');
- nextWk();
+ if(!curWk)return;
+ srPractice(state.wkState,curWk.id);
+ bumpHabit('wk');nextWk();
 }
-
 function setWkStatusFromList(id,status){
- if(status==='practice'){
-  state.wkState[id]={status:'practice',level:0,due:0};
- }else{
-  state.wkState[id]={status:'mastered',level:0,due:Date.now()+(3*86400000)};
- }
- persist();
- renderWkList();
- updateWkStats();
+ if(status==='practice')srPractice(state.wkState,id);
+ else srMaster(state.wkState,id);
+ persist();renderWkList();updateWkStats();
 }
-
 function renderWkList(){
  const list=document.getElementById('wkAllList');
  const items=getFilteredWorks();
@@ -1219,404 +1140,331 @@ function renderWkList(){
    '<details><summary style="cursor:pointer;color:#1f3a5f;font-size:13px;font-weight:600">Show Solution Blueprint</summary>'+
    '<div class="eq-answer-box" style="margin-top:8px;margin-bottom:8px"><div class="eq-formula" style="font-size:15px">'+w.tool+'</div>'+
    '<div class="eq-note">'+w.steps+'</div></div></details>'+
-   '<button onclick="setWkStatusFromList('+w.id+',\'practice\')">🟡 Needs Practice</button> '+
-   '<button onclick="setWkStatusFromList('+w.id+',\'mastered\')">🟢 Mark Mastered (3d)</button></div>';
+   '<button onclick="setWkStatusFromList('+jsArg(w.id)+',\'practice\')">🟡 Needs Practice</button> '+
+   '<button onclick="setWkStatusFromList('+jsArg(w.id)+',\'mastered\')">'+srMasterLabel(e)+'</button></div>';
  }).join('');
 }
 
-/* No-Calculator MCAT Mental Math Generator */
-let mathCount = 0;
+/* ============ Mental math ============ */
+function updateMathLabel(){
+ document.getElementById('mathStreak').textContent='Streak: '+state.mathStreak+' | Best: '+state.mathBest;
+}
 function nextMath(){
  document.getElementById('mathRevealBtn').classList.remove('hidden');
  document.getElementById('mathAfter').classList.add('hidden');
- document.getElementById('mathStreak').textContent = 'Solved: ' + mathCount;
- const type = Math.floor(Math.random() * 4);
- let q='', ans='', trick='';
-
- if(type === 0){
-  const coeffs = [[2,0.30],[3,0.48],[4,0.60],[5,0.70],[6,0.78],[7,0.85],[8,0.90]];
-  const [c, lg] = coeffs[Math.floor(Math.random()*coeffs.length)];
-  const exp = Math.floor(Math.random()*9) + 2;
-  q = 'Find pH if [H⁺] = ' + c + ' × 10⁻' + exp + ' M';
-  ans = 'pH ≈ ' + (exp - lg).toFixed(2);
-  trick = 'Shortcut: pH = ' + exp + ' - log(' + c + '). Since log(' + c + ') ≈ ' + lg + ', ' + exp + ' - ' + lg + ' = ' + (exp - lg).toFixed(2) + '.';
- } else if(type === 1){
-  const a1 = [1.5, 2.4, 3.6, 4.8, 6.0, 7.5, 8.4, 9.0][Math.floor(Math.random()*8)];
-  const a2 = [1.2, 1.5, 2.0, 3.0, 4.0][Math.floor(Math.random()*5)];
-  const e1 = Math.floor(Math.random()*11) - 5;
-  const e2 = Math.floor(Math.random()*11) - 5;
-  const resC = (a1 / a2).toFixed(2);
-  const resE = e1 - e2;
-  q = '(' + a1 + ' × 10^' + e1 + ')  ÷  (' + a2 + ' × 10^' + e2 + ')';
-  ans = resC + ' × 10^' + resE;
-  trick = 'Divide coefficients (' + a1 + ' / ' + a2 + ' = ' + resC + '), and SUBTRACT exponents: (' + e1 + ') - (' + e2 + ') = ' + resE + '.';
- } else if(type === 2){
-  const pairs = [
-   ['1.8 × 10⁻⁵', '0.20 M', '√(3.6 × 10⁻⁶) ≈ 1.9 × 10⁻³ M (pH ≈ 2.7)'],
-   ['4.0 × 10⁻⁶', '0.10 M', '√(4.0 × 10⁻⁷) = √(40 × 10⁻⁸) ≈ 6.3 × 10⁻⁴ M (pH ≈ 3.2)'],
-   ['2.5 × 10⁻⁵', '0.10 M', '√(2.5 × 10⁻⁶) ≈ 1.58 × 10⁻³ M (pH ≈ 2.8)'],
-   ['5.0 × 10⁻⁸', '0.20 M', '√(1.0 × 10⁻⁸) = 1.0 × 10⁻⁴ M (pH = 4.0)'],
-   ['1.6 × 10⁻⁷', '0.40 M', '√(6.4 × 10⁻⁸) = √(64 × 10⁻¹⁰) = 8.0 × 10⁻⁵ M (pH ≈ 4.1)']
+ updateMathLabel();
+ const type=Math.floor(Math.random()*4);
+ let q='',ans='',trick='';
+ if(type===0){
+  const coeffs=[[2,0.30],[3,0.48],[4,0.60],[5,0.70],[6,0.78],[7,0.85],[8,0.90]];
+  const [c,lg]=coeffs[Math.floor(Math.random()*coeffs.length)];
+  const exp=Math.floor(Math.random()*9)+2;
+  q='Find pH if [H⁺] = '+c+' × 10⁻'+exp+' M';
+  ans='pH ≈ '+(exp-lg).toFixed(2);
+  trick='Shortcut: pH = '+exp+' - log('+c+'). Since log('+c+') ≈ '+lg+', '+exp+' - '+lg+' = '+(exp-lg).toFixed(2)+'.';
+ }else if(type===1){
+  const a1=[1.5,2.4,3.6,4.8,6.0,7.5,8.4,9.0][Math.floor(Math.random()*8)];
+  const a2=[1.2,1.5,2.0,3.0,4.0][Math.floor(Math.random()*5)];
+  const e1=Math.floor(Math.random()*11)-5;
+  const e2=Math.floor(Math.random()*11)-5;
+  const resC=(a1/a2).toFixed(2);
+  const resE=e1-e2;
+  q='('+a1+' × 10^'+e1+')  ÷  ('+a2+' × 10^'+e2+')';
+  ans=resC+' × 10^'+resE;
+  trick='Divide coefficients ('+a1+' / '+a2+' = '+resC+'), and SUBTRACT exponents: ('+e1+') - ('+e2+') = '+resE+'.';
+ }else if(type===2){
+  const pairs=[
+   ['1.8 × 10⁻⁵','0.20 M','√(3.6 × 10⁻⁶) ≈ 1.9 × 10⁻³ M (pH ≈ 2.7)'],
+   ['4.0 × 10⁻⁶','0.10 M','√(4.0 × 10⁻⁷) = √(40 × 10⁻⁸) ≈ 6.3 × 10⁻⁴ M (pH ≈ 3.2)'],
+   ['2.5 × 10⁻⁵','0.10 M','√(2.5 × 10⁻⁶) ≈ 1.58 × 10⁻³ M (pH ≈ 2.8)'],
+   ['5.0 × 10⁻⁸','0.20 M','√(1.0 × 10⁻⁸) = 1.0 × 10⁻⁴ M (pH = 4.0)'],
+   ['1.6 × 10⁻⁷','0.40 M','√(6.4 × 10⁻⁸) = √(64 × 10⁻¹⁰) = 8.0 × 10⁻⁵ M (pH ≈ 4.1)']
   ];
-  const [ka, ha, out] = pairs[Math.floor(Math.random()*pairs.length)];
-  q = 'Weak acid Ka = ' + ka + ', [HA] = ' + ha + '. Estimate [H⁺] and pH.';
-  ans = out;
-  trick = 'Multiply Ka × [HA], shift decimal so the exponent is EVEN, then take √(number) × 10^(half exponent).';
- } else {
-  const drills = [
-   ['Sound intensity increases by 1000×. What is ΔdB?', '+30 dB', '1000 = 10³ → multiply exponent 3 by 10 dB = +30 dB.'],
-   ['Sound level increases by +20 dB. By what factor did intensity increase?', '100× intensity', '+20 dB ÷ 10 = 2 → 10² = 100×.'],
-   ['Arteriole radius decreases by 20% (0.8r). Roughly how much flow remains?', '~41% flow (drops ~59%)', 'Poiseuille Q ∝ r⁴: 0.8² = 0.64, and 0.64² ≈ 0.41.'],
-   ['Distance from a point light/sound source triples (3r). Intensity becomes:', '1/9 of original', 'Inverse square law: I ∝ 1/r² → 1/3² = 1/9.'],
-   ['Lens focal length f = +25 cm. What is its power in Diopters?', '+4.0 D', 'Convert cm to meters first: 25 cm = 0.25 m → P = 1 / 0.25 = +4 D.']
+  const [ka,ha,out]=pairs[Math.floor(Math.random()*pairs.length)];
+  q='Weak acid Ka = '+ka+', [HA] = '+ha+'. Estimate [H⁺] and pH.';
+  ans=out;
+  trick='Multiply Ka × [HA], shift decimal so the exponent is EVEN, then take √(number) × 10^(half exponent).';
+ }else{
+  const drills=[
+   ['Sound intensity increases by 1000×. What is ΔdB?','+30 dB','1000 = 10³ → multiply exponent 3 by 10 dB = +30 dB.'],
+   ['Sound level increases by +20 dB. By what factor did intensity increase?','100× intensity','+20 dB ÷ 10 = 2 → 10² = 100×.'],
+   ['Arteriole radius decreases by 20% (0.8r). Roughly how much flow remains?','~41% flow (drops ~59%)','Poiseuille Q ∝ r⁴: 0.8² = 0.64, and 0.64² ≈ 0.41.'],
+   ['Distance from a point light/sound source triples (3r). Intensity becomes:','1/9 of original','Inverse square law: I ∝ 1/r² → 1/3² = 1/9.'],
+   ['Lens focal length f = +25 cm. What is its power in Diopters?','+4.0 D','Convert cm to meters first: 25 cm = 0.25 m → P = 1 / 0.25 = +4 D.']
   ];
-  const [dq, da, dt] = drills[Math.floor(Math.random()*drills.length)];
-  q = dq; ans = da; trick = dt;
+  const [dq,da,dt]=drills[Math.floor(Math.random()*drills.length)];
+  q=dq;ans=da;trick=dt;
  }
- document.getElementById('mathPrompt').textContent = q;
- document.getElementById('mathAns').textContent = ans;
- document.getElementById('mathTrick').textContent = trick;
+ document.getElementById('mathPrompt').textContent=q;
+ document.getElementById('mathAns').textContent=ans;
+ document.getElementById('mathTrick').textContent=trick;
 }
-
 function revealMath(){
- mathCount++;
  document.getElementById('mathRevealBtn').classList.add('hidden');
  document.getElementById('mathAfter').classList.remove('hidden');
- document.getElementById('mathStreak').textContent = 'Solved: ' + mathCount;
+}
+function gradeMath(correct){
+ if(correct){
+  state.mathStreak++;
+  if(state.mathStreak>state.mathBest)state.mathBest=state.mathStreak;
+ }else{
+  state.mathStreak=0;
+ }
+ persist();
+ nextMath();
 }
 
-/* TAB 5: PICTORIAL ERROR PATTERN TRACKER (WITH CARS PRESETS) */
-const ERR_COLORS = {
- "Didn't Read / Carelessness": "#c0392b",
- "Didn't Read / Misread": "#c0392b",
- "Passage / Graph Trap": "#d98e04",
- "Content Gap": "#1f3a5f",
- "Calculation / Math Error": "#8e44ad",
- "50/50 Guess / Overthought": "#2980b9",
- "Outside Knowledge / Bias (CARS)": "#e67e22",
- "Extreme / Out-of-Scope (CARS)": "#d35400",
- "Author vs. Cited Source (CARS)": "#9b59b6",
- "Timing / Rushed": "#16a085"
+/* ============ Error tracker ============ */
+const ERR_COLORS={
+ "Didn't Read / Carelessness":"#c0392b","Didn't Read / Misread":"#c0392b",
+ "Passage / Graph Trap":"#d98e04","Content Gap":"#1f3a5f","Calculation / Math Error":"#8e44ad",
+ "50/50 Guess / Overthought":"#2980b9","Outside Knowledge / Bias (CARS)":"#e67e22",
+ "Extreme / Out-of-Scope (CARS)":"#d35400","Author vs. Cited Source (CARS)":"#9b59b6","Timing / Rushed":"#16a085"
 };
-
-function toggleErrForm(){
- document.getElementById('errForm').classList.toggle('hidden');
-}
-
+function toggleErrForm(){document.getElementById('errForm').classList.toggle('hidden');}
 function saveErrorLog(){
- const type = document.getElementById('errType').value;
- const subject = document.getElementById('errSubj').value;
- const topic = document.getElementById('errTopic').value.trim() || 'General';
- const lesson = document.getElementById('errLesson').value.trim();
  state.errors.unshift({
-  id: Date.now(),
-  date: new Date().toLocaleDateString(),
-  type,
-  subject,
-  topic,
-  lesson
+  id:Date.now(),
+  date:new Date().toLocaleDateString(),
+  type:val('errType'),
+  subject:val('errSubj'),
+  topic:val('errTopic').trim()||'General',
+  lesson:val('errLesson').trim()
  });
  persist();
- document.getElementById('errTopic').value = '';
- document.getElementById('errLesson').value = '';
+ document.getElementById('errTopic').value='';
+ document.getElementById('errLesson').value='';
  toggleErrForm();
  renderErrors();
 }
-
 function deleteErrorLog(id){
  if(!confirm('Remove this logged mistake?'))return;
- state.errors = state.errors.filter(e => e.id !== id);
- persist();
+ state.errors=state.errors.filter(e=>e.id!==id);
+ persist();renderErrors();
+}
+function filterErrBy(type,subj){
+ if(type)document.getElementById('errFilterType').value=type;
+ if(subj)document.getElementById('errFilterSubj').value=subj;
  renderErrors();
 }
-
-function filterErrBy(type, subj){
- if(type) document.getElementById('errFilterType').value = type;
- if(subj) document.getElementById('errFilterSubj').value = subj;
- renderErrors();
+/* Home-screen reminder: the takeaway rule for the most frequent error type */
+function renderFocusRule(){
+ const box=document.getElementById('focusRule');
+ if(!state.errors.length){box.classList.add('hidden');return;}
+ const counts={};
+ state.errors.forEach(e=>{counts[e.type]=(counts[e.type]||0)+1;});
+ const top=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0][0];
+ const withRule=state.errors.find(e=>e.type===top&&e.lesson);
+ if(!withRule){box.classList.add('hidden');return;}
+ box.innerHTML='🎯 <b>Top leak: '+escapeHtml(top)+'</b><br>'+escapeHtml(withRule.lesson);
+ box.classList.remove('hidden');
 }
-
 function renderErrors(){
- const total = state.errors.length;
- document.getElementById('sub-er').textContent = total + ' logged';
-
- const carsPresets = [
-  "Foundations: Main Idea",
-  "Foundations: Explicit Detail",
-  "Foundations: Tone / Attitude",
-  "Foundations: Word in Context",
-  "Reasoning Within Text: Function / Structure",
-  "Reasoning Within Text: Evaluate Evidence",
-  "Reasoning Beyond Text: Strengthen / Weaken",
-  "Reasoning Beyond Text: Apply New Info / Analogy"
+ const total=state.errors.length;
+ document.getElementById('sub-er').textContent=total+' logged';
+ renderFocusRule();
+ const carsPresets=[
+  "Foundations: Main Idea","Foundations: Explicit Detail","Foundations: Tone / Attitude","Foundations: Word in Context",
+  "Reasoning Within Text: Function / Structure","Reasoning Within Text: Evaluate Evidence",
+  "Reasoning Beyond Text: Strengthen / Weaken","Reasoning Beyond Text: Apply New Info / Analogy"
  ];
- const topics = [...new Set([...carsPresets, ...state.errors.map(e => e.topic).filter(Boolean)])].sort();
- document.getElementById('errTopicSuggestions').innerHTML =
-  topics.map(t => '<option value="'+escapeHtml(t)+'"></option>').join('');
-
- const dash = document.getElementById('errDashboard');
+ const topics=[...new Set([...carsPresets,...state.errors.map(e=>e.topic).filter(Boolean)])].sort();
+ document.getElementById('errTopicSuggestions').innerHTML=topics.map(t=>'<option value="'+escapeHtml(t)+'"></option>').join('');
+ const dash=document.getElementById('errDashboard');
  if(!total){
-  dash.innerHTML = '<div class="chart-card"><p style="margin:0;font-size:13.5px;color:#555">No mistakes logged yet. Tap <b>+ Log Mistake</b> after any practice block or CARS passage to see visual patterns of where you lose points.</p></div>';
-  document.getElementById('errList').innerHTML = '';
+  dash.innerHTML='<div class="chart-card"><p style="margin:0;font-size:13.5px;color:#555">No mistakes logged yet. Tap <b>+ Log Mistake</b> after any practice block or CARS passage to see visual patterns of where you lose points.</p></div>';
+  document.getElementById('errList').innerHTML='';
   return;
  }
-
- const typeCounts = {};
- const subjCounts = {};
- const topicCounts = {};
- state.errors.forEach(e => {
-  typeCounts[e.type] = (typeCounts[e.type]||0) + 1;
-  subjCounts[e.subject] = (subjCounts[e.subject]||0) + 1;
-  const key = e.topic + ' (' + e.subject.slice(0,4) + ')';
-  topicCounts[key] = (topicCounts[key]||0) + 1;
+ const typeCounts={},subjCounts={},topicCounts={};
+ state.errors.forEach(e=>{
+  typeCounts[e.type]=(typeCounts[e.type]||0)+1;
+  subjCounts[e.subject]=(subjCounts[e.subject]||0)+1;
+  const key=e.topic+' ('+e.subject.slice(0,4)+')';
+  topicCounts[key]=(topicCounts[key]||0)+1;
  });
+ const sortedTypes=Object.entries(typeCounts).sort((a,b)=>b[1]-a[1]);
+ const sortedSubjs=Object.entries(subjCounts).sort((a,b)=>b[1]-a[1]);
+ const sortedTopics=Object.entries(topicCounts).sort((a,b)=>b[1]-a[1]).slice(0,6);
 
- const sortedTypes = Object.entries(typeCounts).sort((a,b) => b[1] - a[1]);
- const sortedSubjs = Object.entries(subjCounts).sort((a,b) => b[1] - a[1]);
- const sortedTopics = Object.entries(topicCounts).sort((a,b) => b[1] - a[1]).slice(0, 6);
-
- let html = '<div class="chart-card"><div class="chart-title"><span>🎯 Why Am I Missing Questions?</span><span style="font-size:12px;color:#555">Total: '+total+'</span></div>';
- sortedTypes.forEach(([label, count]) => {
-  const pct = Math.round((count / total) * 100);
-  const color = ERR_COLORS[label] || '#1f3a5f';
-  html += '<div class="bar-row" onclick="filterErrBy(\''+label.replace(/'/g,"\\'")+'\',\'all\')">' +
-   '<div class="bar-label"><span>'+escapeHtml(label)+'</span><span>'+pct+'% ('+count+')</span></div>' +
+ let html='<div class="chart-card"><div class="chart-title"><span>🎯 Why Am I Missing Questions?</span><span style="font-size:12px;color:#555">Total: '+total+'</span></div>';
+ sortedTypes.forEach(([label,count])=>{
+  const pct=Math.round(count/total*100);
+  const color=ERR_COLORS[label]||'#1f3a5f';
+  html+='<div class="bar-row" onclick="filterErrBy('+jsArg(label)+',\'all\')">'+
+   '<div class="bar-label"><span>'+escapeHtml(label)+'</span><span>'+pct+'% ('+count+')</span></div>'+
    '<div class="bar-track"><div class="bar-fill" style="width:'+pct+'%;background:'+color+'"></div></div></div>';
  });
- html += '</div>';
-
- html += '<div class="chart-card"><div class="chart-title"><span>📚 Breakdown by Subject</span><span style="font-size:11px;color:#1f3a5f;cursor:pointer" onclick="filterErrBy(\'all\',\'all\')">Reset Filters</span></div>';
- sortedSubjs.forEach(([label, count]) => {
-  const pct = Math.round((count / total) * 100);
-  html += '<div class="bar-row" onclick="filterErrBy(\'all\',\''+label.replace(/'/g,"\\'")+'\')">' +
-   '<div class="bar-label"><span>'+escapeHtml(label)+'</span><span>'+pct+'% ('+count+')</span></div>' +
+ html+='</div>';
+ html+='<div class="chart-card"><div class="chart-title"><span>📚 Breakdown by Subject</span><span style="font-size:11px;color:#1f3a5f;cursor:pointer" onclick="filterErrBy(\'all\',\'all\')">Reset Filters</span></div>';
+ sortedSubjs.forEach(([label,count])=>{
+  const pct=Math.round(count/total*100);
+  html+='<div class="bar-row" onclick="filterErrBy(\'all\','+jsArg(label)+')">'+
+   '<div class="bar-label"><span>'+escapeHtml(label)+'</span><span>'+pct+'% ('+count+')</span></div>'+
    '<div class="bar-track"><div class="bar-fill" style="width:'+pct+'%;background:#1f3a5f"></div></div></div>';
  });
- html += '<div style="margin-top:12px;font-size:12px;font-weight:700;color:#555">🔥 Top Weak Topic Hotspots:</div><div class="hotspot-chips">' +
-  sortedTopics.map(([t, c]) => '<span class="hotspot-chip">'+escapeHtml(t)+' · '+c+'</span>').join('') +
-  '</div></div>';
+ html+='<div style="margin-top:12px;font-size:12px;font-weight:700;color:#555">🔥 Top Weak Topic Hotspots:</div><div class="hotspot-chips">'+
+  sortedTopics.map(([t,c])=>'<span class="hotspot-chip">'+escapeHtml(t)+' · '+c+'</span>').join('')+'</div></div>';
+ dash.innerHTML=html;
 
- dash.innerHTML = html;
-
- const fType = document.getElementById('errFilterType').value;
- const fSubj = document.getElementById('errFilterSubj').value;
- const filtered = state.errors.filter(e =>
-  (fType==='all' || e.type===fType) && (fSubj==='all' || e.subject===fSubj)
- );
-
- const list = document.getElementById('errList');
- if(!filtered.length){
-  list.innerHTML = '<p class="stats">No logged mistakes match these filters.</p>';
-  return;
- }
- list.innerHTML = filtered.map(e => {
-  const color = ERR_COLORS[e.type] || '#1f3a5f';
-  return '<div class="rev" style="border-left:4px solid '+color+'">' +
-   '<div class="tag"><span><b>'+escapeHtml(e.subject)+'</b> · '+escapeHtml(e.topic)+'</span><span>'+escapeHtml(e.date)+'</span></div>' +
-   '<div style="font-size:13px;font-weight:700;color:'+color+';margin-bottom:4px">'+escapeHtml(e.type)+'</div>' +
-   (e.lesson ? '<div class="eq-note">'+escapeHtml(e.lesson)+'</div>' : '') +
-   '<button class="res-del" onclick="deleteErrorLog('+e.id+')">Delete</button></div>';
+ const fType=val('errFilterType'),fSubj=val('errFilterSubj');
+ const filtered=state.errors.filter(e=>(fType==='all'||e.type===fType)&&(fSubj==='all'||e.subject===fSubj));
+ const list=document.getElementById('errList');
+ if(!filtered.length){list.innerHTML='<p class="stats">No logged mistakes match these filters.</p>';return;}
+ list.innerHTML=filtered.map(e=>{
+  const color=ERR_COLORS[e.type]||'#1f3a5f';
+  return '<div class="rev" style="border-left:4px solid '+color+'">'+
+   '<div class="tag"><span><b>'+escapeHtml(e.subject)+'</b> · '+escapeHtml(e.topic)+'</span><span>'+escapeHtml(e.date)+'</span></div>'+
+   '<div style="font-size:13px;font-weight:700;color:'+color+';margin-bottom:4px">'+escapeHtml(e.type)+'</div>'+
+   (e.lesson?'<div class="eq-note">'+escapeHtml(e.lesson)+'</div>':'')+
+   '<button class="res-del" onclick="deleteErrorLog('+jsArg(e.id)+')">Delete</button></div>';
  }).join('');
 }
 
-/* IndexedDB Storage + 3-Bucket Vault Circle Drill (Active Circle | Saved Review | Mastered) */
+/* ============ Vault (IndexedDB) ============ */
 let db;
 const req=indexedDB.open('mcatResourcesDB',1);
 req.onupgradeneeded=e=>{e.target.result.createObjectStore('items',{keyPath:'id',autoIncrement:true});};
 req.onsuccess=e=>{db=e.target.result;renderResources();};
+req.onerror=()=>{alert('Vault storage could not be opened. Notes and images will not save in this browser mode.');};
 
-let pastedImgData = null;
-let editingId = null;
-let currentPriority = 'none';
-let blurActive = false;
-let resDrillMode = false;
-let curResDrill = null;
+let pastedImgData=null,editingId=null,currentPriority='none',blurActive=false,resDrillMode=false,curResDrill=null;
+const noteBox=document.getElementById('resNote');
 
-function resInCircle(item){
- return item && !state.resRetired.includes(item.id) && !state.resSaved.includes(item.id);
+function resInCircle(item){return item&&!state.resRetired.includes(item.id)&&!state.resSaved.includes(item.id);}
+/* One "review" concept: either flagged Needs Review when saved, or put in the review list while drilling */
+function resNeedsReview(item){
+ return item&&!state.resRetired.includes(item.id)&&(state.resSaved.includes(item.id)||item.priority==='review');
 }
-
 function toggleResDrillMode(){
- resDrillMode = !resDrillMode;
- document.getElementById('resBrowseView').classList.toggle('hidden', resDrillMode);
- document.getElementById('resDrillView').classList.toggle('hidden', !resDrillMode);
- const btn = document.getElementById('resDrillBtn');
- btn.classList.toggle('active', resDrillMode);
- btn.textContent = resDrillMode ? '📂 Browse Vault' : '🔄 Drill Circle';
- if(resDrillMode) nextResDrill();
- else renderResources();
+ resDrillMode=!resDrillMode;
+ document.getElementById('resBrowseView').classList.toggle('hidden',resDrillMode);
+ document.getElementById('resDrillView').classList.toggle('hidden',!resDrillMode);
+ const btn=document.getElementById('resDrillBtn');
+ btn.classList.toggle('active',resDrillMode);
+ btn.textContent=resDrillMode?'📂 Browse Vault':'🔄 Drill Circle';
+ if(resDrillMode)nextResDrill();else renderResources();
 }
-
 function nextResDrill(){
- if(!db) return;
- const scope = document.getElementById('resDrillScope').value;
- const subj = document.getElementById('resDrillSubj').value;
- db.transaction('items','readonly').objectStore('items').getAll().onsuccess = e => {
-  const all = e.target.result;
-  const activeCircle = all.filter(resInCircle);
-  const savedReview = all.filter(x => state.resSaved.includes(x.id) && !state.resRetired.includes(x.id));
-  const masteredCount = all.filter(x => state.resRetired.includes(x.id)).length;
-
-  document.getElementById('resDrillStats').textContent =
-   'In Circle: ' + activeCircle.length + ' | Saved Review: ' + savedReview.length + ' | Mastered: ' + masteredCount;
-
-  let pool = [];
-  if(scope === 'saved'){
-   pool = savedReview.filter(x => subj === 'all' || x.subject === subj);
-  } else if(scope === 'high'){
-   pool = activeCircle.filter(x => x.priority === 'high' && (subj === 'all' || x.subject === subj));
-  } else {
-   pool = activeCircle.filter(x => subj === 'all' || x.subject === subj);
-  }
-
-  const card = document.getElementById('resDrillCard');
+ if(!db)return;
+ const scope=val('resDrillScope'),subj=val('resDrillSubj');
+ db.transaction('items','readonly').objectStore('items').getAll().onsuccess=e=>{
+  const all=e.target.result;
+  const activeCircle=all.filter(resInCircle);
+  const review=all.filter(resNeedsReview);
+  const masteredCount=all.filter(x=>state.resRetired.includes(x.id)).length;
+  document.getElementById('resDrillStats').textContent='In Circle: '+activeCircle.length+' | Needs Review: '+review.length+' | Mastered: '+masteredCount;
+  const okSubj=x=>subj==='all'||x.subject===subj;
+  let pool;
+  if(scope==='saved')pool=review.filter(okSubj);
+  else if(scope==='high')pool=activeCircle.filter(x=>x.priority==='high'&&okSubj(x));
+  else pool=activeCircle.filter(okSubj);
+  const card=document.getElementById('resDrillCard');
   if(!pool.length){
-   const msg = scope === 'saved'
-    ? 'No items in your Saved for Review list yet.'
-    : 'No resources left in the Active Circle! Switch to <b>Saved for Review List</b> or tap <b>Reset Mastered</b> below.';
-   card.innerHTML = '<div class="fs-card"><p>' + msg + '</p></div>';
-   curResDrill = null;
-   return;
+   const msg=scope==='saved'?'Nothing in your Needs Review list yet.':'No resources left here. Switch to the <b>Needs Review List</b> or tap <b>Reset Mastered</b> below.';
+   card.innerHTML='<div class="fs-card"><p>'+msg+'</p></div>';
+   curResDrill=null;return;
   }
-
-  curResDrill = pool[Math.floor(Math.random() * pool.length)];
-
-  const p = curResDrill.priority || 'none';
-  const isSaved = state.resSaved.includes(curResDrill.id);
-  const badge = isSaved ? '<span class="prio-badge review">🟡 Saved for Review</span>' :
-                (p === 'high' ? '<span class="prio-badge high">🔴 High Priority</span>' : '');
-
-  card.innerHTML = '<div class="fs-card">' +
-   '<div class="tag"><span>' + escapeHtml(curResDrill.subject) + '</span>' + badge + '</div>' +
-   '<div class="eq-prompt">' + escapeHtml(curResDrill.title || 'Untitled Resource') + '</div>' +
-   '<button class="reveal-btn" id="revealResBtn" onclick="revealResDrill()">Reveal Notes &amp; Diagram</button>' +
+  const lastId=curResDrill?curResDrill.id:null;
+  const p=pool.length>1?pool.filter(x=>x.id!==lastId):pool;
+  curResDrill=p[Math.floor(Math.random()*p.length)];
+  const pr=curResDrill.priority||'none';
+  const badge=resNeedsReview(curResDrill)&&pr!=='high'?'<span class="prio-badge review">🟡 Needs Review</span>':(pr==='high'?'<span class="prio-badge high">🔴 High Priority</span>':'');
+  card.innerHTML='<div class="fs-card"><div class="tag"><span>'+escapeHtml(curResDrill.subject)+'</span>'+badge+'</div>'+
+   '<div class="eq-prompt">'+escapeHtml(curResDrill.title||'Untitled Resource')+'</div>'+
+   '<button class="reveal-btn" id="revealResBtn" onclick="revealResDrill()">Reveal Notes &amp; Diagram</button>'+
    '<div id="resDrillAfter" class="hidden"></div></div>';
  };
 }
-
 function revealResDrill(){
- if(!curResDrill) return;
+ if(!curResDrill)return;
  document.getElementById('revealResBtn').classList.add('hidden');
- const after = document.getElementById('resDrillAfter');
+ const after=document.getElementById('resDrillAfter');
  after.classList.remove('hidden');
-
- const isSaved = state.resSaved.includes(curResDrill.id);
- const middleBtn = isSaved
-  ? '<button class="save" onclick="returnResDrillToCircle()">↩️ Put Back in Circle</button>'
-  : '<button class="save" onclick="saveResDrillForReview()">🟡 Save for Review</button>';
-
- after.innerHTML =
-  '<div class="eq-answer-box" style="margin-top:12px">' +
-  (curResDrill.note ? '<div class="eq-note">' + escapeHtml(curResDrill.note) + '</div>' : '') +
-  (curResDrill.imgData ? '<img class="drill-img" src="' + curResDrill.imgData + '" onclick="zoomImg(this.src)">' : '') +
-  (!curResDrill.note && !curResDrill.imgData ? '<div class="eq-note">No note or image attached.</div>' : '') +
-  '</div>' +
-  '<div class="actions">' +
-  '<button class="retire" onclick="retireResDrill()">🟢 Mastered (Hide)</button>' +
-  middleBtn +
-  '</div>' +
+ const isSaved=state.resSaved.includes(curResDrill.id);
+ const middleBtn=isSaved
+  ?'<button class="save" onclick="returnResDrillToCircle()">↩️ Put Back in Circle</button>'
+  :'<button class="save" onclick="saveResDrillForReview()">🟡 Needs Review</button>';
+ after.innerHTML='<div class="eq-answer-box" style="margin-top:12px">'+
+  (curResDrill.note?'<div class="eq-note">'+escapeHtml(curResDrill.note)+'</div>':'')+
+  (curResDrill.imgData?'<img class="drill-img" src="'+curResDrill.imgData+'" onclick="zoomImg(this.src)">':'')+
+  (!curResDrill.note&&!curResDrill.imgData?'<div class="eq-note">No note or image attached.</div>':'')+
+  '</div><div class="actions"><button class="retire" onclick="retireResDrill()">🟢 Mastered (Hide)</button>'+middleBtn+'</div>'+
   '<button class="opt" onclick="nextResDrill()" style="margin-top:12px">Keep here, next resource →</button>';
 }
-
 function retireResDrill(){
- if(!curResDrill) return;
- state.resSaved = state.resSaved.filter(x => x !== curResDrill.id);
- if(!state.resRetired.includes(curResDrill.id)) state.resRetired.push(curResDrill.id);
- persist();
- nextResDrill();
+ if(!curResDrill)return;
+ state.resSaved=state.resSaved.filter(x=>x!==curResDrill.id);
+ if(!state.resRetired.includes(curResDrill.id))state.resRetired.push(curResDrill.id);
+ persist();nextResDrill();
 }
-
 function saveResDrillForReview(){
- if(!curResDrill) return;
- state.resRetired = state.resRetired.filter(x => x !== curResDrill.id);
- if(!state.resSaved.includes(curResDrill.id)) state.resSaved.push(curResDrill.id);
- persist();
- nextResDrill();
+ if(!curResDrill)return;
+ state.resRetired=state.resRetired.filter(x=>x!==curResDrill.id);
+ if(!state.resSaved.includes(curResDrill.id))state.resSaved.push(curResDrill.id);
+ persist();nextResDrill();
 }
-
 function returnResDrillToCircle(){
- if(!curResDrill) return;
- state.resSaved = state.resSaved.filter(x => x !== curResDrill.id);
- state.resRetired = state.resRetired.filter(x => x !== curResDrill.id);
- persist();
- nextResDrill();
+ if(!curResDrill)return;
+ state.resSaved=state.resSaved.filter(x=>x!==curResDrill.id);
+ state.resRetired=state.resRetired.filter(x=>x!==curResDrill.id);
+ persist();nextResDrill();
 }
-
 function toggleBlurMode(){
- blurActive = !blurActive;
- const list = document.getElementById('resList');
- const btn = document.getElementById('blurToggleBtn');
- list.classList.toggle('blur-active', blurActive);
- btn.classList.toggle('active', blurActive);
- btn.textContent = blurActive ? '👁️ Blur: ON' : '👁️ Blur: OFF';
- if(!blurActive){
-  document.querySelectorAll('.unblurred').forEach(el => el.classList.remove('unblurred'));
- }
+ blurActive=!blurActive;
+ const btn=document.getElementById('blurToggleBtn');
+ document.getElementById('resList').classList.toggle('blur-active',blurActive);
+ btn.classList.toggle('active',blurActive);
+ btn.textContent=blurActive?'👁️ Blur: ON':'👁️ Blur: OFF';
+ if(!blurActive)document.querySelectorAll('.unblurred').forEach(el=>el.classList.remove('unblurred'));
 }
-
 function setPriority(p){
- currentPriority = p;
+ currentPriority=p;
  ['none','high','review'].forEach(k=>{
-  const el=document.getElementById('prio-'+k);
-  el.className='prio-opt'+(k===p?' sel-'+k:'');
+  document.getElementById('prio-'+k).className='prio-opt'+(k===p?' sel-'+k:'');
  });
 }
-
 function setPastedPreview(dataUrl){
- pastedImgData = dataUrl;
- document.getElementById('pastePreview').innerHTML =
-  '<div style="margin:6px 0">' +
-  '<img src="' + dataUrl + '" style="max-height:150px;border-radius:6px;border:1px solid #c5cbd6">' +
+ pastedImgData=dataUrl;
+ document.getElementById('pastePreview').innerHTML=
+  '<div style="margin:6px 0"><img src="'+dataUrl+'" style="max-height:150px;border-radius:6px;border:1px solid #c5cbd6">'+
   '<button type="button" onclick="clearPastedImg()" style="display:block;color:#c0392b;background:none;border:none;font-size:12px;padding:4px 0;cursor:pointer">Remove image</button></div>';
 }
-
-function clearPastedImg(){
- pastedImgData = null;
- document.getElementById('pastePreview').innerHTML = '';
-}
-
+function clearPastedImg(){pastedImgData=null;document.getElementById('pastePreview').innerHTML='';}
 function openNewResource(){
- if(resDrillMode) toggleResDrillMode();
- editingId = null;
- document.getElementById('formModeLabel').textContent = 'Add New Resource';
- document.getElementById('resTitle').value = '';
- noteBox.innerHTML = '';
- document.getElementById('resFile').value = '';
- setPriority('none');
- clearPastedImg();
+ if(resDrillMode)toggleResDrillMode();
+ editingId=null;
+ document.getElementById('formModeLabel').textContent='Add New Resource';
+ document.getElementById('resTitle').value='';
+ noteBox.innerHTML='';
+ document.getElementById('resFile').value='';
+ setPriority('none');clearPastedImg();
  document.getElementById('resForm').classList.remove('hidden');
  document.getElementById('resTitle').focus();
 }
-
 function editResource(id){
  if(!db)return;
  db.transaction('items','readonly').objectStore('items').get(id).onsuccess=e=>{
-  const item = e.target.result;
+  const item=e.target.result;
   if(!item)return;
-  editingId = item.id;
-  document.getElementById('formModeLabel').textContent = 'Edit / Move Resource';
-  document.getElementById('resTitle').value = item.title || '';
-  document.getElementById('resSubj').value = item.subject || 'Biochemistry';
-  noteBox.innerText = item.note || '';
-  document.getElementById('resFile').value = '';
-  setPriority(item.priority || 'none');
-  if(item.imgData){
-   setPastedPreview(item.imgData);
-  }else{
-   clearPastedImg();
-  }
-  const form = document.getElementById('resForm');
+  editingId=item.id;
+  document.getElementById('formModeLabel').textContent='Edit / Move Resource';
+  document.getElementById('resTitle').value=item.title||'';
+  document.getElementById('resSubj').value=item.subject||'Biochemistry';
+  noteBox.innerText=item.note||'';
+  document.getElementById('resFile').value='';
+  setPriority(item.priority||'none');
+  if(item.imgData)setPastedPreview(item.imgData);else clearPastedImg();
+  const form=document.getElementById('resForm');
   form.classList.remove('hidden');
   form.scrollIntoView({behavior:'smooth',block:'center'});
  };
 }
-
 function closeResForm(){
- editingId = null;
+ editingId=null;
  document.getElementById('resForm').classList.add('hidden');
  clearPastedImg();
 }
-
 function compressImage(file){
  return new Promise(resolve=>{
   const reader=new FileReader();
@@ -1626,8 +1474,7 @@ function compressImage(file){
     const canvas=document.createElement('canvas');
     const maxW=1200;
     const scale=img.width>maxW?maxW/img.width:1;
-    canvas.width=img.width*scale;
-    canvas.height=img.height*scale;
+    canvas.width=img.width*scale;canvas.height=img.height*scale;
     canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
     resolve(canvas.toDataURL('image/jpeg',0.8));
    };
@@ -1636,87 +1483,68 @@ function compressImage(file){
   reader.readAsDataURL(file);
  });
 }
+function insertSym(sym){noteBox.focus();document.execCommand('insertText',false,sym);}
 
-const noteBox = document.getElementById('resNote');
-
-/* Insert symbol from 1-tap equation bar */
-function insertSym(sym){
- noteBox.focus();
- document.execCommand('insertText', false, sym);
+/* Superscripts: ^2 -> ², ^-1 -> ⁻¹, ^+ -> ⁺. Converts only after the exponent is finished
+   (when you type the next character that is not a digit/sign), so ^25 and ^-1 work. */
+const SUP={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','+':'⁺','-':'⁻'};
+function superscriptify(t){
+ return t.replace(/\^([+\-]?\d+|[+\-])/g,(m,g)=>g.split('').map(c=>SUP[c]).join(''));
 }
-
-/* Auto-convert ^2, ^3, ^-1, ^+, ^- into Unicode superscripts as you type */
-noteBox.addEventListener('input', function(){
- const sel = window.getSelection();
- if(!sel.rangeCount || !sel.isCollapsed) return;
- const node = sel.focusNode;
- if(!node || node.nodeType !== Node.TEXT_NODE) return;
- const pos = sel.focusOffset;
- const before = node.textContent.slice(0, pos);
- const map = {'^2':'²','^3':'³','^4':'⁴','^-1':'⁻¹','^-2':'⁻²','^+':'⁺','^-':'⁻','^0':'⁰','^1':'¹'};
- for(const [pat, rep] of Object.entries(map)){
-  if(before.endsWith(pat)){
-   const start = pos - pat.length;
-   node.textContent = node.textContent.slice(0, start) + rep + node.textContent.slice(pos);
-   const range = document.createRange();
-   range.setStart(node, start + rep.length);
-   range.collapse(true);
-   sel.removeAllRanges();
-   sel.addRange(range);
-   break;
-  }
- }
+noteBox.addEventListener('input',function(){
+ const sel=window.getSelection();
+ if(!sel.rangeCount||!sel.isCollapsed)return;
+ const node=sel.focusNode;
+ if(!node||node.nodeType!==Node.TEXT_NODE)return;
+ const pos=sel.focusOffset;
+ const before=node.textContent.slice(0,pos);
+ if(before.indexOf('^')===-1)return;
+ if(/[\d+\-^]$/.test(before))return;
+ const converted=superscriptify(before);
+ if(converted===before)return;
+ node.textContent=converted+node.textContent.slice(pos);
+ const range=document.createRange();
+ range.setStart(node,converted.length);range.collapse(true);
+ sel.removeAllRanges();sel.addRange(range);
 });
-
-noteBox.addEventListener('paste', async function(e){
- const cd = e.clipboardData || e.originalEvent.clipboardData;
- if(cd && cd.items){
+noteBox.addEventListener('paste',async function(e){
+ const cd=e.clipboardData||e.originalEvent.clipboardData;
+ if(cd&&cd.items){
   for(let i=0;i<cd.items.length;i++){
    if(cd.items[i].type.indexOf('image')!==-1){
     e.preventDefault();
-    const blob = cd.items[i].getAsFile();
-    const dataUrl = await compressImage(blob);
-    setPastedPreview(dataUrl);
+    setPastedPreview(await compressImage(cd.items[i].getAsFile()));
     return;
    }
   }
  }
- setTimeout(async ()=>{
-  const embedded = noteBox.querySelector('img');
+ setTimeout(()=>{
+  const embedded=noteBox.querySelector('img');
   if(embedded){
-   const src = embedded.src;
+   const src=embedded.src;
    embedded.remove();
-   if(src.startsWith('data:image')) setPastedPreview(src);
+   if(src.startsWith('data:image'))setPastedPreview(src);
   }
- }, 60);
+ },60);
 });
-
 async function pasteFromClipboard(){
  try{
-  if(!navigator.clipboard || !navigator.clipboard.read){
-   alert('Tap inside the notes box above and tap Paste on your keyboard.');
-   return;
-  }
-  const items = await navigator.clipboard.read();
+  if(!navigator.clipboard||!navigator.clipboard.read){alert('Tap inside the notes box above and tap Paste on your keyboard.');return;}
+  const items=await navigator.clipboard.read();
   for(const item of items){
-   const imgType = item.types.find(t => t.startsWith('image/'));
-   if(imgType){
-    const blob = await item.getType(imgType);
-    const dataUrl = await compressImage(blob);
-    setPastedPreview(dataUrl);
-    return;
-   }
+   const imgType=item.types.find(t=>t.startsWith('image/'));
+   if(imgType){setPastedPreview(await compressImage(await item.getType(imgType)));return;}
   }
   alert('No image found in clipboard. Copy an image from Chrome first.');
  }catch(err){
   alert('Tap inside the notes box above and select Paste from your keyboard.');
  }
 }
-
 async function saveResource(){
- const title=document.getElementById('resTitle').value.trim();
- const subject=document.getElementById('resSubj').value;
- const note=noteBox.innerText.trim();
+ if(!db){alert('Vault storage is not ready.');return;}
+ const title=val('resTitle').trim();
+ const subject=val('resSubj');
+ const note=superscriptify(noteBox.innerText.trim());
  const file=document.getElementById('resFile').files[0];
  if(!title&&!note&&!file&&!pastedImgData){alert('Add a title, equation, or photo first.');return;}
  let imgData=pastedImgData;
@@ -1724,108 +1552,78 @@ async function saveResource(){
  const tx=db.transaction('items','readwrite');
  const store=tx.objectStore('items');
  const record={title:title||'Untitled Resource',subject,priority:currentPriority,note,imgData};
- if(editingId!==null){
-  record.id=editingId;
-  store.put(record);
- }else{
-  store.add(record);
- }
+ if(editingId!==null){record.id=editingId;store.put(record);}
+ else store.add(record);
  tx.oncomplete=()=>{
   document.getElementById('resTitle').value='';
   noteBox.innerHTML='';
   document.getElementById('resFile').value='';
-  closeResForm();
-  renderResources();
+  closeResForm();renderResources();
  };
+ tx.onerror=()=>alert('Could not save this resource.');
 }
-
-function escapeHtml(s){
- return s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : '';
-}
-
 function updateTitleSuggestions(allItems){
- const paths = new Set();
+ const paths=new Set();
  allItems.forEach(item=>{
   if(!item.title)return;
-  const parts = item.title.split('/').map(p=>p.trim()).filter(Boolean);
-  let acc = '';
-  parts.forEach((p,idx)=>{
-   acc = idx===0 ? p : acc + ' / ' + p;
+  let acc='';
+  item.title.split('/').map(p=>p.trim()).filter(Boolean).forEach((p,idx)=>{
+   acc=idx===0?p:acc+' / '+p;
    paths.add(acc);
   });
  });
- const dl = document.getElementById('titleSuggestions');
- dl.innerHTML = [...paths].sort().map(p=>'<option value="'+escapeHtml(p)+'"></option>').join('');
+ document.getElementById('titleSuggestions').innerHTML=[...paths].sort().map(p=>'<option value="'+escapeHtml(p)+'"></option>').join('');
 }
-
-function nodeHasPriority(node, prio){
+function nodeHasPriority(node,prio){
  if(node.items.some(i=>(i.priority||'none')===prio))return true;
- return Object.values(node.children).some(child=>nodeHasPriority(child,prio));
+ return Object.values(node.children).some(c=>nodeHasPriority(c,prio));
 }
-
-function handleNoteClick(el){
- if(blurActive && !el.classList.contains('unblurred')){
-  el.classList.add('unblurred');
- }
-}
-
+function handleNoteClick(el){if(blurActive&&!el.classList.contains('unblurred'))el.classList.add('unblurred');}
 function handleImgClick(el){
- if(blurActive && !el.classList.contains('unblurred')){
-  el.classList.add('unblurred');
-  return;
- }
+ if(blurActive&&!el.classList.contains('unblurred')){el.classList.add('unblurred');return;}
  zoomImg(el.src);
 }
-
-function buildTreeHtml(node, autoOpen){
+function buildTreeHtml(node,autoOpen){
  let html='';
  Object.keys(node.children).forEach(key=>{
   const child=node.children[key];
-  const hasHigh=nodeHasPriority(child,'high');
-  const hasRev=nodeHasPriority(child,'review');
-  const dots=(hasHigh?' 🔴':'')+(hasRev?' 🟡':'');
-  html+='<details class="tree-node"'+(autoOpen?' open':'')+'><summary><span class="sum-left">'+escapeHtml(key)+dots+'</span><span class="sum-arrow">▾</span></summary><div class="tree-body">'+buildTreeHtml(child, autoOpen)+'</div></details>';
+  const dots=(nodeHasPriority(child,'high')?' 🔴':'')+(nodeHasPriority(child,'review')?' 🟡':'');
+  html+='<details class="tree-node"'+(autoOpen?' open':'')+'><summary><span class="sum-left">'+escapeHtml(key)+dots+'</span><span class="sum-arrow">▾</span></summary><div class="tree-body">'+buildTreeHtml(child,autoOpen)+'</div></details>';
  });
  node.items.forEach(item=>{
   const p=item.priority||'none';
   const isRetired=state.resRetired.includes(item.id);
   const isSaved=state.resSaved.includes(item.id);
   const badge=p==='high'?'<span class="prio-badge high">🔴 High Priority</span>':
-              ((p==='review'||isSaved)?'<span class="prio-badge review">🟡 Saved for Review</span>':
-              (isRetired?'<span class="prio-badge master">🟢 Mastered</span>':''));
+   ((p==='review'||isSaved)?'<span class="prio-badge review">🟡 Needs Review</span>':
+   (isRetired?'<span class="prio-badge master">🟢 Mastered</span>':''));
   html+='<div class="res-item p-'+p+'"><div class="tag"><span>'+escapeHtml(item.subject)+'</span>'+badge+'</div>'+
    (item.note?'<div class="res-note" onclick="handleNoteClick(this)">'+escapeHtml(item.note)+'</div>':'')+
    (item.imgData?'<img src="'+item.imgData+'" onclick="handleImgClick(this)">':'')+
-   '<div class="item-actions">'+
-   '<button class="res-edit" onclick="editResource('+item.id+')">Edit / Move</button>'+
-   '<button class="res-del" onclick="delResource('+item.id+')">Delete</button>'+
-   '</div></div>';
+   '<div class="item-actions"><button class="res-edit" onclick="editResource('+jsArg(item.id)+')">Edit / Move</button>'+
+   '<button class="res-del" onclick="delResource('+jsArg(item.id)+')">Delete</button></div></div>';
  });
  return html;
 }
-
 function renderResources(){
- if(!db) return;
- const subjFilter=document.getElementById('resFilter').value;
- const prioFilter=document.getElementById('resPrioFilter').value;
- const query=(document.getElementById('resSearch').value || '').trim().toLowerCase();
+ if(!db)return;
+ const subjFilter=val('resFilter'),prioFilter=val('resPrioFilter');
+ const query=(document.getElementById('resSearch').value||'').trim().toLowerCase();
  const list=document.getElementById('resList');
  db.transaction('items','readonly').objectStore('items').getAll().onsuccess=e=>{
   const rawAll=e.target.result;
   updateTitleSuggestions(rawAll);
   document.getElementById('sub-res').textContent=rawAll.length+' saved';
   const all=rawAll.filter(x=>{
-   const isSaved=state.resSaved.includes(x.id);
-   const effectivePrio = isSaved ? 'review' : (x.priority||'none');
-   const matchSubj=subjFilter==='all'||x.subject===subjFilter;
-   const matchPrio=prioFilter==='all'||effectivePrio===prioFilter;
-   const matchQuery=!query || (x.title||'').toLowerCase().includes(query) || (x.note||'').toLowerCase().includes(query);
-   return matchSubj && matchPrio && matchQuery;
+   const effectivePrio=state.resSaved.includes(x.id)?'review':(x.priority||'none');
+   return (subjFilter==='all'||x.subject===subjFilter)&&
+    (prioFilter==='all'||effectivePrio===prioFilter)&&
+    (!query||(x.title||'').toLowerCase().includes(query)||(x.note||'').toLowerCase().includes(query));
   });
   if(!all.length){list.innerHTML='<p class="stats">No matching resources found.</p>';return;}
   const root={children:{},items:[]};
   all.forEach(item=>{
-   const parts=item.title.split('/').map(p=>p.trim()).filter(Boolean);
+   const parts=(item.title||'').split('/').map(p=>p.trim()).filter(Boolean);
    if(!parts.length)parts.push('Untitled');
    let curr=root;
    parts.forEach(part=>{
@@ -1834,76 +1632,77 @@ function renderResources(){
    });
    curr.items.push(item);
   });
-  list.innerHTML=buildTreeHtml(root, Boolean(query));
+  list.innerHTML=buildTreeHtml(root,Boolean(query));
  };
 }
-
 function delResource(id){
  if(!confirm('Delete this resource?'))return;
  const tx=db.transaction('items','readwrite');
  tx.objectStore('items').delete(id);
  tx.oncomplete=()=>{
-  state.resRetired = state.resRetired.filter(x => x !== id);
-  state.resSaved = state.resSaved.filter(x => x !== id);
-  persist();
-  renderResources();
+  state.resRetired=state.resRetired.filter(x=>x!==id);
+  state.resSaved=state.resSaved.filter(x=>x!==id);
+  persist();renderResources();
  };
 }
-
 function zoomImg(src){
  document.getElementById('modalImg').src=src;
  document.getElementById('imgModal').style.display='flex';
 }
 
-/* Seamless In-Place Overwriting Backup using File System Access API */
-let savedFileHandle = null;
+/* ============ Backup / Restore ============ */
+let savedFileHandle=null;
+function updateBackupInfo(){
+ const el=document.getElementById('backupInfo');
+ if(!state.lastBackup){el.textContent='No backup saved yet. Save one now: your data lives only in this browser.';el.className='backup-info stale';return;}
+ const days=Math.floor((Date.now()-state.lastBackup)/DAY);
+ el.textContent='Last backup: '+new Date(state.lastBackup).toLocaleDateString()+(days>=7?' ('+days+' days ago, save a new one)':'');
+ el.className='backup-info'+(days>=7?' stale':'');
+}
+function markBackupDone(){state.lastBackup=Date.now();persist();updateBackupInfo();}
 
 async function exportBackup(){
  if(!db)return;
  db.transaction('items','readonly').objectStore('items').getAll().onsuccess=async e=>{
-  const payload={
-   version:1,
-   date:new Date().toISOString(),
-   quizState:state,
-   resources:e.target.result
-  };
-  const jsonString=JSON.stringify(payload);
-
+  const json=JSON.stringify({version:2,date:new Date().toISOString(),quizState:state,resources:e.target.result});
   try{
+   /* Desktop Chrome: overwrite one file in place */
    if(window.showSaveFilePicker){
     if(!savedFileHandle){
-     const opts={
+     savedFileHandle=await window.showSaveFilePicker({
       suggestedName:'mcat-vault-backup.json',
-      types:[{
-       description:'JSON Backup',
-       accept:{'application/json':['.json']}
-      }]
-     };
-     savedFileHandle=await window.showSaveFilePicker(opts);
+      types:[{description:'JSON Backup',accept:{'application/json':['.json']}}]
+     });
     }
-    const writable=await savedFileHandle.createWritable();
-    await writable.write(jsonString);
-    await writable.close();
-    alert('Backup successfully updated in-place!');
+    const w=await savedFileHandle.createWritable();
+    await w.write(json);await w.close();
+    markBackupDone();alert('Backup updated in place.');
     return;
    }
+   /* Phones: share sheet lets you save to Drive/Files, replacing the old copy */
+   const file=new File([json],'mcat-vault-backup.json',{type:'application/json'});
+   if(navigator.canShare&&navigator.canShare({files:[file]})){
+    await navigator.share({files:[file],title:'MCAT backup'});
+    markBackupDone();return;
+   }
   }catch(err){
-   if(err.name!=='AbortError')savedFileHandle=null;
-   else return;
+   if(err&&err.name==='AbortError')return;
+   savedFileHandle=null;
   }
-
-  const blob=new Blob([jsonString],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
+  const url=URL.createObjectURL(new Blob([json],{type:'application/json'}));
   const a=document.createElement('a');
-  a.href=url;
-  a.download='mcat-vault-backup.json';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  a.href=url;a.download='mcat-vault-backup.json';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
   URL.revokeObjectURL(url);
+  markBackupDone();
  };
 }
-
+function renderAll(){
+ renderDailyQuote();renderUpNext();updateHabitStrip();
+ buildStCats();deckStats('eq');deckStats('st');updateWkStats();
+ renderErrors();renderSyllabus();updateBackupInfo();updateMathLabel();
+ if(db)renderResources();
+}
 function importBackup(ev){
  const file=ev.target.files[0];
  if(!file)return;
@@ -1911,42 +1710,20 @@ function importBackup(ev){
  reader.onload=e=>{
   try{
    const data=JSON.parse(e.target.result);
-   if(!data.resources||!Array.isArray(data.resources)){alert('Invalid backup file.');return;}
-   if(data.quizState){
-    state=data.quizState;
-    if(!state.eqRetired)state.eqRetired=[];
-    if(!state.eqSaved)state.eqSaved=[];
-    if(!state.stRetired)state.stRetired=[];
-    if(!state.stSaved)state.stSaved=[];
-    if(!state.resRetired)state.resRetired=[];
-    if(!state.resSaved)state.resSaved=[];
-    if(!state.wkState)state.wkState={};
-    if(!state.errors)state.errors=[];
-    if(!state.syllabusDone || typeof state.syllabusDone!=='object')state.syllabusDone={};
-    if(typeof state.dailyQuote!=='string')state.dailyQuote='';
-    if(!Array.isArray(state.upNext) || state.upNext.length!==3)state.upNext=["","",""];
-    if(!state.today || state.today.day!==TODAY)state.today={day:TODAY,eq:0,st:0,wk:0};
-    persist();
-    renderDailyQuote();
-    renderUpNext();
-    updateEqStats();
-    updateStStats();
-    updateWkStats();
-    updateHabitStrip();
-    renderErrors();
-    renderSyllabus();
-   }
+   if(!data.resources||!Array.isArray(data.resources)){alert('Invalid backup file.');ev.target.value='';return;}
+   if(!confirm('Restore will REPLACE all current vault items and progress with this backup ('+data.resources.length+' items). Continue?')){ev.target.value='';return;}
+   if(data.quizState){state=normalizeState(data.quizState);persist();}
    const tx=db.transaction('items','readwrite');
    const store=tx.objectStore('items');
    store.clear();
+   /* Keep original ids so Mastered / Needs Review lists still point at the right items */
    data.resources.forEach(item=>{
     const clean={title:item.title,subject:item.subject,priority:item.priority||'none',note:item.note,imgData:item.imgData};
-    store.add(clean);
+    if(item.id!==undefined&&item.id!==null){clean.id=item.id;store.put(clean);}
+    else store.add(clean);
    });
-   tx.oncomplete=()=>{
-    renderResources();
-    alert('Restored '+data.resources.length+' resources and progress!');
-   };
+   tx.oncomplete=()=>{renderAll();alert('Restored '+data.resources.length+' resources and progress.');};
+   tx.onerror=()=>alert('Restore failed part way. Your previous data was not changed.');
   }catch(err){
    alert('Could not read backup file.');
   }
@@ -1955,14 +1732,8 @@ function importBackup(ev){
  reader.readAsText(file);
 }
 
-renderDailyQuote();
-renderUpNext();
-updateHabitStrip();
-updateEqStats();
-updateStStats();
-updateWkStats();
-renderErrors();
-renderSyllabus();
+/* ============ Init ============ */
+renderAll();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
 </script>
 </body>
