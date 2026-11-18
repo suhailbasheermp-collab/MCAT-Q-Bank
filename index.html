@@ -18,6 +18,13 @@
 
  main{padding:12px 14px;max-width:640px;margin:auto}
 
+ /* Catchy Daily Quote / Inspiration Banner */
+ .quote-banner{background:linear-gradient(135deg,#1f3a5f 0%,#2b5284 100%);color:#fff;border-radius:12px;padding:11px 14px;margin-bottom:10px;box-shadow:0 3px 10px rgba(31,58,95,0.18);border-left:4px solid #f4b41a;display:flex;align-items:flex-start;gap:10px}
+ .quote-icon{font-size:18px;line-height:1.2;flex-shrink:0;margin-top:1px}
+ .quote-text{flex:1;font-size:13.5px;font-weight:600;font-style:italic;line-height:1.4;outline:none;min-height:19px;word-break:break-word}
+ .quote-text:empty::before{content:attr(data-placeholder);color:rgba(255,255,255,0.75);font-weight:500}
+ .quote-text:focus{background:rgba(255,255,255,0.12);border-radius:6px;padding:2px 6px;margin:-2px -6px}
+
  /* Standalone Timer Drawer */
  .timer-drawer{background:#fff;border:1.5px solid #1f3a5f;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 4px 12px rgba(31,58,95,0.12)}
  .timer-display{font-size:32px;font-weight:800;font-family:ui-monospace,monospace;color:#1f3a5f;text-align:center;margin:4px 0 12px 0;letter-spacing:1px}
@@ -175,6 +182,12 @@
 </header>
 
 <main>
+ <!-- Catchy Daily Quote / Inspiration Banner -->
+ <div class="quote-banner">
+  <span class="quote-icon">✨</span>
+  <div id="dailyQuoteBox" class="quote-text" contenteditable="true" spellcheck="false" data-placeholder="Tap here to write your daily inspiration or target score mantra..." oninput="saveDailyQuote()"></div>
+ </div>
+
  <!-- Standalone General Timer Drawer -->
  <div id="timerDrawer" class="timer-drawer hidden">
   <div class="timer-display" id="timerDisplay">20:00</div>
@@ -606,9 +619,9 @@ const KEY='mcatState';
 const TODAY=new Date().toDateString();
 let state;
 try {
- state=JSON.parse(localStorage.getItem(KEY)||'{"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"resRetired":[],"resSaved":[],"wkState":{},"errors":[],"syllabusDone":{},"upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}}');
+ state=JSON.parse(localStorage.getItem(KEY)||'{"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"resRetired":[],"resSaved":[],"wkState":{},"errors":[],"syllabusDone":{},"dailyQuote":"","upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}}');
 } catch(e) {
- state={"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"resRetired":[],"resSaved":[],"wkState":{},"errors":[],"syllabusDone":{},"upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}};
+ state={"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"resRetired":[],"resSaved":[],"wkState":{},"errors":[],"syllabusDone":{},"dailyQuote":"","upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}};
 }
 if(!state.eqRetired)state.eqRetired=[];
 if(!state.eqSaved)state.eqSaved=[];
@@ -619,12 +632,24 @@ if(!state.resSaved)state.resSaved=[];
 if(!state.wkState)state.wkState={};
 if(!state.errors)state.errors=[];
 if(!state.syllabusDone || typeof state.syllabusDone!=='object')state.syllabusDone={};
+if(typeof state.dailyQuote!=='string')state.dailyQuote='';
 if(!Array.isArray(state.upNext) || state.upNext.length!==3)state.upNext=["","",""];
 if(!state.today || state.today.day!==TODAY){
  state.today={day:TODAY,eq:0,st:0,wk:0};
 }
 
 function persist(){localStorage.setItem(KEY,JSON.stringify(state));}
+
+/* Daily Quote / Inspiration Banner */
+function renderDailyQuote(){
+ const box = document.getElementById('dailyQuoteBox');
+ if(box) box.innerText = state.dailyQuote || '';
+}
+function saveDailyQuote(){
+ const box = document.getElementById('dailyQuoteBox');
+ state.dailyQuote = box.innerText.trim();
+ persist();
+}
 
 /* Standalone General Timer with Timestamp Tracking & Wake Lock */
 let timerInterval = null;
@@ -1898,9 +1923,11 @@ function importBackup(ev){
     if(!state.wkState)state.wkState={};
     if(!state.errors)state.errors=[];
     if(!state.syllabusDone || typeof state.syllabusDone!=='object')state.syllabusDone={};
+    if(typeof state.dailyQuote!=='string')state.dailyQuote='';
     if(!Array.isArray(state.upNext) || state.upNext.length!==3)state.upNext=["","",""];
     if(!state.today || state.today.day!==TODAY)state.today={day:TODAY,eq:0,st:0,wk:0};
     persist();
+    renderDailyQuote();
     renderUpNext();
     updateEqStats();
     updateStStats();
@@ -1928,6 +1955,7 @@ function importBackup(ev){
  reader.readAsText(file);
 }
 
+renderDailyQuote();
 renderUpNext();
 updateHabitStrip();
 updateEqStats();
