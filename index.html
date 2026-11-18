@@ -40,12 +40,12 @@
  .next-input:focus{outline:none;border-color:#1f3a5f;background:#fff}
  .next-done{background:#eef3fa;color:#2e9e4f;border:1px solid #c5cbd6;border-radius:8px;padding:6px 9px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0}
 
- /* 5 Central Navigation Tabs */
- .hub-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:16px}
- .hub-tab{background:#fff;border:2px solid #d5dce6;border-radius:12px;padding:10px 2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.04);transition:all 0.15s ease;color:#1f3a5f}
- .hub-tab .tab-icon{font-size:18px;line-height:1}
- .hub-tab .tab-title{font-size:11.5px;font-weight:700}
- .hub-tab .tab-sub{font-size:9.5px;color:#555;font-weight:500;text-align:center}
+ /* 6 Central Navigation Tabs */
+ .hub-tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-bottom:16px}
+ .hub-tab{background:#fff;border:2px solid #d5dce6;border-radius:11px;padding:9px 1px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.04);transition:all 0.15s ease;color:#1f3a5f}
+ .hub-tab .tab-icon{font-size:16px;line-height:1}
+ .hub-tab .tab-title{font-size:10px;font-weight:700}
+ .hub-tab .tab-sub{font-size:8.5px;color:#555;font-weight:500;text-align:center}
  .hub-tab.active{background:#1f3a5f;border-color:#1f3a5f;color:#fff;box-shadow:0 4px 12px rgba(31,58,95,0.28)}
  .hub-tab.active .tab-sub{color:#d6e2f2}
 
@@ -143,6 +143,23 @@
  .hotspot-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
  .hotspot-chip{background:#eef3fa;color:#1f3a5f;border:1px solid #c5d4ea;border-radius:99px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer}
 
+ /* Content Syllabus Checklist Styling */
+ .syl-progress-card{background:#fff;border:1px solid #dce1ea;border-radius:12px;padding:12px 14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,0.03)}
+ .syl-prog-top{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;font-weight:700;color:#1f3a5f;margin-bottom:6px}
+ details.syl-subj{background:#fff;border:1.5px solid #d5dce6;border-radius:10px;margin-bottom:10px;overflow:hidden}
+ details.syl-subj > summary{padding:12px 14px;font-weight:700;font-size:15px;color:#1f3a5f;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;background:#fafbfd}
+ details.syl-subj > summary::-webkit-details-marker{display:none}
+ .syl-subj-body{padding:8px 10px 10px 10px;border-top:1px solid #eef1f6}
+ details.syl-topic{background:#fff;border:1px solid #e2e6ee;border-radius:8px;margin-bottom:7px;overflow:hidden}
+ details.syl-topic.done-topic{border-color:#a8e4b7;background:#f7fcf8}
+ details.syl-topic > summary{padding:10px 12px;font-weight:600;font-size:14px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px}
+ details.syl-topic > summary::-webkit-details-marker{display:none}
+ .syl-topic-body{padding:6px 12px 10px 12px;border-top:1px solid #eef1f6;background:#fff}
+ .syl-row{display:flex;align-items:flex-start;gap:10px;padding:7px 2px;border-bottom:1px solid #f2f4f8;cursor:pointer;font-size:13.5px;line-height:1.4}
+ .syl-row:last-child{border-bottom:none}
+ .syl-row input[type="checkbox"]{width:18px;height:18px;margin:2px 0 0 0;flex-shrink:0;accent-color:#2e9e4f;cursor:pointer}
+ .syl-row.checked span{text-decoration:line-through;color:#6c757d}
+
  /* Fullscreen Image Zoom Modal */
  #imgModal{position:fixed;inset:0;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;z-index:999;padding:12px}
  #imgModal img{max-width:100%;max-height:100%;object-fit:contain}
@@ -207,7 +224,7 @@
   </div>
  </div>
 
- <!-- 5 Central Navigation Tabs -->
+ <!-- 6 Central Navigation Tabs -->
  <div class="hub-tabs" role="tablist">
   <button class="hub-tab active" id="tab-res" onclick="switchTab('res')">
    <span class="tab-icon">🗂️</span>
@@ -233,6 +250,11 @@
    <span class="tab-icon">📊</span>
    <span class="tab-title">Errors</span>
    <span class="tab-sub" id="sub-er">0 logged</span>
+  </button>
+  <button class="hub-tab" id="tab-ct" onclick="switchTab('ct')">
+   <span class="tab-icon">📋</span>
+   <span class="tab-title">Content</span>
+   <span class="tab-sub" id="sub-ct">0% done</span>
   </button>
  </div>
 
@@ -547,6 +569,30 @@
   </div>
   <div id="errList"></div>
  </section>
+
+ <!-- TAB 6: CONTENT SYLLABUS CHECKLIST -->
+ <section id="panel-ct" class="tab-panel">
+  <div class="sub-bar">
+   <h2>Content Review Syllabus</h2>
+   <div class="pill-group">
+    <button class="pill-btn" onclick="setSyllabusOpen(true)">Expand All</button>
+    <button class="pill-btn" onclick="setSyllabusOpen(false)">Collapse All</button>
+   </div>
+  </div>
+
+  <div class="syl-progress-card">
+   <div class="syl-prog-top">
+    <span id="sylOverallText">Overall Progress: 0 / 0</span>
+    <span id="sylOverallPct">0%</span>
+   </div>
+   <div class="bar-track" style="height:12px">
+    <div class="bar-fill" id="sylOverallBar" style="width:0%;background:#2e9e4f"></div>
+   </div>
+  </div>
+
+  <input type="search" id="sylSearch" placeholder="🔍 Search subjects, topics, or subtopics..." oninput="renderSyllabus()">
+  <div id="sylContainer"></div>
+ </section>
 </main>
 
 <div id="imgModal" onclick="this.style.display='none'"><img id="modalImg" src=""></div>
@@ -554,14 +600,15 @@
 <script src="equations.js"></script>
 <script src="structures.js"></script>
 <script src="works.js"></script>
+<script src="syllabus.js"></script>
 <script>
 const KEY='mcatState';
 const TODAY=new Date().toDateString();
 let state;
 try {
- state=JSON.parse(localStorage.getItem(KEY)||'{"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"resRetired":[],"resSaved":[],"wkState":{},"errors":[],"upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}}');
+ state=JSON.parse(localStorage.getItem(KEY)||'{"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"resRetired":[],"resSaved":[],"wkState":{},"errors":[],"syllabusDone":{},"upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}}');
 } catch(e) {
- state={"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"resRetired":[],"resSaved":[],"wkState":{},"errors":[],"upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}};
+ state={"eqRetired":[],"eqSaved":[],"stRetired":[],"stSaved":[],"resRetired":[],"resSaved":[],"wkState":{},"errors":[],"syllabusDone":{},"upNext":["","",""],"today":{"day":"","eq":0,"st":0,"wk":0}};
 }
 if(!state.eqRetired)state.eqRetired=[];
 if(!state.eqSaved)state.eqSaved=[];
@@ -571,6 +618,7 @@ if(!state.resRetired)state.resRetired=[];
 if(!state.resSaved)state.resSaved=[];
 if(!state.wkState)state.wkState={};
 if(!state.errors)state.errors=[];
+if(!state.syllabusDone || typeof state.syllabusDone!=='object')state.syllabusDone={};
 if(!Array.isArray(state.upNext) || state.upNext.length!==3)state.upNext=["","",""];
 if(!state.today || state.today.day!==TODAY){
  state.today={day:TODAY,eq:0,st:0,wk:0};
@@ -739,7 +787,7 @@ function updateHabitStrip(){
 
 /* Central Tab Switcher */
 function switchTab(which){
- ['res','eq','st','wk','er'].forEach(t=>{
+ ['res','eq','st','wk','er','ct'].forEach(t=>{
   document.getElementById('tab-'+t).classList.toggle('active',t===which);
   document.getElementById('panel-'+t).classList.toggle('active',t===which);
  });
@@ -765,6 +813,9 @@ function switchTab(which){
  if(which==='er'){
   renderErrors();
  }
+ if(which==='ct'){
+  renderSyllabus();
+ }
 }
 
 function resetRetired(type){
@@ -773,6 +824,118 @@ function resetRetired(type){
  if(type==='st'){state.stRetired=[];persist();nextSt();}
  if(type==='wk'){state.wkState={};persist();nextWk();}
  if(type==='res'){state.resRetired=[];persist();nextResDrill();}
+}
+
+/* TAB 6: CONTENT SYLLABUS CHECKLIST */
+function sylPool(){return typeof SYLLABUS!=='undefined'?SYLLABUS:[];}
+
+function updateSyllabusStats(){
+ const pool = sylPool();
+ let total = 0, done = 0;
+ pool.forEach(subj => {
+  subj.topics.forEach(t => {
+   t.items.forEach((item, idx) => {
+    total++;
+    const key = t.id + ':' + idx;
+    if(state.syllabusDone[key]) done++;
+   });
+  });
+ });
+ const pct = total ? Math.round((done / total) * 100) : 0;
+ document.getElementById('sub-ct').textContent = pct + '% done';
+ const txtEl = document.getElementById('sylOverallText');
+ const pctEl = document.getElementById('sylOverallPct');
+ const barEl = document.getElementById('sylOverallBar');
+ if(txtEl) txtEl.textContent = 'Overall Progress: ' + done + ' / ' + total + ' subtopics';
+ if(pctEl) pctEl.textContent = pct + '%';
+ if(barEl) barEl.style.width = pct + '%';
+}
+
+function toggleSyllabusItem(key){
+ if(state.syllabusDone[key]){
+  delete state.syllabusDone[key];
+ } else {
+  state.syllabusDone[key] = true;
+ }
+ persist();
+ const openIds = [...document.querySelectorAll('#sylContainer details[open]')].map(d => d.dataset.sid);
+ renderSyllabus(openIds);
+}
+
+function setSyllabusOpen(open){
+ document.querySelectorAll('#sylContainer details').forEach(d => {
+  d.open = open;
+ });
+}
+
+function renderSyllabus(preserveOpenIds){
+ updateSyllabusStats();
+ const container = document.getElementById('sylContainer');
+ const query = (document.getElementById('sylSearch').value || '').trim().toLowerCase();
+ const pool = sylPool();
+ if(!pool.length){
+  container.innerHTML = '<p class="stats">Syllabus data not loaded.</p>';
+  return;
+ }
+
+ const openSet = new Set(preserveOpenIds || []);
+ let html = '';
+ let matchFound = false;
+
+ pool.forEach(subj => {
+  let subjTotal = 0, subjDone = 0;
+  let topicsHtml = '';
+
+  subj.topics.forEach(t => {
+   let topTotal = t.items.length;
+   let topDone = 0;
+   let itemsHtml = '';
+   let topHasMatch = !query || subj.subject.toLowerCase().includes(query) || t.title.toLowerCase().includes(query);
+
+   t.items.forEach((item, idx) => {
+    const key = t.id + ':' + idx;
+    const isChecked = Boolean(state.syllabusDone[key]);
+    if(isChecked) topDone++;
+    const itemMatch = topHasMatch || item.toLowerCase().includes(query);
+    if(itemMatch){
+     itemsHtml += '<label class="syl-row' + (isChecked ? ' checked' : '') + '">' +
+      '<input type="checkbox"' + (isChecked ? ' checked' : '') + ' onchange="toggleSyllabusItem(\'' + key + '\')">' +
+      '<span>' + escapeHtml(item) + '</span></label>';
+    }
+   });
+
+   subjTotal += topTotal;
+   subjDone += topDone;
+
+   if(itemsHtml){
+    matchFound = true;
+    const allDone = topDone === topTotal && topTotal > 0;
+    const isOpen = Boolean(query) || openSet.has(t.id);
+    const badge = allDone
+     ? '<span class="prio-badge master">✓ Completed (' + topDone + '/' + topTotal + ')</span>'
+     : '<span class="prio-badge">' + topDone + ' / ' + topTotal + '</span>';
+
+    topicsHtml += '<details class="syl-topic' + (allDone ? ' done-topic' : '') + '" data-sid="' + t.id + '"' + (isOpen ? ' open' : '') + '>' +
+     '<summary><span class="sum-left">' + escapeHtml(t.title) + '</span>' + badge + '</summary>' +
+     '<div class="syl-topic-body">' + itemsHtml + '</div></details>';
+   }
+  });
+
+  if(topicsHtml){
+   const subjPct = subjTotal ? Math.round((subjDone / subjTotal) * 100) : 0;
+   const subjAllDone = subjDone === subjTotal && subjTotal > 0;
+   const isSubjOpen = Boolean(query) || openSet.has(subj.id);
+   const subjBadge = subjAllDone
+    ? '<span class="prio-badge master">✓ 100% (' + subjDone + '/' + subjTotal + ')</span>'
+    : '<span class="prio-badge">' + subjDone + '/' + subjTotal + ' (' + subjPct + '%)</span>';
+
+   html += '<details class="syl-subj" data-sid="' + subj.id + '"' + (isSubjOpen ? ' open' : '') + '>' +
+    '<summary><span>' + escapeHtml(subj.subject) + '</span>' + subjBadge + '</summary>' +
+    '<div class="syl-subj-body">' + topicsHtml + '</div></details>';
+  }
+ });
+
+ container.innerHTML = matchFound ? html : '<p class="stats">No matching syllabus topics found.</p>';
 }
 
 /* Equations Flashcard Logic */
@@ -1734,6 +1897,7 @@ function importBackup(ev){
     if(!state.resSaved)state.resSaved=[];
     if(!state.wkState)state.wkState={};
     if(!state.errors)state.errors=[];
+    if(!state.syllabusDone || typeof state.syllabusDone!=='object')state.syllabusDone={};
     if(!Array.isArray(state.upNext) || state.upNext.length!==3)state.upNext=["","",""];
     if(!state.today || state.today.day!==TODAY)state.today={day:TODAY,eq:0,st:0,wk:0};
     persist();
@@ -1743,6 +1907,7 @@ function importBackup(ev){
     updateWkStats();
     updateHabitStrip();
     renderErrors();
+    renderSyllabus();
    }
    const tx=db.transaction('items','readwrite');
    const store=tx.objectStore('items');
@@ -1769,6 +1934,7 @@ updateEqStats();
 updateStStats();
 updateWkStats();
 renderErrors();
+renderSyllabus();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
 </script>
 </body>
