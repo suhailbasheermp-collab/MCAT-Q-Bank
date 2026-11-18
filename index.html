@@ -578,12 +578,37 @@ if(!state.today || state.today.day!==TODAY){
 
 function persist(){localStorage.setItem(KEY,JSON.stringify(state));}
 
-/* Standalone General Timer with Custom Mid-Point Gentle Chime */
+/* Standalone General Timer with Timestamp Tracking & Wake Lock */
 let timerInterval = null;
 let timerTotalSec = 20 * 60;
 let timerRemSec = 20 * 60;
+let timerEndAt = 0;
 let timerRunning = false;
 let chimeTriggered = false;
+let wakeLock = null;
+
+async function requestWakeLock(){
+ try{
+  if('wakeLock' in navigator && !wakeLock){
+   wakeLock = await navigator.wakeLock.request('screen');
+   wakeLock.addEventListener('release', () => { wakeLock = null; });
+  }
+ }catch(e){}
+}
+
+function releaseWakeLock(){
+ if(wakeLock){
+  wakeLock.release().catch(()=>{});
+  wakeLock = null;
+ }
+}
+
+document.addEventListener('visibilitychange', () => {
+ if(document.visibilityState === 'visible' && timerRunning){
+  tickTimer();
+  requestWakeLock();
+ }
+});
 
 function playGentleChime(isEnd){
  try{
@@ -596,7 +621,7 @@ function playGentleChime(isEnd){
    osc.frequency.value = freq;
    const t0 = ctx.currentTime + idx * 0.22;
    gain.gain.setValueAtTime(0.001, t0);
-   gain.gain.exponentialRampToValueAtTime(0.18, t0 + 0.04);
+   gain.gain.exponentialRampToValueAtTime(0.22, t0 + 0.04);
    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.75);
    osc.connect(gain);
    gain.connect(ctx.destination);
@@ -604,6 +629,7 @@ function playGentleChime(isEnd){
    osc.stop(t0 + 0.8);
   });
  }catch(e){}
+ if(navigator.vibrate) navigator.vibrate(isEnd ? [200, 100, 200] : [150]);
  const btn = document.getElementById('hdrTimerBtn');
  btn.classList.add('chime-flash');
  setTimeout(() => btn.classList.remove('chime-flash'), 1600);
@@ -637,37 +663,47 @@ function syncTimerInputs(){
  updateTimerUI();
 }
 
-function toggleTimerRun(){
- if(timerRunning){
+function tickTimer(){
+ if(!timerRunning) return;
+ timerRemSec = Math.max(0, Math.ceil((timerEndAt - Date.now()) / 1000));
+ const elapsedSec = timerTotalSec - timerRemSec;
+ const chimeMin = parseInt(document.getElementById('timerChimeMin').value, 10);
+
+ if(!chimeTriggered && chimeMin > 0 && elapsedSec >= chimeMin * 60 && timerRemSec > 0){
+  chimeTriggered = true;
+  playGentleChime(false);
+ }
+ if(timerRemSec <= 0){
+  timerRemSec = 0;
   clearInterval(timerInterval);
   timerRunning = false;
+  releaseWakeLock();
+  playGentleChime(true);
+ }
+ updateTimerUI();
+}
+
+function toggleTimerRun(){
+ if(timerRunning){
+  tickTimer();
+  clearInterval(timerInterval);
+  timerRunning = false;
+  releaseWakeLock();
   updateTimerUI();
   return;
  }
  if(timerRemSec <= 0) syncTimerInputs();
+ timerEndAt = Date.now() + (timerRemSec * 1000);
  timerRunning = true;
+ requestWakeLock();
  updateTimerUI();
- timerInterval = setInterval(() => {
-  timerRemSec--;
-  const elapsedSec = timerTotalSec - timerRemSec;
-  const chimeMin = parseInt(document.getElementById('timerChimeMin').value, 10);
-  if(!chimeTriggered && chimeMin > 0 && elapsedSec === chimeMin * 60 && timerRemSec > 0){
-   chimeTriggered = true;
-   playGentleChime(false);
-  }
-  if(timerRemSec <= 0){
-   timerRemSec = 0;
-   clearInterval(timerInterval);
-   timerRunning = false;
-   playGentleChime(true);
-  }
-  updateTimerUI();
- }, 1000);
+ timerInterval = setInterval(tickTimer, 500);
 }
 
 function resetTimer(){
  clearInterval(timerInterval);
  timerRunning = false;
+ releaseWakeLock();
  syncTimerInputs();
 }
 
