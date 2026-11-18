@@ -8,10 +8,24 @@
 <title>MCAT Daily</title>
 <style>
  body{font-family:system-ui,sans-serif;margin:0;background:#f4f6fa;color:#1a1a1a;padding-bottom:48px}
- header{background:#1f3a5f;color:#fff;padding:12px 16px;display:flex;justify-content:center;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+ header{background:#1f3a5f;color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+ .hdr-left{display:flex;align-items:center;gap:10px}
  .logo{width:34px;height:34px;border-radius:50%;object-fit:cover;border:1.5px solid #fff;box-shadow:0 0 6px rgba(255,255,255,0.4)}
  header h1{font-size:18px;margin:0;letter-spacing:0.3px}
+ .hdr-timer-btn{background:rgba(255,255,255,0.15);color:#fff;border:1.5px solid rgba(255,255,255,0.7);border-radius:99px;padding:6px 12px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px}
+ .hdr-timer-btn.running{background:#2e9e4f;border-color:#fff}
+ .hdr-timer-btn.chime-flash{background:#d98e04;border-color:#fff}
+
  main{padding:12px 14px;max-width:640px;margin:auto}
+
+ /* Standalone Timer Drawer */
+ .timer-drawer{background:#fff;border:1.5px solid #1f3a5f;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 4px 12px rgba(31,58,95,0.12)}
+ .timer-display{font-size:32px;font-weight:800;font-family:ui-monospace,monospace;color:#1f3a5f;text-align:center;margin:4px 0 12px 0;letter-spacing:1px}
+ .timer-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+ .timer-grid label{font-size:11.5px;font-weight:700;color:#555;display:block;margin-bottom:4px}
+ .timer-grid input{margin:0;padding:8px 10px;font-size:14px}
+ .timer-btns{display:flex;gap:8px}
+ .timer-btns button{flex:1;padding:10px;border-radius:8px;border:none;font-size:14px;font-weight:700;cursor:pointer;color:#fff}
 
  /* Daily Micro-Habit Strip */
  .habit-strip{background:#fff;border:1px solid #d5dce6;border-radius:10px;padding:8px 12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600;color:#1f3a5f;box-shadow:0 1px 4px rgba(0,0,0,0.03)}
@@ -136,11 +150,34 @@
 </head>
 <body>
 <header>
- <img class="logo" src="logo.png" alt="MCAT Daily" onerror="this.style.display='none'">
- <h1>MCAT Daily</h1>
+ <div class="hdr-left">
+  <img class="logo" src="logo.png" alt="MCAT Daily" onerror="this.style.display='none'">
+  <h1>MCAT Daily</h1>
+ </div>
+ <button type="button" class="hdr-timer-btn" id="hdrTimerBtn" onclick="toggleTimerDrawer()">⏱️ Timer</button>
 </header>
 
 <main>
+ <!-- Standalone General Timer Drawer -->
+ <div id="timerDrawer" class="timer-drawer hidden">
+  <div class="timer-display" id="timerDisplay">20:00</div>
+  <div class="timer-grid">
+   <div>
+    <label for="timerTotalMin">Total Minutes</label>
+    <input type="number" id="timerTotalMin" min="1" max="300" value="20" oninput="syncTimerInputs()">
+   </div>
+   <div>
+    <label for="timerChimeMin">Gentle Chime At (min elapsed)</label>
+    <input type="number" id="timerChimeMin" min="1" max="299" placeholder="e.g., 10">
+   </div>
+  </div>
+  <div class="timer-btns">
+   <button type="button" id="timerStartBtn" style="background:#2e9e4f" onclick="toggleTimerRun()">Start</button>
+   <button type="button" style="background:#7f8c8d" onclick="resetTimer()">Reset</button>
+   <button type="button" style="background:#1f3a5f" onclick="toggleTimerDrawer()">Hide</button>
+  </div>
+ </div>
+
  <!-- Daily Micro-Habit Strip -->
  <div class="habit-strip">
   <span>⚡ Today's Drill</span>
@@ -540,6 +577,99 @@ if(!state.today || state.today.day!==TODAY){
 }
 
 function persist(){localStorage.setItem(KEY,JSON.stringify(state));}
+
+/* Standalone General Timer with Custom Mid-Point Gentle Chime */
+let timerInterval = null;
+let timerTotalSec = 20 * 60;
+let timerRemSec = 20 * 60;
+let timerRunning = false;
+let chimeTriggered = false;
+
+function playGentleChime(isEnd){
+ try{
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const notes = isEnd ? [523.25, 659.25, 783.99] : [587.33, 880];
+  notes.forEach((freq, idx) => {
+   const osc = ctx.createOscillator();
+   const gain = ctx.createGain();
+   osc.type = 'sine';
+   osc.frequency.value = freq;
+   const t0 = ctx.currentTime + idx * 0.22;
+   gain.gain.setValueAtTime(0.001, t0);
+   gain.gain.exponentialRampToValueAtTime(0.18, t0 + 0.04);
+   gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.75);
+   osc.connect(gain);
+   gain.connect(ctx.destination);
+   osc.start(t0);
+   osc.stop(t0 + 0.8);
+  });
+ }catch(e){}
+ const btn = document.getElementById('hdrTimerBtn');
+ btn.classList.add('chime-flash');
+ setTimeout(() => btn.classList.remove('chime-flash'), 1600);
+}
+
+function formatClock(sec){
+ const m = Math.floor(sec / 60);
+ const s = sec % 60;
+ return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+function updateTimerUI(){
+ const str = formatClock(timerRemSec);
+ document.getElementById('timerDisplay').textContent = str;
+ const hdrBtn = document.getElementById('hdrTimerBtn');
+ hdrBtn.classList.toggle('running', timerRunning);
+ hdrBtn.textContent = (timerRunning || timerRemSec !== timerTotalSec) ? '⏱️ ' + str : '⏱️ Timer';
+ document.getElementById('timerStartBtn').textContent = timerRunning ? 'Pause' : 'Start';
+}
+
+function toggleTimerDrawer(){
+ document.getElementById('timerDrawer').classList.toggle('hidden');
+}
+
+function syncTimerInputs(){
+ if(timerRunning) return;
+ const mins = Math.max(1, parseInt(document.getElementById('timerTotalMin').value, 10) || 1);
+ timerTotalSec = mins * 60;
+ timerRemSec = timerTotalSec;
+ chimeTriggered = false;
+ updateTimerUI();
+}
+
+function toggleTimerRun(){
+ if(timerRunning){
+  clearInterval(timerInterval);
+  timerRunning = false;
+  updateTimerUI();
+  return;
+ }
+ if(timerRemSec <= 0) syncTimerInputs();
+ timerRunning = true;
+ updateTimerUI();
+ timerInterval = setInterval(() => {
+  timerRemSec--;
+  const elapsedSec = timerTotalSec - timerRemSec;
+  const chimeMin = parseInt(document.getElementById('timerChimeMin').value, 10);
+  if(!chimeTriggered && chimeMin > 0 && elapsedSec === chimeMin * 60 && timerRemSec > 0){
+   chimeTriggered = true;
+   playGentleChime(false);
+  }
+  if(timerRemSec <= 0){
+   timerRemSec = 0;
+   clearInterval(timerInterval);
+   timerRunning = false;
+   playGentleChime(true);
+  }
+  updateTimerUI();
+ }, 1000);
+}
+
+function resetTimer(){
+ clearInterval(timerInterval);
+ timerRunning = false;
+ syncTimerInputs();
+}
 
 /* Up Next to Learn (3 Editable Slots) */
 function renderUpNext(){
