@@ -6,6 +6,7 @@ const ASSETS = [
   './equations.js',
   './structures.js',
   './works.js',
+  './syllabus.js',
   './logo.png'
 ];
 
