@@ -533,6 +533,22 @@
    </div>
   </div>
 
+  <div id="retestBox"></div>
+
+  <div class="chart-card">
+   <div class="chart-title"><span>📈 Full-Length Exams</span><span style="font-size:12px;color:#555">Target 528</span></div>
+   <div id="examChart"></div>
+   <input type="text" id="examName" placeholder="Exam name (e.g., AAMC FL3)">
+   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+    <input type="number" id="examCars" min="118" max="132" placeholder="CARS" style="padding:8px 4px;text-align:center">
+    <input type="number" id="examCp" min="118" max="132" placeholder="C/P" style="padding:8px 4px;text-align:center">
+    <input type="number" id="examBb" min="118" max="132" placeholder="B/B" style="padding:8px 4px;text-align:center">
+    <input type="number" id="examPs" min="118" max="132" placeholder="P/S" style="padding:8px 4px;text-align:center">
+   </div>
+   <button class="btn-primary" style="width:100%;padding:11px" onclick="addExam()">+ Add Exam Score</button>
+   <div id="examList"></div>
+  </div>
+
   <div id="errDashboard"></div>
 
   <div class="filter-row">
@@ -610,7 +626,7 @@ function val(id){return document.getElementById(id).value;}
 /* ============ State ============ */
 function defaultState(){
  return {
-  eqState:{},stState:{},resRetired:[],resSaved:[],wkState:{},errors:[],
+  eqState:{},stState:{},resRetired:[],resSaved:[],wkState:{},errors:[],exams:[],
   syllabusDone:{},dailyQuote:'',upNext:['','',''],
   today:{day:'',eq:0,st:0,wk:0},mathStreak:0,mathBest:0,lastBackup:0
  };
@@ -1229,7 +1245,8 @@ function saveErrorLog(){
   type:val('errType'),
   subject:val('errSubj'),
   topic:val('errTopic').trim()||'General',
-  lesson:val('errLesson').trim()
+  lesson:val('errLesson').trim(),
+  sr:{level:0,due:Date.now()+DAY}
  });
  persist();
  document.getElementById('errTopic').value='';
@@ -1261,8 +1278,11 @@ function renderFocusRule(){
 }
 function renderErrors(){
  const total=state.errors.length;
- document.getElementById('sub-er').textContent=total+' logged';
+ const dueCount=state.errors.filter(errDue).length;
+ document.getElementById('sub-er').textContent=total+' logged'+(dueCount?' · '+dueCount+' due':'');
  renderFocusRule();
+ renderRetest();
+ renderExams();
  const carsPresets=[
   "Foundations: Main Idea","Foundations: Explicit Detail","Foundations: Tone / Attitude","Foundations: Word in Context",
   "Reasoning Within Text: Function / Structure","Reasoning Within Text: Evaluate Evidence",
@@ -1319,6 +1339,101 @@ function renderErrors(){
    (e.lesson?'<div class="eq-note">'+escapeHtml(e.lesson)+'</div>':'')+
    '<button class="res-del" onclick="deleteErrorLog('+jsArg(e.id)+')">Delete</button></div>';
  }).join('');
+}
+
+/* ============ Retest mistakes (spaced: 1, 3, 7, 14 days) ============ */
+const ERR_INTERVALS=[1,3,7,14];
+let curRetestId=null;
+function errDue(e){
+ if(e.done)return false;
+ return Date.now()>=((e.sr&&e.sr.due)||0);
+}
+function renderRetest(){
+ const box=document.getElementById('retestBox');
+ if(!state.errors.length){box.innerHTML='';curRetestId=null;return;}
+ const due=state.errors.filter(errDue).sort((a,b)=>((a.sr&&a.sr.due)||0)-((b.sr&&b.sr.due)||0));
+ if(!due.length){
+  box.innerHTML='<div class="chart-card"><div class="chart-title"><span>🔁 Retest Mistakes</span></div><p style="margin:0;font-size:13px;color:#555">Nothing due. Each logged mistake comes back after 1, 3, 7 and 14 days.</p></div>';
+  curRetestId=null;return;
+ }
+ const e=due[0];curRetestId=e.id;
+ box.innerHTML='<div class="chart-card" style="border-left:4px solid #c0392b"><div class="chart-title"><span>🔁 Retest Mistakes</span><span style="font-size:12px;color:#c0392b">'+due.length+' due</span></div>'+
+  '<div class="tag"><span><b>'+escapeHtml(e.subject)+'</b> · '+escapeHtml(e.topic)+'</span><span>'+escapeHtml(e.date)+'</span></div>'+
+  '<div style="font-size:13px;font-weight:700;margin-bottom:6px">You missed this because: '+escapeHtml(e.type)+'</div>'+
+  '<div class="eq-prompt" style="font-size:16px;margin:6px 0 10px">What will you do differently next time? Say it before you reveal.</div>'+
+  '<button class="reveal-btn" id="retestRevealBtn" onclick="revealRetest()">Show my takeaway</button>'+
+  '<div id="retestAfter" class="hidden"></div></div>';
+}
+function revealRetest(){
+ const e=state.errors.find(x=>x.id===curRetestId);
+ if(!e)return;
+ document.getElementById('retestRevealBtn').classList.add('hidden');
+ const after=document.getElementById('retestAfter');
+ after.classList.remove('hidden');
+ after.innerHTML='<div class="eq-answer-box" style="margin-top:12px"><div class="eq-note">'+
+  (e.lesson?escapeHtml(e.lesson):'No takeaway was logged. Judge yourself on your own answer, and add a rule next time you log a mistake.')+
+  '</div></div><div class="actions"><button class="retire" onclick="gradeRetest(true)">✓ Would get it right</button>'+
+  '<button class="save" style="background:#c0392b" onclick="gradeRetest(false)">✗ Would miss again</button></div>';
+}
+function gradeRetest(ok){
+ const e=state.errors.find(x=>x.id===curRetestId);
+ if(!e)return;
+ let lvl=(e.sr&&e.sr.level)||0;
+ if(ok){
+  if(lvl>=ERR_INTERVALS.length-1){e.done=true;lvl=ERR_INTERVALS.length-1;}
+  else lvl++;
+ }else{
+  lvl=0;
+ }
+ e.sr={level:lvl,due:Date.now()+ERR_INTERVALS[lvl]*DAY};
+ persist();renderErrors();
+}
+
+/* ============ Full-length exam log ============ */
+function addExam(){
+ const ids=['examCars','examCp','examBb','examPs'];
+ const v=ids.map(i=>parseInt(document.getElementById(i).value,10));
+ if(v.some(n=>!(n>=118&&n<=132))){alert('Each section score must be a number from 118 to 132.');return;}
+ state.exams.push({
+  id:Date.now(),
+  name:document.getElementById('examName').value.trim()||('Exam '+(state.exams.length+1)),
+  date:Date.now(),cars:v[0],cp:v[1],bb:v[2],ps:v[3],total:v[0]+v[1]+v[2]+v[3]
+ });
+ persist();
+ ids.concat(['examName']).forEach(i=>{document.getElementById(i).value='';});
+ renderExams();
+}
+function deleteExam(id){
+ if(!confirm('Remove this exam score?'))return;
+ state.exams=state.exams.filter(e=>e.id!==id);
+ persist();renderExams();
+}
+function renderExams(){
+ const ex=state.exams;
+ const chart=document.getElementById('examChart'),list=document.getElementById('examList');
+ if(!ex.length){
+  chart.innerHTML='<p style="margin:0 0 10px;font-size:13px;color:#555">No exams logged yet. Add each full-length score to track your trend against 528.</p>';
+  list.innerHTML='';return;
+ }
+ const W=300,H=130,L=28,R=10,T=14,B=10;
+ const tots=ex.map(e=>e.total);
+ const lo=Math.min(...tots,500)-4,hi=530;
+ const x=i=>ex.length===1?(L+(W-L-R)/2):L+i*(W-L-R)/(ex.length-1);
+ const y=v=>T+(hi-v)*(H-T-B)/(hi-lo);
+ const pts=ex.map((e,i)=>x(i).toFixed(1)+','+y(e.total).toFixed(1)).join(' ');
+ const svg='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;display:block">'+
+  '<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(528)+'" y2="'+y(528)+'" stroke="#2e9e4f" stroke-dasharray="4 3"/>'+
+  '<text x="2" y="'+(y(528)+3)+'" font-size="9" fill="#2e9e4f">528</text>'+
+  (ex.length>1?'<polyline points="'+pts+'" fill="none" stroke="#1f3a5f" stroke-width="2"/>':'')+
+  ex.map((e,i)=>'<circle cx="'+x(i)+'" cy="'+y(e.total)+'" r="3.5" fill="#1f3a5f"/><text x="'+x(i)+'" y="'+(y(e.total)-6)+'" font-size="9" text-anchor="middle" fill="#1f3a5f">'+e.total+'</text>').join('')+'</svg>';
+ const last=ex[ex.length-1];
+ const secs=[['CARS',last.cars],['Chem/Phys',last.cp],['Bio/Biochem',last.bb],['Psych/Soc',last.ps]].sort((a,b)=>a[1]-b[1]);
+ chart.innerHTML=svg+'<div style="font-size:12.5px;margin:8px 0 10px;color:#333">Latest '+last.total+' · Gap to 528: <b>'+Math.max(0,528-last.total)+'</b> · Weakest section: <b>'+secs[0][0]+' ('+secs[0][1]+')</b></div>';
+ list.innerHTML=ex.slice().reverse().map(e=>
+  '<div class="rev" style="margin:6px 0"><div class="tag" style="margin-bottom:2px"><span><b>'+escapeHtml(e.name)+'</b> · '+new Date(e.date).toLocaleDateString()+'</span><span><b>'+e.total+'</b></span></div>'+
+  '<div style="font-size:12.5px;color:#444">CARS '+e.cars+' · C/P '+e.cp+' · B/B '+e.bb+' · P/S '+e.ps+'</div>'+
+  '<button class="res-del" style="border:none;padding:4px 0;margin-top:4px" onclick="deleteExam('+jsArg(e.id)+')">Delete</button></div>'
+ ).join('');
 }
 
 /* ============ Vault (IndexedDB) ============ */
@@ -1712,7 +1827,6 @@ function importBackup(ev){
    const data=JSON.parse(e.target.result);
    if(!data.resources||!Array.isArray(data.resources)){alert('Invalid backup file.');ev.target.value='';return;}
    if(!confirm('Restore will REPLACE all current vault items and progress with this backup ('+data.resources.length+' items). Continue?')){ev.target.value='';return;}
-   if(data.quizState){state=normalizeState(data.quizState);persist();}
    const tx=db.transaction('items','readwrite');
    const store=tx.objectStore('items');
    store.clear();
@@ -1722,8 +1836,12 @@ function importBackup(ev){
     if(item.id!==undefined&&item.id!==null){clean.id=item.id;store.put(clean);}
     else store.add(clean);
    });
-   tx.oncomplete=()=>{renderAll();alert('Restored '+data.resources.length+' resources and progress.');};
-   tx.onerror=()=>alert('Restore failed part way. Your previous data was not changed.');
+   tx.oncomplete=()=>{
+    if(data.quizState){state=normalizeState(data.quizState);persist();}
+    renderAll();
+    alert('Restored '+data.resources.length+' resources and progress.');
+   };
+   tx.onerror=()=>alert('Restore failed. Your previous data was not changed.');
   }catch(err){
    alert('Could not read backup file.');
   }
