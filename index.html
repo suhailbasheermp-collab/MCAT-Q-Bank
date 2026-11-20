@@ -236,17 +236,17 @@
   <button class="hub-tab" id="tab-eq" onclick="switchTab('eq')">
    <span class="tab-icon">∑</span>
    <span class="tab-title">Equations</span>
-   <span class="tab-sub" id="sub-eq">0 due</span>
+   <span class="tab-sub" id="sub-eq">0 left</span>
   </button>
   <button class="hub-tab" id="tab-st" onclick="switchTab('st')">
    <span class="tab-icon">🧬</span>
    <span class="tab-title">Structures</span>
-   <span class="tab-sub" id="sub-st">0 due</span>
+   <span class="tab-sub" id="sub-st">0 left</span>
   </button>
   <button class="hub-tab" id="tab-wk" onclick="switchTab('wk')">
    <span class="tab-icon">🧮</span>
    <span class="tab-title">Works</span>
-   <span class="tab-sub" id="sub-wk">0 due</span>
+   <span class="tab-sub" id="sub-wk">0 left</span>
   </button>
   <button class="hub-tab" id="tab-er" onclick="switchTab('er')">
    <span class="tab-icon">📊</span>
@@ -357,7 +357,7 @@
    <div class="filter-row">
     <select id="resDrillScope" onchange="nextResDrill()">
      <option value="circle">Active Circle (Unseen / Unsaved)</option>
-     <option value="saved">🟡 Needs Review List</option>
+     <option value="saved">🟡 Saved for Review List</option>
      <option value="high">🔴 High Priority Only</option>
     </select>
     <select id="resDrillSubj" onchange="nextResDrill()">
@@ -382,7 +382,7 @@
  <section id="panel-eq" class="tab-panel">
   <div class="sub-bar">
    <h2>Equation Flashcards</h2>
-   <button class="pill-btn" id="eqModeBtn" onclick="deckToggleSaved('eq')">Practice (0)</button>
+   <button class="pill-btn" id="eqModeBtn" onclick="deckToggleSaved('eq')">Saved (0)</button>
   </div>
   <select id="eqSubj" onchange="deckNext('eq')">
    <option value="all">All subjects</option>
@@ -397,11 +397,11 @@
    <div id="eqCard"></div>
    <div class="stats">
     <span id="eqStats"></span>
-    <button class="reset-link" onclick="resetRetired('eq')">Reset Progress</button>
+    <button class="reset-link" onclick="resetRetired('eq')">Reset Mastered</button>
    </div>
   </div>
   <div id="eqSavedView" class="hidden">
-   <h3>Needs Practice</h3>
+   <h3>Saved Equations for Review</h3>
    <div id="eqSavedList"></div>
   </div>
  </section>
@@ -410,7 +410,7 @@
  <section id="panel-st" class="tab-panel">
   <div class="sub-bar">
    <h2>Structure Identification</h2>
-   <button class="pill-btn" id="stModeBtn" onclick="deckToggleSaved('st')">Practice (0)</button>
+   <button class="pill-btn" id="stModeBtn" onclick="deckToggleSaved('st')">Saved (0)</button>
   </div>
   <select id="stCat" onchange="deckNext('st')">
    <option value="all">All structures</option>
@@ -419,11 +419,11 @@
    <div id="stCard"></div>
    <div class="stats">
     <span id="stStats"></span>
-    <button class="reset-link" onclick="resetRetired('st')">Reset Progress</button>
+    <button class="reset-link" onclick="resetRetired('st')">Reset Mastered</button>
    </div>
   </div>
   <div id="stSavedView" class="hidden">
-   <h3>Needs Practice</h3>
+   <h3>Saved Structures for Review</h3>
    <div id="stSavedList"></div>
   </div>
  </section>
@@ -433,34 +433,32 @@
   <div class="sub-bar">
    <h2>Calculation Blueprints</h2>
    <div class="pill-group">
+    <button class="pill-btn" id="wkSavedBtn" onclick="setWkSubView('saved')">Saved (0)</button>
     <button class="pill-btn" id="wkMathBtn" onclick="setWkSubView('math')">⚡ Mental Math</button>
     <button class="pill-btn" id="wkListBtn" onclick="setWkSubView('list')">Browse All</button>
    </div>
   </div>
 
   <div id="wkDeckView">
-   <div class="filter-row">
-    <select id="wkFilter" onchange="nextWk()">
-     <option value="due">Due Now (Practice + New + Due)</option>
-     <option value="practice">🟡 Needs Practice Only</option>
-     <option value="mastered">🟢 Mastered (Scheduled)</option>
-     <option value="all" id="wkAllOpt">All Setups</option>
-    </select>
-    <select id="wkSubj" onchange="nextWk()">
-     <option value="all">All subjects</option>
-     <option value="General Chemistry">General Chemistry</option>
-     <option value="Physics">Physics</option>
-     <option value="Organic Chemistry">Organic Chemistry</option>
-     <option value="Biochemistry">Biochemistry</option>
-     <option value="Biology">Biology</option>
-     <option value="Psychology and Sociology">Psychology &amp; Stats</option>
-    </select>
-   </div>
+   <select id="wkSubj" onchange="nextWk()">
+    <option value="all">All subjects</option>
+    <option value="General Chemistry">General Chemistry</option>
+    <option value="Physics">Physics</option>
+    <option value="Organic Chemistry">Organic Chemistry</option>
+    <option value="Biochemistry">Biochemistry</option>
+    <option value="Biology">Biology</option>
+    <option value="Psychology and Sociology">Psychology &amp; Stats</option>
+   </select>
    <div id="wkCard"></div>
    <div class="stats">
     <span id="wkStats"></span>
-    <button class="reset-link" onclick="resetRetired('wk')">Reset Works Progress</button>
+    <button class="reset-link" onclick="resetRetired('wk')">Reset Mastered</button>
    </div>
+  </div>
+
+  <div id="wkSavedView" class="hidden">
+   <h3>Saved Blueprints for Review</h3>
+   <div id="wkSavedList"></div>
   </div>
 
   <div id="wkListView" class="hidden">
@@ -533,22 +531,6 @@
    </div>
   </div>
 
-  <div id="retestBox"></div>
-
-  <div class="chart-card">
-   <div class="chart-title"><span>📈 Full-Length Exams</span><span style="font-size:12px;color:#555">Target 528</span></div>
-   <div id="examChart"></div>
-   <input type="text" id="examName" placeholder="Exam name (e.g., AAMC FL3)">
-   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
-    <input type="number" id="examCars" min="118" max="132" placeholder="CARS" style="padding:8px 4px;text-align:center">
-    <input type="number" id="examCp" min="118" max="132" placeholder="C/P" style="padding:8px 4px;text-align:center">
-    <input type="number" id="examBb" min="118" max="132" placeholder="B/B" style="padding:8px 4px;text-align:center">
-    <input type="number" id="examPs" min="118" max="132" placeholder="P/S" style="padding:8px 4px;text-align:center">
-   </div>
-   <button class="btn-primary" style="width:100%;padding:11px" onclick="addExam()">+ Add Exam Score</button>
-   <div id="examList"></div>
-  </div>
-
   <div id="errDashboard"></div>
 
   <div class="filter-row">
@@ -613,35 +595,37 @@
 /* ============ Core helpers ============ */
 const KEY='mcatState';
 const DAY=86400000;
-const SR_INTERVALS=[3,7,14,30];
 function todayKey(){return new Date().toDateString();}
 function escapeHtml(s){
  return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
-/* Safe argument for inline onclick="fn(...)" attributes; works for numbers and strings */
 function jsArg(v){return JSON.stringify(v).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
 function hasId(x){return x && x.id!==undefined && x.id!==null;}
 function val(id){return document.getElementById(id).value;}
 
-/* ============ State ============ */
+/* ============ State (Pure 3-Bucket Circle Model: Active Circle | Saved Review | Mastered) ============ */
 function defaultState(){
  return {
-  eqState:{},stState:{},resRetired:[],resSaved:[],wkState:{},errors:[],exams:[],
+  eqRetired:[],eqSaved:[],
+  stRetired:[],stSaved:[],
+  wkRetired:[],wkSaved:[],
+  resRetired:[],resSaved:[],
+  errors:[],
   syllabusDone:{},dailyQuote:'',upNext:['','',''],
   today:{day:'',eq:0,st:0,wk:0},mathStreak:0,mathBest:0,lastBackup:0
  };
 }
-function migrateLegacy(s){
- ['eq','st'].forEach(k=>{
-  const map=s[k+'State'];
-  (s[k+'Retired']||[]).forEach(id=>{
-   if(!map[id])map[id]={status:'mastered',level:1,due:Date.now()+(3+Math.floor(Math.random()*12))*DAY};
+function migrateMapToBuckets(s,mapKey,retKey,savKey){
+ const map=s[mapKey];
+ if(map && typeof map==='object'){
+  Object.keys(map).forEach(rawId=>{
+   const id = isNaN(Number(rawId)) ? rawId : Number(rawId);
+   const entry = map[rawId];
+   if(entry && entry.status==='mastered' && !s[retKey].includes(id)) s[retKey].push(id);
+   if(entry && entry.status==='practice' && !s[savKey].includes(id)) s[savKey].push(id);
   });
-  (s[k+'Saved']||[]).forEach(id=>{
-   if(!map[id])map[id]={status:'practice',level:0,due:0};
-  });
-  delete s[k+'Retired'];delete s[k+'Saved'];
- });
+  delete s[mapKey];
+ }
 }
 function normalizeState(s){
  const d=defaultState();
@@ -650,7 +634,9 @@ function normalizeState(s){
   if(s[k]===undefined||s[k]===null||Array.isArray(d[k])!==Array.isArray(s[k])||typeof d[k]!==typeof s[k])s[k]=d[k];
  });
  if(s.upNext.length!==3)s.upNext=['','',''];
- migrateLegacy(s);
+ migrateMapToBuckets(s,'eqState','eqRetired','eqSaved');
+ migrateMapToBuckets(s,'stState','stRetired','stSaved');
+ migrateMapToBuckets(s,'wkState','wkRetired','wkSaved');
  if(s.today.day!==todayKey())s.today={day:todayKey(),eq:0,st:0,wk:0};
  return s;
 }
@@ -666,46 +652,7 @@ function persist(){
  }
 }
 persist();
-/* Ask the browser not to evict our data under storage pressure */
 if(navigator.storage&&navigator.storage.persist){navigator.storage.persist().catch(()=>{});}
-
-/* ============ Spaced repetition helpers (shared) ============ */
-function srGet(map,id){return map[id]||{status:'new',level:0,due:0};}
-function srIsDue(map,id){
- const e=srGet(map,id);
- if(e.status==='new'||e.status==='practice')return true;
- return Date.now()>=(e.due||0);
-}
-/* What happens if the card is marked mastered right now */
-function srPlan(e){
- if(e.status==='mastered'&&Date.now()<(e.due||0))return {early:true,lvl:e.level||0,days:null};
- const lvl=e.status==='mastered'?Math.min((e.level||0)+1,SR_INTERVALS.length-1):0;
- return {early:false,lvl,days:SR_INTERVALS[lvl]};
-}
-function srMaster(map,id){
- const p=srPlan(srGet(map,id));
- if(p.early)return;
- map[id]={status:'mastered',level:p.lvl,due:Date.now()+p.days*DAY};
-}
-function srPractice(map,id){map[id]={status:'practice',level:0,due:0};}
-function srMasterLabel(e){
- const p=srPlan(e);
- return p.early?'🟢 Mastered (keeps schedule)':'🟢 Mastered ('+p.days+'d)';
-}
-function formatDueText(e){
- if(e.status==='new')return '<span class="prio-badge">New</span>';
- if(e.status==='practice')return '<span class="prio-badge review">🟡 Needs Practice</span>';
- const diffDays=Math.ceil(((e.due||0)-Date.now())/DAY);
- if(diffDays<=0)return '<span class="prio-badge review">🔄 Due for Review</span>';
- return '<span class="prio-badge master">🟢 Mastered ('+diffDays+'d)</span>';
-}
-/* Pick a random card, avoid repeating the last one, favor practice cards */
-function pickCard(pool,map,lastId){
- let p=pool.length>1?pool.filter(x=>x.id!==lastId):pool;
- const prac=p.filter(x=>srGet(map,x.id).status==='practice');
- if(prac.length&&Math.random()<0.65)p=prac;
- return p[Math.floor(Math.random()*p.length)];
-}
 
 /* ============ Daily quote ============ */
 function renderDailyQuote(){
@@ -720,7 +667,6 @@ function saveDailyQuote(){
 /* ============ Timer ============ */
 let timerInterval=null,timerTotalSec=20*60,timerRemSec=20*60,timerEndAt=0,timerRunning=false,chimeTriggered=false,wakeLock=null,audioCtx=null;
 
-/* Must run inside a user tap so iOS/Chrome allow sound later */
 function unlockAudio(){
  try{
   if(!audioCtx){const AC=window.AudioContext||window.webkitAudioContext;if(AC)audioCtx=new AC();}
@@ -833,7 +779,7 @@ function clearNextSlot(idx){
  persist();
 }
 
-/* ============ Daily habit strip (date checked on every use) ============ */
+/* ============ Daily habit strip ============ */
 function ensureToday(){
  if(!state.today||state.today.day!==todayKey())state.today={day:todayKey(),eq:0,st:0,wk:0};
 }
@@ -869,10 +815,10 @@ function switchTab(which){
  if(which==='ct')renderSyllabus();
 }
 function resetRetired(type){
- if(!confirm('Reset progress for this section?'))return;
- if(type==='eq'){state.eqState={};persist();deckNext('eq');}
- if(type==='st'){state.stState={};persist();deckNext('st');}
- if(type==='wk'){state.wkState={};persist();nextWk();}
+ if(!confirm('Put all Mastered items back into the Active Circle?'))return;
+ if(type==='eq'){state.eqRetired=[];persist();deckNext('eq');}
+ if(type==='st'){state.stRetired=[];persist();deckNext('st');}
+ if(type==='wk'){state.wkRetired=[];persist();nextWk();}
  if(type==='res'){state.resRetired=[];persist();nextResDrill();}
 }
 
@@ -947,53 +893,54 @@ function renderSyllabus(preserveOpenIds){
  container.innerHTML=matchFound?html:'<p class="stats">No matching syllabus topics found.</p>';
 }
 
-/* ============ Equations + Structures (spaced repetition decks) ============ */
+/* ============ Equations + Structures (Pure 3-Bucket Circle Decks) ============ */
 const DECKS={
  eq:{
-  stateKey:'eqState',cur:null,last:null,showingSaved:false,
+  retKey:'eqRetired',savKey:'eqSaved',cur:null,last:null,showingSaved:false,
   pool:()=>typeof EQUATIONS!=='undefined'?EQUATIONS:[],
   match:x=>{const f=val('eqSubj');return f==='all'||x.subject===f;},
   card:'eqCard',stats:'eqStats',sub:'sub-eq',modeBtn:'eqModeBtn',deckView:'eqDeckView',savedView:'eqSavedView',savedList:'eqSavedList',
-  revealText:'Show Equation',emptyText:'Nothing due in Equations right now. Check the Practice list, or come back later.',
-  front:(x,e)=>'<div class="tag"><span>'+x.subject+' \u00b7 '+x.topic+'</span>'+formatDueText(e)+'</div><div class="eq-prompt">'+x.q+'</div>',
+  revealText:'Show Equation',emptyText:'No equations left in this circle. Check Saved or tap Reset Mastered.',
+  front:x=>'<div class="tag"><span>'+x.subject+' \u00b7 '+x.topic+'</span></div><div class="eq-prompt">'+x.q+'</div>',
   back:x=>'<div class="eq-answer-box"><div class="eq-formula">'+x.eq+'</div>'+(x.note?'<div class="eq-note">'+x.note+'</div>':'')+'</div>'
  },
  st:{
-  stateKey:'stState',cur:null,last:null,showingSaved:false,
+  retKey:'stRetired',savKey:'stSaved',cur:null,last:null,showingSaved:false,
   pool:()=>typeof STRUCTURES!=='undefined'?STRUCTURES:[],
   match:x=>{const f=val('stCat');return f==='all'||x.cat===f;},
   card:'stCard',stats:'stStats',sub:'sub-st',modeBtn:'stModeBtn',deckView:'stDeckView',savedView:'stSavedView',savedList:'stSavedList',
-  revealText:'Flip / Show Structure Name',emptyText:'Nothing due in Structures right now. Check the Practice list, or come back later.',
-  front:(x,e)=>'<div class="tag"><span>Identify this structure</span>'+formatDueText(e)+'</div><div class="struct-box">'+x.svg+'</div>',
+  revealText:'Flip / Show Structure Name',emptyText:'No structures left in this circle. Check Saved or tap Reset Mastered.',
+  front:x=>'<div class="tag"><span>Identify this structure</span></div><div class="struct-box">'+x.svg+'</div>',
   back:x=>'<div class="eq-answer-box"><div class="tag" style="margin-bottom:4px"><span>'+x.cat+'</span></div><div class="eq-formula" style="font-family:system-ui,sans-serif">'+x.name+'</div><div class="eq-note">'+x.info+'</div></div>'
  }
 };
 function deckCards(k){return DECKS[k].pool().filter(hasId);}
+function deckInCircle(k,id){
+ const d=DECKS[k];
+ return !state[d.retKey].includes(id) && !state[d.savKey].includes(id);
+}
 function deckStats(k){
- const d=DECKS[k],map=state[d.stateKey],all=deckCards(k);
- let due=0,prac=0,mast=0;
- all.forEach(x=>{
-  const e=srGet(map,x.id);
-  if(srIsDue(map,x.id))due++;
-  if(e.status==='practice')prac++;
-  if(e.status==='mastered')mast++;
- });
- document.getElementById(d.stats).textContent='Due: '+due+' | Practice: '+prac+' | Mastered: '+mast+' / '+all.length;
- document.getElementById(d.sub).textContent=due+' due';
+ const d=DECKS[k],all=deckCards(k);
+ const inC=all.filter(x=>deckInCircle(k,x.id)).length;
+ const sav=state[d.savKey].length;
+ const ret=state[d.retKey].length;
+ document.getElementById(d.stats).textContent='Circle: '+inC+' | Saved: '+sav+' | Mastered: '+ret;
+ document.getElementById(d.sub).textContent=inC+' left';
  const btn=document.getElementById(d.modeBtn);
- btn.textContent=d.showingSaved?'Back to Drill':'Practice ('+prac+')';
+ btn.textContent=d.showingSaved?'Back to Drill':'Saved ('+sav+')';
 }
 function deckNext(k){
- const d=DECKS[k],map=state[d.stateKey];
- const pool=deckCards(k).filter(x=>d.match(x)&&srIsDue(map,x.id));
+ const d=DECKS[k];
+ const pool=deckCards(k).filter(x=>d.match(x)&&deckInCircle(k,x.id));
  const card=document.getElementById(d.card);
  if(!pool.length){
   card.innerHTML='<div class="fs-card"><p>'+d.emptyText+'</p></div>';
   d.cur=null;deckStats(k);return;
  }
- const x=pickCard(pool,map,d.last);
+ const p=pool.length>1?pool.filter(x=>x.id!==d.last):pool;
+ const x=p[Math.floor(Math.random()*p.length)];
  d.cur=x;d.last=x.id;
- card.innerHTML='<div class="fs-card">'+d.front(x,srGet(map,x.id))+
+ card.innerHTML='<div class="fs-card">'+d.front(x)+
   '<button class="reveal-btn" id="reveal-'+k+'" onclick="deckReveal(\''+k+'\')">'+d.revealText+'</button>'+
   '<div id="after-'+k+'" class="hidden"></div></div>';
  deckStats(k);
@@ -1003,16 +950,21 @@ function deckReveal(k){
  document.getElementById('reveal-'+k).classList.add('hidden');
  const after=document.getElementById('after-'+k);
  after.classList.remove('hidden');
- const e=srGet(state[d.stateKey],d.cur.id);
  after.innerHTML=d.back(d.cur)+
-  '<div class="actions"><button class="retire" onclick="deckMark(\''+k+'\',true)">'+srMasterLabel(e)+'</button>'+
-  '<button class="save" onclick="deckMark(\''+k+'\',false)">🟡 Needs Practice</button></div>'+
-  '<button class="opt" onclick="deckNext(\''+k+'\')" style="margin-top:12px">Skip, next card</button>';
+  '<div class="actions"><button class="retire" onclick="deckMark(\''+k+'\',true)">🟢 Mastered (Retire)</button>'+
+  '<button class="save" onclick="deckMark(\''+k+'\',false)">🟡 Save for Review</button></div>'+
+  '<button class="opt" onclick="bumpHabit(\''+k+'\');deckNext(\''+k+'\')" style="margin-top:12px">Keep in circle, next card →</button>';
 }
 function deckMark(k,mastered){
  const d=DECKS[k];if(!d.cur)return;
- const map=state[d.stateKey];
- if(mastered)srMaster(map,d.cur.id);else srPractice(map,d.cur.id);
+ const id=d.cur.id;
+ if(mastered){
+  state[d.savKey]=state[d.savKey].filter(x=>x!==id);
+  if(!state[d.retKey].includes(id))state[d.retKey].push(id);
+ }else{
+  state[d.retKey]=state[d.retKey].filter(x=>x!==id);
+  if(!state[d.savKey].includes(id))state[d.savKey].push(id);
+ }
  bumpHabit(k);
  deckNext(k);
 }
@@ -1026,22 +978,23 @@ function deckToggleSaved(k){
  deckStats(k);
 }
 function deckRenderSaved(k){
- const d=DECKS[k],map=state[d.stateKey];
+ const d=DECKS[k];
  const list=document.getElementById(d.savedList);
- const items=deckCards(k).filter(x=>srGet(map,x.id).status==='practice');
- if(!items.length){list.innerHTML='<p>Nothing in the practice list.</p>';return;}
+ const items=deckCards(k).filter(x=>state[d.savKey].includes(x.id));
+ if(!items.length){list.innerHTML='<p>Nothing saved for review yet.</p>';return;}
  list.innerHTML=items.map(x=>{
   const body=k==='eq'
    ?'<div class="tag"><span>'+x.subject+' \u00b7 '+x.topic+'</span></div><div><b>'+x.q+'</b></div>'+d.back(x)
    :'<div class="tag"><span>'+x.cat+'</span></div><div><b>'+x.name+'</b></div><div class="struct-box">'+x.svg+'</div><div class="eq-note" style="margin-bottom:8px">'+x.info+'</div>';
   return '<div class="rev">'+body+
-   '<button onclick="deckSavedAct(\''+k+'\','+jsArg(x.id)+',true)">🟢 Mark mastered</button> '+
-   '<button onclick="deckSavedAct(\''+k+'\','+jsArg(x.id)+',false)">Back to new</button></div>';
+   '<button onclick="deckSavedAct(\''+k+'\','+jsArg(x.id)+',false)">↩️ Put back in circle</button> '+
+   '<button onclick="deckSavedAct(\''+k+'\','+jsArg(x.id)+',true)">🟢 Mastered (Retire)</button></div>';
  }).join('');
 }
 function deckSavedAct(k,id,mastered){
- const map=state[DECKS[k].stateKey];
- if(mastered)srMaster(map,id);else delete map[id];
+ const d=DECKS[k];
+ state[d.savKey]=state[d.savKey].filter(x=>x!==id);
+ if(mastered && !state[d.retKey].includes(id))state[d.retKey].push(id);
  persist();deckRenderSaved(k);deckStats(k);
 }
 function buildStCats(){
@@ -1056,60 +1009,51 @@ function buildStCats(){
  if(cats.includes(prev))sel.value=prev;
 }
 
-/* ============ Works ============ */
+/* ============ Works (Pure 3-Bucket Circle + Browse All + Mental Math) ============ */
 let curWk=null,lastWk=null,wkSubView='deck';
 function wkPool(){return (typeof WORKS!=='undefined'?WORKS:[]).filter(hasId);}
-function getWkEntry(id){return srGet(state.wkState,id);}
-function isWkDue(w){return srIsDue(state.wkState,w.id);}
+function wkInCircle(id){return !state.wkRetired.includes(id) && !state.wkSaved.includes(id);}
+
 function updateWkStats(){
  const all=wkPool();
- let due=0,prac=0,mast=0;
- all.forEach(w=>{
-  const e=getWkEntry(w.id);
-  if(isWkDue(w))due++;
-  if(e.status==='practice')prac++;
-  if(e.status==='mastered')mast++;
- });
- document.getElementById('wkStats').textContent='Due Now: '+due+' | Needs Practice: '+prac+' | Mastered: '+mast+' / '+all.length;
- document.getElementById('sub-wk').textContent=due+' due';
- document.getElementById('wkAllOpt').textContent='All '+all.length+' Setups';
+ const inC=all.filter(w=>wkInCircle(w.id)).length;
+ const sav=state.wkSaved.length;
+ const ret=state.wkRetired.length;
+ document.getElementById('wkStats').textContent='Circle: '+inC+' | Saved: '+sav+' | Mastered: '+ret;
+ document.getElementById('sub-wk').textContent=inC+' left';
+ const savedBtn=document.getElementById('wkSavedBtn');
+ savedBtn.textContent=wkSubView==='saved'?'Back to Drill':'Saved ('+sav+')';
 }
 function setWkSubView(mode){
  if(wkSubView===mode&&mode!=='deck')mode='deck';
  wkSubView=mode;
  document.getElementById('wkDeckView').classList.toggle('hidden',mode!=='deck');
+ document.getElementById('wkSavedView').classList.toggle('hidden',mode!=='saved');
  document.getElementById('wkListView').classList.toggle('hidden',mode!=='list');
  document.getElementById('wkMathView').classList.toggle('hidden',mode!=='math');
+ document.getElementById('wkSavedBtn').classList.toggle('active',mode==='saved');
  document.getElementById('wkListBtn').classList.toggle('active',mode==='list');
  document.getElementById('wkMathBtn').classList.toggle('active',mode==='math');
  document.getElementById('wkListBtn').textContent=mode==='list'?'Back to Drill':'Browse All';
  document.getElementById('wkMathBtn').textContent=mode==='math'?'Back to Drill':'⚡ Mental Math';
- if(mode==='list')renderWkList();
+ if(mode==='saved')renderWkSaved();
+ else if(mode==='list')renderWkList();
  else if(mode==='math')nextMath();
  else nextWk();
-}
-function getFilteredWorks(){
- const mode=val('wkFilter'),subj=val('wkSubj');
- return wkPool().filter(w=>{
-  if(subj!=='all'&&w.subject!==subj)return false;
-  const e=getWkEntry(w.id);
-  if(mode==='due')return isWkDue(w);
-  if(mode==='practice')return e.status==='practice';
-  if(mode==='mastered')return e.status==='mastered';
-  return true;
- });
+ updateWkStats();
 }
 function nextWk(){
- const pool=getFilteredWorks();
+ const subj=val('wkSubj');
+ const pool=wkPool().filter(w=>wkInCircle(w.id)&&(subj==='all'||w.subject===subj));
  const card=document.getElementById('wkCard');
  if(!pool.length){
-  card.innerHTML='<div class="fs-card"><p>No calculation blueprints match this filter right now. Switch the filter to "All Setups" or try ⚡ Mental Math.</p></div>';
+  card.innerHTML='<div class="fs-card"><p>No calculation blueprints left in this circle. Check Saved or tap Reset Mastered.</p></div>';
   curWk=null;updateWkStats();return;
  }
- curWk=pickCard(pool,state.wkState,lastWk);
+ const p=pool.length>1?pool.filter(w=>w.id!==lastWk):pool;
+ curWk=p[Math.floor(Math.random()*p.length)];
  lastWk=curWk.id;
- const e=getWkEntry(curWk.id);
- card.innerHTML='<div class="fs-card"><div class="tag"><span>'+curWk.subject+' \u00b7 '+curWk.topic+'</span>'+formatDueText(e)+'</div>'+
+ card.innerHTML='<div class="fs-card"><div class="tag"><span>'+curWk.subject+' \u00b7 '+curWk.topic+'</span></div>'+
   '<div class="eq-prompt">'+curWk.q+'</div>'+
   '<button class="reveal-btn" id="revealWkBtn" onclick="revealWk()">Flip / Show Solution Blueprint</button>'+
   '<div id="wkAfter" class="hidden"></div></div>';
@@ -1120,44 +1064,67 @@ function revealWk(){
  document.getElementById('revealWkBtn').classList.add('hidden');
  const after=document.getElementById('wkAfter');
  after.classList.remove('hidden');
- const e=getWkEntry(curWk.id);
  after.innerHTML='<div class="eq-answer-box" style="margin-top:12px">'+
   '<div class="eq-formula">'+curWk.tool+'</div>'+
   '<div class="eq-note">'+curWk.steps+'</div></div>'+
   '<div class="actions">'+
-  '<button class="retire" onclick="markWkMastered()">'+srMasterLabel(e)+'</button>'+
-  '<button class="save" onclick="markWkPractice()">🟡 Needs Practice</button>'+
+  '<button class="retire" onclick="markWkMastered()">🟢 Mastered (Retire)</button>'+
+  '<button class="save" onclick="markWkSaved()">🟡 Save for Review</button>'+
   '</div>'+
-  '<button class="opt" onclick="nextWk()" style="margin-top:12px">Skip / Next Blueprint</button>';
+  '<button class="opt" onclick="bumpHabit(\'wk\');nextWk()" style="margin-top:12px">Keep in circle, next blueprint →</button>';
 }
 function markWkMastered(){
  if(!curWk)return;
- srMaster(state.wkState,curWk.id);
+ state.wkSaved=state.wkSaved.filter(x=>x!==curWk.id);
+ if(!state.wkRetired.includes(curWk.id))state.wkRetired.push(curWk.id);
  bumpHabit('wk');nextWk();
 }
-function markWkPractice(){
+function markWkSaved(){
  if(!curWk)return;
- srPractice(state.wkState,curWk.id);
+ state.wkRetired=state.wkRetired.filter(x=>x!==curWk.id);
+ if(!state.wkSaved.includes(curWk.id))state.wkSaved.push(curWk.id);
  bumpHabit('wk');nextWk();
 }
-function setWkStatusFromList(id,status){
- if(status==='practice')srPractice(state.wkState,id);
- else srMaster(state.wkState,id);
+function renderWkSaved(){
+ const list=document.getElementById('wkSavedList');
+ const items=wkPool().filter(w=>state.wkSaved.includes(w.id));
+ if(!items.length){list.innerHTML='<p>No calculation blueprints saved for review yet.</p>';return;}
+ list.innerHTML=items.map(w=>'<div class="rev"><div class="tag"><span>'+w.subject+' \u00b7 '+w.topic+'</span></div>'+
+  '<div style="font-weight:600;margin-bottom:6px">'+w.q+'</div>'+
+  '<div class="eq-answer-box" style="margin-top:8px;margin-bottom:8px"><div class="eq-formula" style="font-size:15px">'+w.tool+'</div>'+
+  '<div class="eq-note">'+w.steps+'</div></div>'+
+  '<button onclick="wkSavedAct('+jsArg(w.id)+',false)">↩️ Put back in circle</button> '+
+  '<button onclick="wkSavedAct('+jsArg(w.id)+',true)">🟢 Mastered (Retire)</button></div>').join('');
+}
+function wkSavedAct(id,mastered){
+ state.wkSaved=state.wkSaved.filter(x=>x!==id);
+ if(mastered && !state.wkRetired.includes(id))state.wkRetired.push(id);
+ persist();renderWkSaved();updateWkStats();
+}
+function setWkStatusFromList(id,bucket){
+ state.wkSaved=state.wkSaved.filter(x=>x!==id);
+ state.wkRetired=state.wkRetired.filter(x=>x!==id);
+ if(bucket==='saved')state.wkSaved.push(id);
+ if(bucket==='mastered')state.wkRetired.push(id);
  persist();renderWkList();updateWkStats();
 }
 function renderWkList(){
  const list=document.getElementById('wkAllList');
- const items=getFilteredWorks();
- if(!items.length){list.innerHTML='<p class="stats">No blueprints match this filter.</p>';return;}
+ const subj=val('wkSubj');
+ const items=wkPool().filter(w=>subj==='all'||w.subject===subj);
+ if(!items.length){list.innerHTML='<p class="stats">No blueprints found.</p>';return;}
  list.innerHTML=items.map(w=>{
-  const e=getWkEntry(w.id);
-  return '<div class="rev"><div class="tag"><span>'+w.subject+' \u00b7 '+w.topic+'</span>'+formatDueText(e)+'</div>'+
+  const isSav=state.wkSaved.includes(w.id);
+  const isRet=state.wkRetired.includes(w.id);
+  const badge=isSav?'<span class="prio-badge review">🟡 Saved</span>':(isRet?'<span class="prio-badge master">🟢 Mastered</span>':'<span class="prio-badge">In Circle</span>');
+  return '<div class="rev"><div class="tag"><span>'+w.subject+' \u00b7 '+w.topic+'</span>'+badge+'</div>'+
    '<div style="font-weight:600;margin-bottom:6px">'+w.q+'</div>'+
    '<details><summary style="cursor:pointer;color:#1f3a5f;font-size:13px;font-weight:600">Show Solution Blueprint</summary>'+
    '<div class="eq-answer-box" style="margin-top:8px;margin-bottom:8px"><div class="eq-formula" style="font-size:15px">'+w.tool+'</div>'+
    '<div class="eq-note">'+w.steps+'</div></div></details>'+
-   '<button onclick="setWkStatusFromList('+jsArg(w.id)+',\'practice\')">🟡 Needs Practice</button> '+
-   '<button onclick="setWkStatusFromList('+jsArg(w.id)+',\'mastered\')">'+srMasterLabel(e)+'</button></div>';
+   '<button onclick="setWkStatusFromList('+jsArg(w.id)+',\'circle\')">In Circle</button> '+
+   '<button onclick="setWkStatusFromList('+jsArg(w.id)+',\'saved\')">🟡 Save</button> '+
+   '<button onclick="setWkStatusFromList('+jsArg(w.id)+',\'mastered\')">🟢 Mastered</button></div>';
  }).join('');
 }
 
@@ -1245,8 +1212,7 @@ function saveErrorLog(){
   type:val('errType'),
   subject:val('errSubj'),
   topic:val('errTopic').trim()||'General',
-  lesson:val('errLesson').trim(),
-  sr:{level:0,due:Date.now()+DAY}
+  lesson:val('errLesson').trim()
  });
  persist();
  document.getElementById('errTopic').value='';
@@ -1264,7 +1230,6 @@ function filterErrBy(type,subj){
  if(subj)document.getElementById('errFilterSubj').value=subj;
  renderErrors();
 }
-/* Home-screen reminder: the takeaway rule for the most frequent error type */
 function renderFocusRule(){
  const box=document.getElementById('focusRule');
  if(!state.errors.length){box.classList.add('hidden');return;}
@@ -1278,11 +1243,8 @@ function renderFocusRule(){
 }
 function renderErrors(){
  const total=state.errors.length;
- const dueCount=state.errors.filter(errDue).length;
- document.getElementById('sub-er').textContent=total+' logged'+(dueCount?' · '+dueCount+' due':'');
+ document.getElementById('sub-er').textContent=total+' logged';
  renderFocusRule();
- renderRetest();
- renderExams();
  const carsPresets=[
   "Foundations: Main Idea","Foundations: Explicit Detail","Foundations: Tone / Attitude","Foundations: Word in Context",
   "Reasoning Within Text: Function / Structure","Reasoning Within Text: Evaluate Evidence",
@@ -1341,102 +1303,7 @@ function renderErrors(){
  }).join('');
 }
 
-/* ============ Retest mistakes (spaced: 1, 3, 7, 14 days) ============ */
-const ERR_INTERVALS=[1,3,7,14];
-let curRetestId=null;
-function errDue(e){
- if(e.done)return false;
- return Date.now()>=((e.sr&&e.sr.due)||0);
-}
-function renderRetest(){
- const box=document.getElementById('retestBox');
- if(!state.errors.length){box.innerHTML='';curRetestId=null;return;}
- const due=state.errors.filter(errDue).sort((a,b)=>((a.sr&&a.sr.due)||0)-((b.sr&&b.sr.due)||0));
- if(!due.length){
-  box.innerHTML='<div class="chart-card"><div class="chart-title"><span>🔁 Retest Mistakes</span></div><p style="margin:0;font-size:13px;color:#555">Nothing due. Each logged mistake comes back after 1, 3, 7 and 14 days.</p></div>';
-  curRetestId=null;return;
- }
- const e=due[0];curRetestId=e.id;
- box.innerHTML='<div class="chart-card" style="border-left:4px solid #c0392b"><div class="chart-title"><span>🔁 Retest Mistakes</span><span style="font-size:12px;color:#c0392b">'+due.length+' due</span></div>'+
-  '<div class="tag"><span><b>'+escapeHtml(e.subject)+'</b> · '+escapeHtml(e.topic)+'</span><span>'+escapeHtml(e.date)+'</span></div>'+
-  '<div style="font-size:13px;font-weight:700;margin-bottom:6px">You missed this because: '+escapeHtml(e.type)+'</div>'+
-  '<div class="eq-prompt" style="font-size:16px;margin:6px 0 10px">What will you do differently next time? Say it before you reveal.</div>'+
-  '<button class="reveal-btn" id="retestRevealBtn" onclick="revealRetest()">Show my takeaway</button>'+
-  '<div id="retestAfter" class="hidden"></div></div>';
-}
-function revealRetest(){
- const e=state.errors.find(x=>x.id===curRetestId);
- if(!e)return;
- document.getElementById('retestRevealBtn').classList.add('hidden');
- const after=document.getElementById('retestAfter');
- after.classList.remove('hidden');
- after.innerHTML='<div class="eq-answer-box" style="margin-top:12px"><div class="eq-note">'+
-  (e.lesson?escapeHtml(e.lesson):'No takeaway was logged. Judge yourself on your own answer, and add a rule next time you log a mistake.')+
-  '</div></div><div class="actions"><button class="retire" onclick="gradeRetest(true)">✓ Would get it right</button>'+
-  '<button class="save" style="background:#c0392b" onclick="gradeRetest(false)">✗ Would miss again</button></div>';
-}
-function gradeRetest(ok){
- const e=state.errors.find(x=>x.id===curRetestId);
- if(!e)return;
- let lvl=(e.sr&&e.sr.level)||0;
- if(ok){
-  if(lvl>=ERR_INTERVALS.length-1){e.done=true;lvl=ERR_INTERVALS.length-1;}
-  else lvl++;
- }else{
-  lvl=0;
- }
- e.sr={level:lvl,due:Date.now()+ERR_INTERVALS[lvl]*DAY};
- persist();renderErrors();
-}
-
-/* ============ Full-length exam log ============ */
-function addExam(){
- const ids=['examCars','examCp','examBb','examPs'];
- const v=ids.map(i=>parseInt(document.getElementById(i).value,10));
- if(v.some(n=>!(n>=118&&n<=132))){alert('Each section score must be a number from 118 to 132.');return;}
- state.exams.push({
-  id:Date.now(),
-  name:document.getElementById('examName').value.trim()||('Exam '+(state.exams.length+1)),
-  date:Date.now(),cars:v[0],cp:v[1],bb:v[2],ps:v[3],total:v[0]+v[1]+v[2]+v[3]
- });
- persist();
- ids.concat(['examName']).forEach(i=>{document.getElementById(i).value='';});
- renderExams();
-}
-function deleteExam(id){
- if(!confirm('Remove this exam score?'))return;
- state.exams=state.exams.filter(e=>e.id!==id);
- persist();renderExams();
-}
-function renderExams(){
- const ex=state.exams;
- const chart=document.getElementById('examChart'),list=document.getElementById('examList');
- if(!ex.length){
-  chart.innerHTML='<p style="margin:0 0 10px;font-size:13px;color:#555">No exams logged yet. Add each full-length score to track your trend against 528.</p>';
-  list.innerHTML='';return;
- }
- const W=300,H=130,L=28,R=10,T=14,B=10;
- const tots=ex.map(e=>e.total);
- const lo=Math.min(...tots,500)-4,hi=530;
- const x=i=>ex.length===1?(L+(W-L-R)/2):L+i*(W-L-R)/(ex.length-1);
- const y=v=>T+(hi-v)*(H-T-B)/(hi-lo);
- const pts=ex.map((e,i)=>x(i).toFixed(1)+','+y(e.total).toFixed(1)).join(' ');
- const svg='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;display:block">'+
-  '<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(528)+'" y2="'+y(528)+'" stroke="#2e9e4f" stroke-dasharray="4 3"/>'+
-  '<text x="2" y="'+(y(528)+3)+'" font-size="9" fill="#2e9e4f">528</text>'+
-  (ex.length>1?'<polyline points="'+pts+'" fill="none" stroke="#1f3a5f" stroke-width="2"/>':'')+
-  ex.map((e,i)=>'<circle cx="'+x(i)+'" cy="'+y(e.total)+'" r="3.5" fill="#1f3a5f"/><text x="'+x(i)+'" y="'+(y(e.total)-6)+'" font-size="9" text-anchor="middle" fill="#1f3a5f">'+e.total+'</text>').join('')+'</svg>';
- const last=ex[ex.length-1];
- const secs=[['CARS',last.cars],['Chem/Phys',last.cp],['Bio/Biochem',last.bb],['Psych/Soc',last.ps]].sort((a,b)=>a[1]-b[1]);
- chart.innerHTML=svg+'<div style="font-size:12.5px;margin:8px 0 10px;color:#333">Latest '+last.total+' · Gap to 528: <b>'+Math.max(0,528-last.total)+'</b> · Weakest section: <b>'+secs[0][0]+' ('+secs[0][1]+')</b></div>';
- list.innerHTML=ex.slice().reverse().map(e=>
-  '<div class="rev" style="margin:6px 0"><div class="tag" style="margin-bottom:2px"><span><b>'+escapeHtml(e.name)+'</b> · '+new Date(e.date).toLocaleDateString()+'</span><span><b>'+e.total+'</b></span></div>'+
-  '<div style="font-size:12.5px;color:#444">CARS '+e.cars+' · C/P '+e.cp+' · B/B '+e.bb+' · P/S '+e.ps+'</div>'+
-  '<button class="res-del" style="border:none;padding:4px 0;margin-top:4px" onclick="deleteExam('+jsArg(e.id)+')">Delete</button></div>'
- ).join('');
-}
-
-/* ============ Vault (IndexedDB) ============ */
+/* ============ Vault (IndexedDB + 3-Bucket Circle Drill) ============ */
 let db;
 const req=indexedDB.open('mcatResourcesDB',1);
 req.onupgradeneeded=e=>{e.target.result.createObjectStore('items',{keyPath:'id',autoIncrement:true});};
@@ -1447,7 +1314,6 @@ let pastedImgData=null,editingId=null,currentPriority='none',blurActive=false,re
 const noteBox=document.getElementById('resNote');
 
 function resInCircle(item){return item&&!state.resRetired.includes(item.id)&&!state.resSaved.includes(item.id);}
-/* One "review" concept: either flagged Needs Review when saved, or put in the review list while drilling */
 function resNeedsReview(item){
  return item&&!state.resRetired.includes(item.id)&&(state.resSaved.includes(item.id)||item.priority==='review');
 }
@@ -1468,7 +1334,7 @@ function nextResDrill(){
   const activeCircle=all.filter(resInCircle);
   const review=all.filter(resNeedsReview);
   const masteredCount=all.filter(x=>state.resRetired.includes(x.id)).length;
-  document.getElementById('resDrillStats').textContent='In Circle: '+activeCircle.length+' | Needs Review: '+review.length+' | Mastered: '+masteredCount;
+  document.getElementById('resDrillStats').textContent='In Circle: '+activeCircle.length+' | Saved Review: '+review.length+' | Mastered: '+masteredCount;
   const okSubj=x=>subj==='all'||x.subject===subj;
   let pool;
   if(scope==='saved')pool=review.filter(okSubj);
@@ -1476,7 +1342,7 @@ function nextResDrill(){
   else pool=activeCircle.filter(okSubj);
   const card=document.getElementById('resDrillCard');
   if(!pool.length){
-   const msg=scope==='saved'?'Nothing in your Needs Review list yet.':'No resources left here. Switch to the <b>Needs Review List</b> or tap <b>Reset Mastered</b> below.';
+   const msg=scope==='saved'?'Nothing in your Saved for Review list yet.':'No resources left here. Switch to <b>Saved for Review List</b> or tap <b>Reset Mastered</b> below.';
    card.innerHTML='<div class="fs-card"><p>'+msg+'</p></div>';
    curResDrill=null;return;
   }
@@ -1484,7 +1350,7 @@ function nextResDrill(){
   const p=pool.length>1?pool.filter(x=>x.id!==lastId):pool;
   curResDrill=p[Math.floor(Math.random()*p.length)];
   const pr=curResDrill.priority||'none';
-  const badge=resNeedsReview(curResDrill)&&pr!=='high'?'<span class="prio-badge review">🟡 Needs Review</span>':(pr==='high'?'<span class="prio-badge high">🔴 High Priority</span>':'');
+  const badge=resNeedsReview(curResDrill)&&pr!=='high'?'<span class="prio-badge review">🟡 Saved for Review</span>':(pr==='high'?'<span class="prio-badge high">🔴 High Priority</span>':'');
   card.innerHTML='<div class="fs-card"><div class="tag"><span>'+escapeHtml(curResDrill.subject)+'</span>'+badge+'</div>'+
    '<div class="eq-prompt">'+escapeHtml(curResDrill.title||'Untitled Resource')+'</div>'+
    '<button class="reveal-btn" id="revealResBtn" onclick="revealResDrill()">Reveal Notes &amp; Diagram</button>'+
@@ -1499,13 +1365,13 @@ function revealResDrill(){
  const isSaved=state.resSaved.includes(curResDrill.id);
  const middleBtn=isSaved
   ?'<button class="save" onclick="returnResDrillToCircle()">↩️ Put Back in Circle</button>'
-  :'<button class="save" onclick="saveResDrillForReview()">🟡 Needs Review</button>';
+  :'<button class="save" onclick="saveResDrillForReview()">🟡 Save for Review</button>';
  after.innerHTML='<div class="eq-answer-box" style="margin-top:12px">'+
   (curResDrill.note?'<div class="eq-note">'+escapeHtml(curResDrill.note)+'</div>':'')+
   (curResDrill.imgData?'<img class="drill-img" src="'+curResDrill.imgData+'" onclick="zoomImg(this.src)">':'')+
   (!curResDrill.note&&!curResDrill.imgData?'<div class="eq-note">No note or image attached.</div>':'')+
-  '</div><div class="actions"><button class="retire" onclick="retireResDrill()">🟢 Mastered (Hide)</button>'+middleBtn+'</div>'+
-  '<button class="opt" onclick="nextResDrill()" style="margin-top:12px">Keep here, next resource →</button>';
+  '</div><div class="actions"><button class="retire" onclick="retireResDrill()">🟢 Mastered (Retire)</button>'+middleBtn+'</div>'+
+  '<button class="opt" onclick="nextResDrill()" style="margin-top:12px">Keep in circle, next resource →</button>';
 }
 function retireResDrill(){
  if(!curResDrill)return;
@@ -1600,8 +1466,6 @@ function compressImage(file){
 }
 function insertSym(sym){noteBox.focus();document.execCommand('insertText',false,sym);}
 
-/* Superscripts: ^2 -> ², ^-1 -> ⁻¹, ^+ -> ⁺. Converts only after the exponent is finished
-   (when you type the next character that is not a digit/sign), so ^25 and ^-1 work. */
 const SUP={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','+':'⁺','-':'⁻'};
 function superscriptify(t){
  return t.replace(/\^([+\-]?\d+|[+\-])/g,(m,g)=>g.split('').map(c=>SUP[c]).join(''));
@@ -1710,7 +1574,7 @@ function buildTreeHtml(node,autoOpen){
   const isRetired=state.resRetired.includes(item.id);
   const isSaved=state.resSaved.includes(item.id);
   const badge=p==='high'?'<span class="prio-badge high">🔴 High Priority</span>':
-   ((p==='review'||isSaved)?'<span class="prio-badge review">🟡 Needs Review</span>':
+   ((p==='review'||isSaved)?'<span class="prio-badge review">🟡 Saved for Review</span>':
    (isRetired?'<span class="prio-badge master">🟢 Mastered</span>':''));
   html+='<div class="res-item p-'+p+'"><div class="tag"><span>'+escapeHtml(item.subject)+'</span>'+badge+'</div>'+
    (item.note?'<div class="res-note" onclick="handleNoteClick(this)">'+escapeHtml(item.note)+'</div>':'')+
@@ -1781,7 +1645,6 @@ async function exportBackup(){
  db.transaction('items','readonly').objectStore('items').getAll().onsuccess=async e=>{
   const json=JSON.stringify({version:2,date:new Date().toISOString(),quizState:state,resources:e.target.result});
   try{
-   /* Desktop Chrome: overwrite one file in place */
    if(window.showSaveFilePicker){
     if(!savedFileHandle){
      savedFileHandle=await window.showSaveFilePicker({
@@ -1794,7 +1657,6 @@ async function exportBackup(){
     markBackupDone();alert('Backup updated in place.');
     return;
    }
-   /* Phones: share sheet lets you save to Drive/Files, replacing the old copy */
    const file=new File([json],'mcat-vault-backup.json',{type:'application/json'});
    if(navigator.canShare&&navigator.canShare({files:[file]})){
     await navigator.share({files:[file],title:'MCAT backup'});
@@ -1827,21 +1689,17 @@ function importBackup(ev){
    const data=JSON.parse(e.target.result);
    if(!data.resources||!Array.isArray(data.resources)){alert('Invalid backup file.');ev.target.value='';return;}
    if(!confirm('Restore will REPLACE all current vault items and progress with this backup ('+data.resources.length+' items). Continue?')){ev.target.value='';return;}
+   if(data.quizState){state=normalizeState(data.quizState);persist();}
    const tx=db.transaction('items','readwrite');
    const store=tx.objectStore('items');
    store.clear();
-   /* Keep original ids so Mastered / Needs Review lists still point at the right items */
    data.resources.forEach(item=>{
     const clean={title:item.title,subject:item.subject,priority:item.priority||'none',note:item.note,imgData:item.imgData};
     if(item.id!==undefined&&item.id!==null){clean.id=item.id;store.put(clean);}
     else store.add(clean);
    });
-   tx.oncomplete=()=>{
-    if(data.quizState){state=normalizeState(data.quizState);persist();}
-    renderAll();
-    alert('Restored '+data.resources.length+' resources and progress.');
-   };
-   tx.onerror=()=>alert('Restore failed. Your previous data was not changed.');
+   tx.oncomplete=()=>{renderAll();alert('Restored '+data.resources.length+' resources and progress.');};
+   tx.onerror=()=>alert('Restore failed part way. Your previous data was not changed.');
   }catch(err){
    alert('Could not read backup file.');
   }
